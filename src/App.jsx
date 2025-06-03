@@ -10,7 +10,7 @@ function App() {
       <div className="page-wrapper">
         <div className="page-content">
           <NavBar />
-          <Container className="mt-4">
+          <Container className="my-4">
             <Row>
               <Col xs={12} md={7} lg={9}>
                 <ProfileSection />

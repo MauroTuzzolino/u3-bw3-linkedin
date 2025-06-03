@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const Footer = () => {
   return (
-    <footer className="bg-light py-4" style={{ borderTop: "1px solid #e0e0e0" }}>
+    <footer className="py-4">
       <Container>
         <Row className="mb-4">
           {/* Colonna 1 */}
