@@ -4,8 +4,15 @@ import avatar from "../assets/images/avatar.svg";
 import linkSvg from "../assets/images/vite.svg";
 import { FaCamera } from "react-icons/fa";
 import { Pen, Pencil } from "react-bootstrap-icons";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getMyProfile } from "../redux/actions";
 
 const ProfileSection = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getMyProfile());
+  }, []);
   return (
     <Card>
       <div
