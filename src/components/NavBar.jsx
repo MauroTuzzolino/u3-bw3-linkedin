@@ -1,4 +1,3 @@
-import React from "react";
 import { Navbar, Nav, Form, FormControl, Container, NavDropdown, Image } from "react-bootstrap";
 import { FaLinkedin, FaSearch, FaHome, FaUsers, FaUserCircle, FaBriefcase, FaComments, FaBell, FaTh, FaCaretDown } from "react-icons/fa";
 import "./NavBar.css";

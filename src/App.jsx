@@ -1,11 +1,16 @@
 import "./App.css";
-import { Container } from "react-bootstrap";
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <>
-      <NavBar />
+      <div className="page-wrapper">
+        <div className="page-content">
+          <NavBar />
+        </div>
+        <Footer />
+      </div>
     </>
   );
 }
