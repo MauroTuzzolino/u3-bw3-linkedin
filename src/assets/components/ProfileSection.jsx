@@ -1,5 +1,6 @@
 import { Alert, Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import coverImage from "../images/placeholderCover.png";
+import avatar from "../images/avatar.svg";
 import linkSvg from "../images/vite.svg";
 import { Pen, Pencil } from "react-bootstrap-icons";
 
@@ -10,8 +11,9 @@ const ProfileSection = () => {
         <Card>
           <Card.Img variant="top" src={coverImage} className="coverImage" />
           <Card.Body>
+            <Image src={avatar} className="profileImg" alt="Profilo" />
             {/* //mettere immagini matita con abosolute */}
-            <Row mt={2}>
+            <Row className="position-relative pt-5">
               <Row>
                 <Col>
                   <h2> Nome e Cognome</h2>

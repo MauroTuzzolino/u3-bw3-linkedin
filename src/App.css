@@ -3,3 +3,13 @@
   object-fit: cover;
   height: 13rem;
 }
+
+.profileImg {
+  margin-bottom: 5rem;
+  position: absolute;
+  top: 45px;
+  left: 20px;
+  border-radius: 50%;
+  border: 5px solid white;
+  width: 20%;
+}
