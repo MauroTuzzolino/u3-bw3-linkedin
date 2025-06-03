@@ -88,7 +88,7 @@ const Footer = () => {
                 </div>
 
                 <div className="d-flex align-items-center mb-3">
-                  <i class="bi bi-shield-shaded me-2" style={{ fontSize: "1.5rem" }}></i>
+                  <i className="bi bi-shield-shaded me-2" style={{ fontSize: "1.5rem" }}></i>
                   <div>
                     <strong className="d-block">Trasparenza sui contenuti consigliati</strong>
                     <a href="#contenuti" className="text-secondary small">

@@ -1,7 +1,7 @@
 import { Alert, Button, Card, Col, Container, Image, Row } from "react-bootstrap";
-import coverImage from "../images/placeholderCover.png";
-import avatar from "../images/avatar.svg";
-import linkSvg from "../images/vite.svg";
+import coverImage from "../assets/images/placeholderCover.png";
+import avatar from "../assets/images/avatar.svg";
+import linkSvg from "../assets/images/vite.svg";
 import { FaCamera } from "react-icons/fa";
 import { Pen, Pencil } from "react-bootstrap-icons";
 
