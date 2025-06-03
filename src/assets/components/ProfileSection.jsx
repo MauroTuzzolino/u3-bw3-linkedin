@@ -40,20 +40,29 @@ const ProfileSection = () => {
                   </div>
                 </Col>
               </Row>
-              <div className="d-flex justify-content-around w-50 mb-3">
-                <Button className="rounded-pill " variant="primary">
-                  Disponibile per
-                </Button>
-                <Button className="rounded-pill " variant="outline-primary">
-                  Aggiungi sezionde del profilo
-                </Button>
-                <Button className="rounded-pill " variant="outline-primary">
-                  Migliora profilo
-                </Button>
-                <Button className="rounded-pill" variant="outline-secondary">
-                  Risorse
-                </Button>
-              </div>
+              <Row className="d-flex justify-content-around w-100 mb-3 gy-2">
+                <Col sm={12} md={6} lg={3}>
+                  <Button className="w-100 py-2 myButton  " variant="primary">
+                    Disponibile per
+                  </Button>
+                </Col>
+                <Col sm={12} md={6} lg={3}>
+                  <Button className="w-100 py-2 myButton " variant="outline-primary">
+                    Aggiungi sezione del profilo
+                  </Button>
+                </Col>
+                <Col sm={12} md={6} lg={3}>
+                  <Button className="w-100 py-2 myButton " variant="outline-secondary">
+                    Risorse
+                  </Button>
+                </Col>
+                <Col sm={12} md={6} lg={3}>
+                  <Button className="w-100 py-2 myButton " variant="outline-primary">
+                    Migliora profilo
+                  </Button>
+                </Col>
+              </Row>
+
               <Row>
                 <Col>
                   <Alert variant="primary">
