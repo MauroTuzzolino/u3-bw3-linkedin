@@ -1,7 +1,12 @@
 import "./App.css";
+import ProfileSection from "./assets/components/ProfileSection";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <ProfileSection />
+    </>
+  );
 }
 
 export default App;
