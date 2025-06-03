@@ -2,6 +2,7 @@ import { Alert, Button, Card, Col, Container, Image, Row } from "react-bootstrap
 import coverImage from "../images/placeholderCover.png";
 import avatar from "../images/avatar.svg";
 import linkSvg from "../images/vite.svg";
+import { FaCamera } from "react-icons/fa";
 import { Pen, Pencil } from "react-bootstrap-icons";
 
 const ProfileSection = () => {
@@ -9,7 +10,23 @@ const ProfileSection = () => {
     <>
       <Container>
         <Card>
-          <Card.Img variant="top" src={coverImage} className="coverImage" />
+          <div
+            style={{
+              position: "absolute",
+              zIndex: "1000",
+              top: "1rem",
+              right: "1rem",
+              backgroundColor: "#e0e0e0",
+              borderRadius: "50%",
+              padding: "12px",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <FaCamera size={17} fill="primary" />
+          </div>
+          <Card.Img variant="top" src={coverImage} className="coverImage position-relative" />
           <Card.Body>
             <Image src={avatar} className="profileImg" alt="Profilo" />
             {/* //mettere immagini matita con abosolute */}
