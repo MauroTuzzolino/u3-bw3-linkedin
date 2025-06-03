@@ -1,7 +1,7 @@
 //questa export viene fatto per sicurezza (?)
 
 export const GET_MY_PROFILE = "GET_MY_PROFILE";
-
+import TOKEN from "../../../token";
 //questa è la funzione che viene chiamata. in questo vaso,  dall'UseEffect quando si carica il componente.
 //codesta funzione me ne ritorna un'altra (matrioska)che mi fa  la fetch e mi metto il json dentro la var fetchedMyProfile
 export const getMyProfile = () => {
@@ -9,7 +9,7 @@ export const getMyProfile = () => {
     try {
       let resp = await fetch("https://striveschool-api.herokuapp.com/api/profile/me", {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODNlYmJhMmIxMGJmMDAwMTVjZjIyYWUiLCJpYXQiOjE3NDg5NDE3MzAsImV4cCI6MTc1MDE1MTMzMH0.QMzQFBg7glw1M5PUc8D7sDQCgXKRJAzIPjXaN-_XH_c`,
+          Authorization: `Bearer ${TOKEN}`,
         },
       });
       if (resp.ok) {
