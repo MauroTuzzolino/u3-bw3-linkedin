@@ -1,10 +1,18 @@
 import "./App.css";
 import ProfileSection from "./assets/components/ProfileSection";
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <>
-      <ProfileSection />
+      <div className="page-wrapper">
+        <div className="page-content">
+          <NavBar />
+          <ProfileSection />
+        </div>
+        <Footer />
+      </div>
     </>
   );
 }
