@@ -3,7 +3,7 @@ import coverImage from "../assets/images/placeholderCover.png";
 import avatar from "../assets/images/avatar.svg";
 import linkSvg from "../assets/images/vite.svg";
 import { FaCamera } from "react-icons/fa";
-import { Pen, Pencil } from "react-bootstrap-icons";
+import { Pencil } from "react-bootstrap-icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyExperience, getMyProfile } from "../redux/actions/index";
@@ -14,14 +14,15 @@ import ExperiencesSection from "./ExperiencesSection";
 
 const ProfileSection = () => {
   const dispatch = useDispatch();
-  const { content: profileSection, error, loading } = useSelector((state) => state.profile);
 
-  const { content: ExperiencesSection, experienceError, experienceLoading } = useSelector((state) => state.experience);
+  const { content: profileSection, error, loading } = useSelector((state) => state.profile);
+  const { content: experienceList, error: experienceError, loading: experienceLoading } = useSelector((state) => state.experience);
+  console.log(experienceList);
+
   useEffect(() => {
     dispatch(getMyProfile());
   }, [dispatch]);
 
-  //carico la fetch del componente experience
   useEffect(() => {
     if (profileSection?._id) {
       dispatch(getMyExperience());
@@ -30,12 +31,12 @@ const ProfileSection = () => {
 
   if (loading) {
     return (
-      //TO DO: non si visualizza lo spinner
       <Spinner animation="border" role="status" variant="info">
         <span className="visually-hidden">Caricamento profilo...</span>
       </Spinner>
     );
   }
+
   if (error) {
     return <Alert variant="danger">{error}</Alert>;
   }
@@ -70,7 +71,6 @@ const ProfileSection = () => {
         <Card.Img variant="top" src={coverImage} className="coverImage position-relative" />
         <Card.Body>
           <Image src={profileSection.image || avatar} className="profileImg" alt="Profilo" />
-          {/* //mettere immagini matita con abosolute */}
           <Row className="position-relative pt-5">
             <Row>
               <Col>
@@ -100,6 +100,7 @@ const ProfileSection = () => {
                 </div>
               </Col>
             </Row>
+
             <Row className="d-flex justify-content-around w-100 mb-3 gy-2">
               <Col sm={12} md={6} lg={3}>
                 <Button className="w-100 py-2 myButton" variant="primary">
@@ -145,14 +146,22 @@ const ProfileSection = () => {
           </Row>
         </Card.Body>
       </Card>
+
       <InfoSections details={profileSection.bio} />
-      <ExperiencesSection
-        role={profileExperience.role}
-        company={profileExperience.company}
-        start={profileExperience.startDate}
-        end={profileExperience.endDate}
-        image={profileExperience.image}
-      />
+
+      {/* Sezione Esperienze */}
+      {experienceLoading ? (
+        <Spinner animation="border" role="status" variant="info">
+          <span className="visually-hidden">Caricamento esperienze...</span>
+        </Spinner>
+      ) : experienceError ? (
+        <Alert variant="danger">{experienceError}</Alert>
+      ) : experienceList && experienceList.length > 0 ? (
+        <ExperiencesSection experiences={experienceList} image={Graphic} />
+      ) : (
+        <p className="text-muted">Nessuna esperienza disponibile.</p>
+      )}
+
       <SectionGeneric header="Formazione" title="Scuola/università" subtitle="durata" details="Votazione" image={Graphic} />
       <SectionGeneric header="Competenze" title="Disciplina" subtitle="Scuola/università" details="Altre informazioni" image={Graphic} />
     </>
