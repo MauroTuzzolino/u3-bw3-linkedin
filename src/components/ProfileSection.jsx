@@ -27,7 +27,6 @@ const ProfileSection = () => {
       dispatch(getMyExperience());
     }
   }, [profileSection?._id, dispatch]);
-  console.log(profileExperience);
 
   if (loading) {
     return (
