@@ -57,6 +57,7 @@ const NavBar = () => {
               }
               id="profile-dropdown"
               align="end"
+              style={{ zIndex: 10000 }}
             >
               <NavDropdown.Item href="#">Profilo</NavDropdown.Item>
               <NavDropdown.Item href="#">Impostazioni</NavDropdown.Item>
