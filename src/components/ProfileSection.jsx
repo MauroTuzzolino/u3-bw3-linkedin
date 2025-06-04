@@ -6,25 +6,24 @@ import { FaCamera } from "react-icons/fa";
 import { Pen, Pencil } from "react-bootstrap-icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyProfile } from "../redux/actions";
+import { getMyProfile } from "../redux/actions/index";
 
 const ProfileSection = () => {
-  if (useSelector((state) => state.profile.content) === null) {
-    profileSection.name = "nome";
-    profileSection.surname = "cognome";
-    profileSection.email = "email";
-    profileSection.title = "titolo";
-    profileSection.area = "area";
-    profileSection.image = avatar;
-  }
-
-  const profileSection = useSelector((state) => state.profile.content);
-  console.log(profileSection);
-
   const dispatch = useDispatch();
+  const profileSection = useSelector((state) => state.profile.content);
+
   useEffect(() => {
     dispatch(getMyProfile());
-  }, []);
+  }, [dispatch]);
+
+  if (!profileSection) {
+    return (
+      <div className="text-center my-5">
+        <p>Caricamento profilo...</p>
+      </div>
+    );
+  }
+
   return (
     <Card>
       <div
@@ -45,22 +44,21 @@ const ProfileSection = () => {
       </div>
       <Card.Img variant="top" src={coverImage} className="coverImage position-relative" />
       <Card.Body>
-        <Image src={profileSection.image} className="profileImg" alt="Profilo" />
+        <Image src={profileSection.image || avatar} className="profileImg" alt="Profilo" />
         {/* //mettere immagini matita con abosolute */}
         <Row className="position-relative pt-5">
           <Row>
             <Col>
               <h2>
-                {" "}
                 {profileSection.name} {profileSection.surname}
               </h2>
               <h3>{profileSection.title}</h3>
               <Row>
                 <Col xs={12} md={6}>
-                  <p className="text-muted"> {profileSection.area}</p>
+                  <p className="text-muted">{profileSection.area}</p>
                 </Col>
                 <Col xs={12} md={6}>
-                  <p> {profileSection.email}</p>
+                  <p>{profileSection.email}</p>
                 </Col>
               </Row>
             </Col>
@@ -79,22 +77,22 @@ const ProfileSection = () => {
           </Row>
           <Row className="d-flex justify-content-around w-100 mb-3 gy-2">
             <Col sm={12} md={6} lg={3}>
-              <Button className="w-100 py-2 myButton  " variant="primary">
+              <Button className="w-100 py-2 myButton" variant="primary">
                 Disponibile per
               </Button>
             </Col>
             <Col sm={12} md={6} lg={3}>
-              <Button className="w-100 py-2 myButton " variant="outline-primary">
+              <Button className="w-100 py-2 myButton" variant="outline-primary">
                 Aggiungi sezione del profilo
               </Button>
             </Col>
             <Col sm={12} md={6} lg={3}>
-              <Button className="w-100 py-2 myButton " variant="outline-secondary">
+              <Button className="w-100 py-2 myButton" variant="outline-secondary">
                 Risorse
               </Button>
             </Col>
             <Col sm={12} md={6} lg={3}>
-              <Button className="w-100 py-2 myButton " variant="outline-primary">
+              <Button className="w-100 py-2 myButton" variant="outline-primary">
                 Migliora profilo
               </Button>
             </Col>
