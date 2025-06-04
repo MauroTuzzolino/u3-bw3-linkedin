@@ -1,6 +1,8 @@
 import { Navbar, Nav, Form, FormControl, Container, NavDropdown, Image } from "react-bootstrap";
 import { FaLinkedin, FaSearch, FaHome, FaUsers, FaUserCircle, FaBriefcase, FaComments, FaBell, FaTh, FaCaretDown } from "react-icons/fa";
 import "./NavBar.css";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const NavBar = () => {
   const navigate = useNavigate();
