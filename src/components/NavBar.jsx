@@ -1,8 +1,37 @@
 import { Navbar, Nav, Form, FormControl, Container, NavDropdown, Image } from "react-bootstrap";
 import { FaLinkedin, FaSearch, FaHome, FaUsers, FaUserCircle, FaBriefcase, FaComments, FaBell, FaTh, FaCaretDown } from "react-icons/fa";
 import "./NavBar.css";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const NavBar = () => {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    searchUser(searchQuery);
+  };
+  const searchUser = (userId) => {
+    fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        if (!resp.ok) throw new Error("Errore nella fetch");
+        return resp.json();
+      })
+      .then((data) => {
+        const userId = data._id;
+      })
+      .catch((err) => {
+        console.error("Errore:", err);
+      });
+  };
+
   return (
     <Navbar bg="white" expand="md" className="border border-bottom-secondary border-bottom-2">
       <Container className="d-flex align-items-center">
@@ -16,10 +45,16 @@ const NavBar = () => {
 
         <Navbar.Collapse id="navbar-content">
           {/* Barra di ricerca */}
-          <Form className="d-flex justify-content-center justify-content-md-start my-2 my-lg-0 flex-grow-1" role="search">
+          <Form onSubmit={handleSubmit} className="d-flex justify-content-center justify-content-md-start my-2 my-lg-0 flex-grow-1" role="search">
             <div className="d-flex align-items-center border border-dark rounded-5 px-2 w-75">
               <FaSearch className="text-muted mx-2" />
-              <FormControl type="search" placeholder="Cerca" className="border-0 shadow-none" />
+              <FormControl
+                type="search"
+                placeholder="Cerca"
+                className="border-0 shadow-none"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             </div>
           </Form>
 
