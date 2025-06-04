@@ -6,10 +6,11 @@ import { FaCamera } from "react-icons/fa";
 import { Pen, Pencil } from "react-bootstrap-icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyProfile } from "../redux/actions/index";
+import { getMyExperience, getMyProfile } from "../redux/actions/index";
 import InfoSections from "./InfoSections";
 import Graphic from "../assets/images/graphic.png";
 import SectionGeneric from "./SectionGeneric";
+import ExperiencesSection from "./ExperiencesSection";
 
 const ProfileSection = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,13 @@ const ProfileSection = () => {
   useEffect(() => {
     dispatch(getMyProfile());
   }, [dispatch]);
+
+  //carico la fetch del componente experience
+  useEffect(() => {
+    if (profileSection?._id) {
+      dispatch(getMyExperience());
+    }
+  }, [profileSection?._id, dispatch]);
 
   if (loading) {
     return (
@@ -33,9 +41,9 @@ const ProfileSection = () => {
 
   if (!profileSection) {
     return (
-      <div className="text-center my-5">
-        <p>Caricamento profilo...</p>
-      </div>
+      <Spinner animation="border" role="status" variant="info">
+        <span className="visually-hidden">Caricamento profilo...</span>
+      </Spinner>
     );
   }
 
@@ -137,7 +145,7 @@ const ProfileSection = () => {
         </Card.Body>
       </Card>
       <InfoSections details={profileSection.bio} />
-      <SectionGeneric header="Esperienza" title="Mansione" subtitle="Tipo di lavoro" details="durata" image={Graphic} />
+      <ExperiencesSection role="" company="" duration="" />
       <SectionGeneric header="Formazione" title="Scuola/università" subtitle="durata" details="Votazione" image={Graphic} />
       <SectionGeneric header="Competenze" title="Disciplina" subtitle="Scuola/università" details="Altre informazioni" image={Graphic} />
     </>
