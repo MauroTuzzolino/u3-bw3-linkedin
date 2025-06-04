@@ -20,6 +20,7 @@ const ProfileSection = () => {
 
   if (loading) {
     return (
+      //TO DO: non si visualizza lo spinner
       <Spinner animation="border" role="status" variant="info">
         <span className="visually-hidden">Caricamento profilo...</span>
       </Spinner>
