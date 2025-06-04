@@ -1,15 +1,27 @@
-import React from "react";
 import { Card, ListGroup, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRandomUsers } from "../redux/actions/index";
 
 const MySidebar = () => {
+  const dispatch = useDispatch();
+  const { users, loading, error } = useSelector((state) => state.profiles);
+
+  useEffect(() => {
+    dispatch(fetchRandomUsers());
+  }, [dispatch]);
+
+  if (loading) return <p>Caricamento...</p>;
+  if (error) return <p>Errore</p>;
+
   return (
     <div
       className="d-flex flex-column"
       style={{
         width: "100%",
         maxWidth: "250px",
-        margin: "0 auto"
+        margin: "0 auto",
       }}
     >
       <Card className="mb-3">
@@ -37,9 +49,17 @@ const MySidebar = () => {
       <Card>
         <Card.Header>I tuoi gruppi</Card.Header>
         <ListGroup variant="flush">
-          <ListGroup.Item action>Gruppo 1</ListGroup.Item>
+          {users.map((profile) => (
+            <ListGroup.Item key={profile._id}>
+              <h6>
+                {profile.name} {profile.surname}
+              </h6>
+              <p>{profile.title}</p>
+            </ListGroup.Item>
+          ))}
+          {/*<ListGroup.Item action>Gruppo 1</ListGroup.Item>
           <ListGroup.Item action>Gruppo 2</ListGroup.Item>
-          <ListGroup.Item action>Gruppo 3</ListGroup.Item>
+          <ListGroup.Item action>Gruppo 3</ListGroup.Item>*/}
         </ListGroup>
       </Card>
     </div>

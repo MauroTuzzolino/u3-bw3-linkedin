@@ -87,3 +87,29 @@ export const getMyExperience = () => {
     }
   };
 };
+
+export const GET_RANDOM_USERS = "GET_RANDOM_USERS";
+export const GET_RANDOM_SUCCESS = "GET_RANDOM_SUCCESS";
+export const GET_RANDOM_ERROR = "GET_RANDOM_ERROR";
+
+export const fetchRandomUsers = () => {
+  return async (dispatch) => {
+    dispatch({ type: GET_RANDOM_USERS });
+    try {
+      const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/`, {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Errore nella fetch");
+      }
+      const profiles = await response.json();
+      const randomThree = profiles.sort(() => Math.random() - 0.5).slice(0, 3);
+      dispatch({ type: GET_RANDOM_SUCCESS, payload: randomThree });
+      console.log("random 3:", randomThree);
+    } catch (error) {
+      dispatch({ type: GET_RANDOM_ERROR, payload: error.message });
+    }
+  };
+};
