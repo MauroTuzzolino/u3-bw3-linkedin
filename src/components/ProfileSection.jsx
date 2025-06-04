@@ -157,7 +157,7 @@ const ProfileSection = () => {
       ) : experienceError ? (
         <Alert variant="danger">{experienceError}</Alert>
       ) : experienceList && experienceList.length > 0 ? (
-        <ExperiencesSection experiences={experienceList} image={Graphic} />
+        <ExperiencesSection experiences={experienceList} />
       ) : (
         <p className="text-muted">Nessuna esperienza disponibile.</p>
       )}

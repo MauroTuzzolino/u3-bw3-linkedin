@@ -25,7 +25,7 @@ const ExperiencesSection = ({ experiences = [], image }) => {
         {experiences.map((exp, index) => (
           <Row key={exp._id || index} className="mb-3 border-bottom">
             <Col md={1} className="d-none d-md-block">
-              <img src={image} alt="graphic" className="img-fluid" />
+              <img src={exp.image} alt="graphic" className="img-fluid" />
             </Col>
             <Col>
               <h5>{exp.role}</h5>

@@ -41,8 +41,7 @@ export const getMyExperience = () => {
 
       if (!userId) throw new Error("Utente non trovato");
 
-      let resp = await fetch(`https://striveschool-api.herokuapp.com/api/profile/683ebba2b10bf00015cf22ae/experiences`, {
-        //let resp = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences`, {
+      let resp = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences`, {
         headers: {
           Authorization: `Bearer ${TOKEN}`,
         },
