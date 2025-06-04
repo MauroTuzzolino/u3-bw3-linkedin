@@ -3,7 +3,7 @@ import coverImage from "../assets/images/placeholderCover.png";
 import avatar from "../assets/images/avatar.svg";
 import linkSvg from "../assets/images/vite.svg";
 import { FaCamera } from "react-icons/fa";
-import { Pencil } from "react-bootstrap-icons";
+import { Pencil, PlusLg } from "react-bootstrap-icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyExperience, getMyProfile } from "../redux/actions/index";
@@ -159,7 +159,24 @@ const ProfileSection = () => {
       ) : experienceList && experienceList.length > 0 ? (
         <ExperiencesSection experiences={experienceList} />
       ) : (
-        <p className="text-muted">Nessuna esperienza disponibile.</p>
+        <Card className="my-2 py-3">
+          <Card.Header className="bg-white border-0">
+            <Row className="align-items-center">
+              <Col>
+                <h4>Esperienze</h4>
+              </Col>
+              <Col className="text-end">
+                <Button variant="light" className="border-0 bg-transparent">
+                  <PlusLg className="me-3" size={25} />
+                </Button>
+                <Button variant="light" className="border-0 bg-transparent">
+                  <Pencil size={25} />
+                </Button>
+              </Col>
+            </Row>
+          </Card.Header>
+          <Card.Body>Nessuna esperienza disponibile.</Card.Body>
+        </Card>
       )}
 
       <SectionGeneric header="Formazione" title="Scuola/università" subtitle="durata" details="Votazione" image={Graphic} />

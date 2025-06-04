@@ -2,7 +2,7 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import { PlusLg, Pencil } from "react-bootstrap-icons";
 import Graphic from "../assets/images/graphic.png";
 
-const ExperiencesSection = ({ experiences = [], image }) => {
+const ExperiencesSection = ({ experiences = [] }) => {
   return (
     <Card className="my-2 py-3">
       <Card.Header className="bg-white border-0">
