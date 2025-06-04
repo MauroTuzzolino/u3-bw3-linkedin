@@ -11,6 +11,15 @@ import { getMyProfile } from "../redux/actions";
 const ProfileSection = () => {
   const profileSection = useSelector((state) => state.profile.content);
   console.log(profileSection);
+
+  if (profileSection === null) {
+    profileSection.name = "nome";
+    profileSection.surname = "cognome";
+    profileSection.email = "email";
+    profileSection.title = "titolo";
+    profileSection.area = "area";
+    profileSection.image = avatar;
+  }
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMyProfile());
