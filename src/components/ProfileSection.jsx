@@ -5,10 +5,12 @@ import linkSvg from "../assets/images/vite.svg";
 import { FaCamera } from "react-icons/fa";
 import { Pen, Pencil } from "react-bootstrap-icons";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../redux/actions";
 
 const ProfileSection = () => {
+  const profileSection = useSelector((state) => state.profile.content);
+  console.log(profileSection);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMyProfile());
@@ -33,19 +35,22 @@ const ProfileSection = () => {
       </div>
       <Card.Img variant="top" src={coverImage} className="coverImage position-relative" />
       <Card.Body>
-        <Image src={avatar} className="profileImg" alt="Profilo" />
+        <Image src={profileSection.image} className="profileImg" alt="Profilo" />
         {/* //mettere immagini matita con abosolute */}
         <Row className="position-relative pt-5">
           <Row>
             <Col>
-              <h2> Nome e Cognome</h2>
-              <h3>Titolo lavoro</h3>
+              <h2>
+                {" "}
+                {profileSection.name} {profileSection.surname}
+              </h2>
+              <h3>{profileSection.title}</h3>
               <Row>
                 <Col xs={12} md={6}>
-                  <p className="text-muted"> Residenza, luogo </p>
+                  <p className="text-muted"> {profileSection.area}</p>
                 </Col>
                 <Col xs={12} md={6}>
-                  <p> informazioni contatto</p>
+                  <p> {profileSection.email}</p>
                 </Col>
               </Row>
             </Col>
