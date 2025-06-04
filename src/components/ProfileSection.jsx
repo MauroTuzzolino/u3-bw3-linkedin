@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../redux/actions/index";
 import InfoSections from "./InfoSections";
 import Graphic from "../assets/images/graphic.png";
+import SectionGeneric from "./SectionGeneric";
 
 const ProfileSection = () => {
   const dispatch = useDispatch();
@@ -135,10 +136,10 @@ const ProfileSection = () => {
           </Row>
         </Card.Body>
       </Card>
-      <InfoSections header="Informazioni" title="Nome Cognome" subtitle="Dettagli Personali" details="Lorem ipsum" image={Graphic} />
-      <InfoSections header="Esperienza" title="Mansione" subtitle="Tipo di lavoro" details="durata" image={Graphic} />
-      <InfoSections header="Formazione" title="Scuola/università" subtitle="durata" details="Votazione" image={Graphic} />
-      <InfoSections header="Competenze" title="Disciplina" subtitle="Scuola/università" details="Altre informazioni" image={Graphic} />
+      <InfoSections details={profileSection.bio} />
+      <SectionGeneric header="Esperienza" title="Mansione" subtitle="Tipo di lavoro" details="durata" image={Graphic} />
+      <SectionGeneric header="Formazione" title="Scuola/università" subtitle="durata" details="Votazione" image={Graphic} />
+      <SectionGeneric header="Competenze" title="Disciplina" subtitle="Scuola/università" details="Altre informazioni" image={Graphic} />
     </>
   );
 };
