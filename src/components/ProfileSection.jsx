@@ -10,11 +10,22 @@ import { getMyProfile } from "../redux/actions/index";
 
 const ProfileSection = () => {
   const dispatch = useDispatch();
-  const profileSection = useSelector((state) => state.profile.content);
+  const { content: profileSection, error, loading } = useSelector((state) => state.profile);
 
   useEffect(() => {
     dispatch(getMyProfile());
   }, [dispatch]);
+
+  if (loading) {
+    return (
+      <div className="text-center my-5">
+        <p>Caricamento profilo...</p>
+      </div>
+    );
+  }
+  if (error) {
+    return <Alert variant="danger">{error}</Alert>;
+  }
 
   if (!profileSection) {
     return (
