@@ -3,18 +3,20 @@ import coverImage from "../assets/images/placeholderCover.png";
 import avatar from "../assets/images/avatar.svg";
 import linkSvg from "../assets/images/vite.svg";
 import { FaCamera } from "react-icons/fa";
-import { Pencil, PlusLg } from "react-bootstrap-icons";
-import { useEffect } from "react";
+import { Cursor, Pencil, PlusLg } from "react-bootstrap-icons";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyExperience, getMyProfile } from "../redux/actions/index";
 import InfoSections from "./InfoSections";
 import Graphic from "../assets/images/graphic.png";
 import SectionGeneric from "./SectionGeneric";
 import ExperiencesSection from "./ExperiencesSection";
+import EditProfileModal from "./EditProfileModal";
 
 const ProfileSection = () => {
   const dispatch = useDispatch();
 
+  const [showEditmodal, setShowEditmodal] = useState(false);
   const { content: profileSection, error, loading } = useSelector((state) => state.profile);
   const { content: experienceList, error: experienceError, loading: experienceLoading } = useSelector((state) => state.experience);
   console.log(experienceList);
@@ -74,9 +76,13 @@ const ProfileSection = () => {
           <Row className="position-relative pt-5">
             <Row>
               <Col>
-                <h2>
-                  {profileSection.name} {profileSection.surname}
-                </h2>
+                <div className="d-flex justify-content-between align-items-center">
+                  <h2>
+                    {profileSection.name} {profileSection.surname}
+                  </h2>
+                  <Pencil size={20} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />
+                </div>
+
                 <h3>{profileSection.title}</h3>
                 <Row>
                   <Col xs={12} md={6}>
@@ -181,6 +187,7 @@ const ProfileSection = () => {
 
       <SectionGeneric header="Formazione" title="Scuola/università" subtitle="durata" details="Votazione" image={Graphic} />
       <SectionGeneric header="Competenze" title="Disciplina" subtitle="Scuola/università" details="Altre informazioni" image={Graphic} />
+      <EditProfileModal show={showEditmodal} handleClose={() => setShowEditmodal(false)} profileData={profileSection} />
     </>
   );
 };

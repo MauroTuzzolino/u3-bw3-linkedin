@@ -27,6 +27,37 @@ export const getMyProfile = () => {
   };
 };
 
+export const UPDATE_PROFILE_LOADING = "UPDATE_PROFILE_LOADING";
+export const UPDATE_PROFILE_SUCCESS = "UPDATE_PROFILE_SUCCESS";
+export const UPDATE_PROFILE_ERROR = "UPDATE_PROFILE_ERROR";
+
+export const updateMyProfile = (updatedData) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "UPDATE_PROFILE_LOADING" });
+
+      const response = await fetch("https://striveschool-api.herokuapp.com/api/profile/", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${TOKEN}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Errore nell'aggiornamento del profilo");
+      }
+
+      const data = await response.json();
+
+      dispatch({ type: "UPDATE_PROFILE_SUCCESS", payload: data });
+    } catch (error) {
+      dispatch({ type: "UPDATE_PROFILE_ERROR", payload: error.message });
+    }
+  };
+};
+
 export const GET_MY_EXPERIENCE = "GET_MY_EXPERIENCE";
 export const SET_LOADING_MYEXPERIENCE = "SET_LOADING_MYEXPERIENCE";
 export const GET_EXPERIENCE_ERROR = "GET_EXPERIENCE_ERROR";

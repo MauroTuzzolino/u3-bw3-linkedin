@@ -1,6 +1,6 @@
 //qui verrà cambiato lo stato solo del mio componente (No globale!)
 //importo l'azione
-import { GET_MY_PROFILE, SET_LOADING_MYPROFILE, GET_MYPROFILE_ERROR } from "../actions";
+import { GET_MY_PROFILE, SET_LOADING_MYPROFILE, GET_MYPROFILE_ERROR, UPDATE_PROFILE_LOADING, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_ERROR } from "../actions";
 //setto lo stato iniziale come deve essere
 const initialState = {
   content: null,
@@ -31,6 +31,27 @@ const myProfileReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.error,
+      };
+
+    case UPDATE_PROFILE_LOADING:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+
+    case UPDATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        content: action.payload,
+      };
+
+    case UPDATE_PROFILE_ERROR:
+      return {
+        ...state,
+        loading: FALSE,
+        error: action.payload,
       };
 
     default:
