@@ -16,6 +16,7 @@ const ProfileSection = () => {
   const dispatch = useDispatch();
   const { content: profileSection, error, loading } = useSelector((state) => state.profile);
 
+  const { content: ExperiencesSection, experienceError, experienceLoading } = useSelector((state) => state.experience);
   useEffect(() => {
     dispatch(getMyProfile());
   }, [dispatch]);
@@ -26,6 +27,7 @@ const ProfileSection = () => {
       dispatch(getMyExperience());
     }
   }, [profileSection?._id, dispatch]);
+  console.log(profileExperience);
 
   if (loading) {
     return (
@@ -145,7 +147,13 @@ const ProfileSection = () => {
         </Card.Body>
       </Card>
       <InfoSections details={profileSection.bio} />
-      <ExperiencesSection role="" company="" duration="" />
+      <ExperiencesSection
+        role={profileExperience.role}
+        company={profileExperience.company}
+        start={profileExperience.startDate}
+        end={profileExperience.endDate}
+        image={profileExperience.image}
+      />
       <SectionGeneric header="Formazione" title="Scuola/università" subtitle="durata" details="Votazione" image={Graphic} />
       <SectionGeneric header="Competenze" title="Disciplina" subtitle="Scuola/università" details="Altre informazioni" image={Graphic} />
     </>

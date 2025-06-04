@@ -3,7 +3,7 @@ import { PlusLg } from "react-bootstrap-icons";
 import { Pencil } from "react-bootstrap-icons";
 import Graphic from "../assets/images/graphic.png";
 
-const ExperiencesSection = ({ title, subtitle, details, image }) => {
+const ExperiencesSection = ({ role, company, start, end, image }) => {
   return (
     <Card className="my-2 py-3">
       <Card.Header className="bg-white border-0">
@@ -28,9 +28,11 @@ const ExperiencesSection = ({ title, subtitle, details, image }) => {
           </Col>
 
           <Col>
-            <h5>{title}</h5>
-            <h6>{subtitle}</h6>
-            <p>{details}</p>
+            <h5>{role}</h5>
+            <h6>{company}</h6>
+            <p>
+              {start} - {end}
+            </p>
           </Col>
         </Row>
       </Card.Body>
