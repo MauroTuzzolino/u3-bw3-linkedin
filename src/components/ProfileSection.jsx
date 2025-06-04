@@ -9,10 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../redux/actions";
 
 const ProfileSection = () => {
-  const profileSection = useSelector((state) => state.profile.content);
-  console.log(profileSection);
-
-  if (profileSection === null) {
+  if (useSelector((state) => state.profile.content) === null) {
     profileSection.name = "nome";
     profileSection.surname = "cognome";
     profileSection.email = "email";
@@ -20,6 +17,10 @@ const ProfileSection = () => {
     profileSection.area = "area";
     profileSection.image = avatar;
   }
+
+  const profileSection = useSelector((state) => state.profile.content);
+  console.log(profileSection);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMyProfile());
