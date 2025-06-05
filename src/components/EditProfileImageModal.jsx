@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateMyImgProfile } from "../redux/actions/index";
 
-const EditProfileImageModal = ({ show, handleClose, isMyProfile }) => {
+const EditProfileImageModal = ({ show, handleClose }) => {
   const dispatch = useDispatch();
   const profileData = useSelector((state) => state.myProfile.content);
 

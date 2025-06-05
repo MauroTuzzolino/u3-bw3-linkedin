@@ -112,7 +112,14 @@ const ProfileSection = () => {
             </div>
             <Card.Img variant="top" src={coverImage} className="coverImage position-relative" />
             <Card.Body>
-              <Image src={imgSrc} onError={handleError} className="profileImg" alt="Profile Image" onClick={() => setShowImageModal(true)} />
+              <Image
+                src={imgSrc}
+                onError={handleError}
+                className="profileImg"
+                alt="Profile Image"
+                onClick={isMyProfile ? () => setShowImageModal(true) : undefined}
+                style={{ cursor: isMyProfile ? "pointer" : "default" }}
+              />
               <Row className="position-relative pt-5">
                 <Row>
                   <Col>
@@ -235,7 +242,7 @@ const ProfileSection = () => {
             isMyProfile={isMyProfile}
           />
           <EditProfileModal show={showEditmodal} handleClose={() => setShowEditmodal(false)} profileData={profileSection} />
-          <EditProfileImageModal show={showImageModal} handleClose={() => setShowImageModal(false)} isMyProfile={isMyProfile} />
+          <EditProfileImageModal show={showImageModal} handleClose={() => setShowImageModal(false)} />
         </Col>
         <Col xs={0} md={5} lg={3} className="d-none d-md-block">
           <SideBar />
