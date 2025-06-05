@@ -1,35 +1,21 @@
-import { Navbar, Nav, Form, FormControl, Container, NavDropdown, Image } from "react-bootstrap";
+import { Navbar, Nav, Form, FormControl, Container, NavDropdown } from "react-bootstrap";
 import { FaLinkedin, FaSearch, FaHome, FaUsers, FaUserCircle, FaBriefcase, FaComments, FaBell, FaTh, FaCaretDown } from "react-icons/fa";
 import "./NavBar.css";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { searchProfileByName } from "../redux/reducers/profileThunks";
+
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    searchUser(searchQuery);
-  };
-  const searchUser = (userId) => {
-    fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((resp) => {
-        if (!resp.ok) throw new Error("Errore nella fetch");
-        return resp.json();
-      })
-      .then((data) => {
-        const userId = data._id;
-      })
-      .catch((err) => {
-        console.error("Errore:", err);
-      });
+    if (searchQuery.trim() !== "") {
+      dispatch(searchProfileByName(searchQuery.trim()));
+    }
   };
 
   return (
@@ -60,7 +46,7 @@ const NavBar = () => {
 
           {/* Icone */}
           <Nav className="d-flex align-items-center">
-            <Nav.Link href="#" className="d-flex flex-column align-items-center mx-2">
+            <Nav.Link href="/home" className="d-flex flex-column align-items-center mx-2">
               <FaHome size={30} />
               <small className="d-block d-md-none d-lg-block">Home</small>
             </Nav.Link>
@@ -94,7 +80,9 @@ const NavBar = () => {
               align="end"
               style={{ zIndex: 10000 }}
             >
-              <NavDropdown.Item href="#">Profilo</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/me">
+                Profilo
+              </NavDropdown.Item>
               <NavDropdown.Item href="#">Impostazioni</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#">Esci</NavDropdown.Item>

@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRandomUsers } from "../redux/actions/index";
+import { Link } from "react-router-dom";
 
 const MySidebar = () => {
   const dispatch = useDispatch();
@@ -33,10 +34,7 @@ const MySidebar = () => {
           <div className="mt-2">Italiano</div>
           <hr />
           <Card.Text>
-            <strong>Link pubblico</strong>{" "}
-            <a href="https://www.linkedin.com/in/tuo-profilo" target="_blank" rel="noopener noreferrer">
-              linkedin.com/in/tuo-profilo
-            </a>
+            <strong>Link pubblico</strong> <Link to="/me"> linkedin.com/in/tuo-profilo</Link>
           </Card.Text>
         </Card.Body>
       </Card>
@@ -47,14 +45,19 @@ const MySidebar = () => {
 
       {/* Groups Section */}
       <Card>
-        <Card.Header>I tuoi gruppi</Card.Header>
+        <Card.Header>
+          <h6>Persone che potresti conoscere</h6>
+        </Card.Header>
         <ListGroup variant="flush">
           {users.map((profile) => (
             <ListGroup.Item key={profile._id}>
               <h6>
-                {profile.name} {profile.surname}
+                <Link to={`/other/${profile._id}`}>
+                  {" "}
+                  {profile.name} {profile.surname}
+                </Link>
               </h6>
-              <p>{profile.title}</p>
+              <p className="mb-0">{profile.title}</p>
             </ListGroup.Item>
           ))}
           {/*<ListGroup.Item action>Gruppo 1</ListGroup.Item>
