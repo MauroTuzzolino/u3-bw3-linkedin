@@ -114,9 +114,14 @@ export const fetchRandomUsers = () => {
   };
 };
 
+export const GET_OTHER_PROFILE = "GET_OTHER_PROFILE";
+export const SET_LOADING_OTHER_PROFILE = "SET_LOADING_OTHER_PROFILE";
+export const GET_OTHER_PROFILE_ERROR = "GET_OTHER_PROFILE_ERROR";
+
 export const getUserProfile = (id) => {
   return async (dispatch) => {
     try {
+      dispatch({ type: SET_LOADING_OTHER_PROFILE });
       const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${id}`, {
         headers: {
           Authorization: `Bearer ${TOKEN}`,
@@ -124,20 +129,26 @@ export const getUserProfile = (id) => {
       });
 
       if (!response.ok) {
-        throw new Error("Errore nel recupero del profilo utente");
+        throw new Error("Errore nella fetch");
       }
 
       const data = await response.json();
-      dispatch({ type: "GET_PROFILE_SUCCESS", payload: data });
+      dispatch({ type: GET_OTHER_PROFILE, payload: data });
     } catch (error) {
-      dispatch({ type: "GET_PROFILE_ERROR", payload: error.message });
+      dispatch({ type: GET_OTHER_PROFILE_ERROR, payload: error.message });
     }
   };
 };
+//aggiornare experience other user
+
+export const GET_OTHER_EXPERIENCE = "GET_OTHER_EXPERIENCE";
+export const SET_LOADING_OTHER_EXPERIENCE = "SET_LOADING_OTHER_EXPERIENCE";
+export const GET_OTHER_EXPERIENCE_ERROR = "GET_OTHER_EXPERIENCE_ERROR";
 
 export const getExperienceByUserId = (userId) => {
   return async (dispatch) => {
     try {
+      dispatch({ type: SET_LOADING_OTHER_EXPERIENCE });
       const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences`, {
         headers: {
           Authorization: `Bearer ${TOKEN}`,
@@ -145,13 +156,13 @@ export const getExperienceByUserId = (userId) => {
       });
 
       if (!response.ok) {
-        throw new Error("Errore nel recupero delle esperienze");
+        throw new Error("Errore nella fetch");
       }
 
       const data = await response.json();
-      dispatch({ type: "GET_EXPERIENCE_SUCCESS", payload: data });
+      dispatch({ type: "GET_OTHER_EXPERIENCE", payload: data });
     } catch (error) {
-      dispatch({ type: "GET_EXPERIENCE_ERROR", payload: error.message });
+      dispatch({ type: "GET_OTHER_EXPERIENCE_ERROR", payload: error.message });
     }
   };
 };

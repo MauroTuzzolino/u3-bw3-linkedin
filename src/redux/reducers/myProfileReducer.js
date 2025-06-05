@@ -50,7 +50,7 @@ const myProfileReducer = (state = initialState, action) => {
     case UPDATE_PROFILE_ERROR:
       return {
         ...state,
-        loading: FALSE,
+        loading: false,
         error: action.payload,
       };
 

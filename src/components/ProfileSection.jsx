@@ -19,39 +19,38 @@ const ProfileSection = () => {
   const { userId } = useParams();
   const location = useLocation();
 
-  const myProfile = location.pathname === "/me";
-
+  const isMyProfile = location.pathname.includes === "/me";
   const [showEditmodal, setShowEditmodal] = useState(false);
-  const { content: profileSection, error, loading } = useSelector((state) => state.profile);
-  const { content: experienceList, error: experienceError, loading: experienceLoading } = useSelector((state) => state.experience);
-  console.log(experienceList);
 
-  /* useEffect(() => {
-    dispatch(getMyProfile());
-  }, [dispatch]);
- */
+  const myProfile = useSelector((state) => state.myProfile);
+  const otherProfile = useSelector((state) => state.otherProfile);
+
+  const myExperienceState = useSelector((state) => state.experience);
+  const otherExperienceState = useSelector((state) => state.otherExperience);
+
+  const experienceList = isMyProfile ? myExperienceState?.content : otherExperienceState?.content;
+  const experienceLoading = isMyProfile ? myExperienceState?.loading : otherExperienceState?.loading;
+  const experienceError = isMyProfile ? myExperienceState?.error : otherExperienceState?.error;
+
+  const profileSection = isMyProfile ? myProfile?.content : otherProfile?.content;
+  const loading = isMyProfile ? myProfile?.loading : otherProfile?.loading;
+  const error = isMyProfile ? myProfile?.error : otherProfile?.error;
 
   useEffect(() => {
-    if (myProfile) {
+    if (isMyProfile) {
       dispatch(getMyProfile());
     } else if (userId) {
       dispatch(getUserProfile(userId));
     }
-  }, [dispatch, myProfile, userId]);
+  }, [dispatch, isMyProfile, userId]);
 
   console.log(userId);
 
-  /*  useEffect(() => {
-    if (profileSection?._id) {
-      dispatch(getMyExperience());
-    }
-  }, [profileSection?._id, dispatch]); */
-
   useEffect(() => {
-    if ((myProfile && profileSection?._id) || userId) {
-      dispatch(getExperienceByUserId(myProfile ? profileSection._id : userId));
+    if ((isMyProfile && profileSection?._id) || userId) {
+      dispatch(getExperienceByUserId(isMyProfile ? profileSection._id : userId));
     }
-  }, [dispatch, myProfile, profileSection?._id, userId]);
+  }, [dispatch, isMyProfile, profileSection?._id, userId]);
 
   if (loading) {
     return (
