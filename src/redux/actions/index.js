@@ -162,3 +162,41 @@ export const getExperienceByUserId = (userId) => {
     }
   };
 };
+
+// Creazione di post
+
+export const OPEN_MODAL = "OPEN_MODAL";
+export const CLOSE_MODAL = "CLOSE_MODAL";
+export const SET_CONTENT = "SET_CONTENT";
+export const SET_LOADING = "SET_LOADING";
+export const SET_ERROR = "SET_ERROR";
+
+export const openModal = () => ({ type: OPEN_MODAL });
+export const closeModal = () => ({ type: CLOSE_MODAL });
+export const setContent = (content) => ({ type: SET_CONTENT, payload: content });
+export const setLoading = (loading) => ({ type: SET_LOADING, payload: loading });
+export const setError = (error) => ({ type: SET_ERROR, payload: error });
+
+export const submitPost = (content) => async (dispatch) => {
+  dispatch(setLoading(true));
+  dispatch(setError(null));
+
+  try {
+    const res = await fetch("https://striveschool-api.herokuapp.com/api/posts/", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${TOKEN}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ text: content }),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "Errore invio post");
+    }
+
+    dispatch(closeModal());
+  } catch (error) {
+    dispatch(setError(error.message));
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
