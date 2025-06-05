@@ -3,7 +3,7 @@ import coverImage from "../assets/images/placeholderCover.png";
 import avatar from "../assets/images/avatar.svg";
 import linkSvg from "../assets/images/vite.svg";
 import { FaCamera } from "react-icons/fa";
-import { Cursor, Pencil, PlusLg } from "react-bootstrap-icons";
+import { Pencil, PlusLg } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyExperience, getMyProfile } from "../redux/actions/index";

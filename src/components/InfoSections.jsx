@@ -10,11 +10,7 @@ const InfoSections = ({ details }) => {
           <Col>
             <h4>Informazioni</h4>
           </Col>
-          <Col className="text-end">
-            <Button variant="light" className="border-0 bg-transparent">
-              <Pencil size={25} />
-            </Button>
-          </Col>
+          <Col className="text-end"></Col>
         </Row>
       </Card.Header>
       <Card.Body>

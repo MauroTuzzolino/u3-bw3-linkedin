@@ -1,35 +1,19 @@
-import { Navbar, Nav, Form, FormControl, Container, NavDropdown, Image } from "react-bootstrap";
+import { Navbar, Nav, Form, FormControl, Container, NavDropdown } from "react-bootstrap";
 import { FaLinkedin, FaSearch, FaHome, FaUsers, FaUserCircle, FaBriefcase, FaComments, FaBell, FaTh, FaCaretDown } from "react-icons/fa";
 import "./NavBar.css";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { searchProfileByName } from "../redux/reducers/profileThunks";
 
 const NavBar = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    searchUser(searchQuery);
-  };
-  const searchUser = (userId) => {
-    fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((resp) => {
-        if (!resp.ok) throw new Error("Errore nella fetch");
-        return resp.json();
-      })
-      .then((data) => {
-        const userId = data._id;
-      })
-      .catch((err) => {
-        console.error("Errore:", err);
-      });
+    if (searchQuery.trim() !== "") {
+      dispatch(searchProfileByName(searchQuery.trim()));
+    }
   };
 
   return (
