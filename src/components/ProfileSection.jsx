@@ -157,7 +157,7 @@ const ProfileSection = () => {
                 <Alert variant="primary">
                   <div className="d-flex justify-content-between align-items-center">
                     <h5>Disponibile a lavorare</h5>
-                    <Pencil size={20} />
+                    {isMyProfile && <Pencil size={20} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />}
                   </div>
                   <p className="mb-0">Ruoli di </p>
                   <p className="mb-0">Mostra dettagli</p>
@@ -175,7 +175,7 @@ const ProfileSection = () => {
         </Card.Body>
       </Card>
 
-      <InfoSections details={profileSection.bio} />
+      <InfoSections details={profileSection.bio} isMyProfile={isMyProfile} />
 
       {/* Sezione Esperienze */}
       {experienceLoading ? (
@@ -198,7 +198,7 @@ const ProfileSection = () => {
                   <PlusLg className="me-3" size={25} />
                 </Button>
                 <Button variant="light" className="border-0 bg-transparent">
-                  <Pencil size={25} />
+                  {isMyProfile && <Pencil size={25} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />}
                 </Button>
               </Col>
             </Row>
@@ -207,8 +207,15 @@ const ProfileSection = () => {
         </Card>
       )}
 
-      <SectionGeneric header="Formazione" title="Scuola/università" subtitle="durata" details="Votazione" image={Graphic} />
-      <SectionGeneric header="Competenze" title="Disciplina" subtitle="Scuola/università" details="Altre informazioni" image={Graphic} />
+      <SectionGeneric header="Formazione" title="Scuola/università" subtitle="durata" details="Votazione" image={Graphic} isMyProfile={isMyProfile} />
+      <SectionGeneric
+        header="Competenze"
+        title="Disciplina"
+        subtitle="Scuola/università"
+        details="Altre informazioni"
+        image={Graphic}
+        isMyProfile={isMyProfile}
+      />
       <EditProfileModal show={showEditmodal} handleClose={() => setShowEditmodal(false)} profileData={profileSection} />
     </>
   );
