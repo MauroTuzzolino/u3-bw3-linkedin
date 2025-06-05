@@ -4,7 +4,9 @@ import {
   GET_EXPERIENCE_ERROR,
   UPDATE_EXPERIENCE_LOADING,
   UPDATE_EXPERIENCE_SUCCESS,
-  UPDATE_EXPERIENCE_ERROR
+  UPDATE_EXPERIENCE_ERROR,
+  CREATE_EXPERIENCE_SUCCESS,
+  DELETE_EXPERIENCE_SUCCESS
 } from "../actions";
 
 const initialState = {
@@ -43,6 +45,21 @@ const experienceReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         content: state.content.map((exp) => (exp._id === action.payload._id ? action.payload : exp))
+      };
+
+    case CREATE_EXPERIENCE_SUCCESS:
+      return {
+        ...state,
+        content: [...state.content, action.payload],
+        loading: false,
+        error: null
+      };
+    case DELETE_EXPERIENCE_SUCCESS:
+      return {
+        ...state,
+        content: state.content.filter((exp) => exp._id !== action.payload),
+        loading: false,
+        error: null
       };
 
     default:

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Card, Col, Row } from "react-bootstrap";
-import { PlusLg, Pencil } from "react-bootstrap-icons";
+import { PlusLg, Pencil, Trash } from "react-bootstrap-icons";
 import EditExperienceModal from "./EditExperienceModal";
-import { updateExperience } from "../redux/actions";
+import { updateExperience, createExperience, deleteExperience } from "../redux/actions";
 
 const ExperiencesSection = () => {
   const dispatch = useDispatch();
@@ -18,11 +18,25 @@ const ExperiencesSection = () => {
     setShowModal(true);
   };
 
+  const handleAddClick = () => {
+    setSelectedExperience(null);
+    setShowModal(true);
+  };
+
   const handleSave = (updatedExperience) => {
     if (selectedExperience?._id) {
       dispatch(updateExperience(userId, selectedExperience._id, updatedExperience));
+    } else {
+      dispatch(createExperience(userId, updatedExperience));
     }
     setShowModal(false);
+  };
+
+  const handleDelete = (expId) => {
+    const confirmDelete = window.confirm("Sei sicuro di voler eliminare questa esperienza?");
+    if (confirmDelete) {
+      dispatch(deleteExperience(userId, expId));
+    }
   };
 
   return (
@@ -34,7 +48,7 @@ const ExperiencesSection = () => {
               <h4>Esperienze</h4>
             </Col>
             <Col className="text-end">
-              <Button variant="light" className="border-0 bg-transparent">
+              <Button variant="light" className="border-0 bg-transparent" onClick={handleAddClick}>
                 <PlusLg className="me-3" size={25} />
               </Button>
             </Col>
@@ -44,12 +58,11 @@ const ExperiencesSection = () => {
         <Card.Body>
           {experiences?.map((exp) => (
             <Row key={exp._id} className="mb-3 border-bottom">
-              <Col md={1} className="d-none d-md-block">
-                <img src={exp.image} alt="graphic" className="img-fluid" />
-              </Col>
+              <Col md={1} className="d-none d-md-block"></Col>
               <Col>
                 <h5>
                   {exp.role} <Pencil size={20} className="ms-2" style={{ cursor: "pointer" }} onClick={() => handleEditClick(exp)} />
+                  <Trash size={20} className="ms-2 text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(exp._id)} />
                 </h5>
                 <h6>{exp.company}</h6>
                 <p>
@@ -61,9 +74,7 @@ const ExperiencesSection = () => {
         </Card.Body>
       </Card>
 
-      {selectedExperience && (
-        <EditExperienceModal show={showModal} handleClose={() => setShowModal(false)} experienceData={selectedExperience} handleSave={handleSave} />
-      )}
+      <EditExperienceModal show={showModal} handleClose={() => setShowModal(false)} experienceData={selectedExperience} handleSave={handleSave} />
     </>
   );
 };
