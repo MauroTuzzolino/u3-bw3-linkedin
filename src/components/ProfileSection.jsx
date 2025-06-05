@@ -49,14 +49,15 @@ const ProfileSection = () => {
     }
   }, [dispatch, isMyProfile, userId]);
 
-  console.log(userId);
+  console.log("userId " + userId);
 
   useEffect(() => {
-    if ((isMyProfile && profileSection?._id) || userId) {
-      dispatch(getExperienceByUserId(isMyProfile ? profileSection._id : userId));
+    if (isMyProfile && profileSection?._id) {
+      dispatch(getMyExperience()); // usa l'action per il tuo profilo
+    } else if (!isMyProfile && userId) {
+      dispatch(getExperienceByUserId(userId)); // usa userId per altri profili
     }
   }, [dispatch, isMyProfile, profileSection?._id, userId]);
-
   useEffect(() => {
     if (profileSection?.image) {
       setImgSrc(profileSection.image);
