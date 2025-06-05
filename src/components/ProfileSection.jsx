@@ -14,6 +14,7 @@ import ExperiencesSection from "./ExperiencesSection";
 import EditProfileModal from "./EditProfileModal";
 import SideBar from "./Sidebar";
 import { useParams, useLocation } from "react-router-dom";
+import EditExperienceModal from "./EditExperienceModal";
 
 const ProfileSection = () => {
   const dispatch = useDispatch();
@@ -214,7 +215,7 @@ const ProfileSection = () => {
                       <PlusLg className="me-3" size={25} />
                     </Button>
                     <Button variant="light" className="border-0 bg-transparent">
-                      {isMyProfile && <Pencil size={25} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />}
+                      <Pencil size={25} style={{ cursor: "pointer" }} />
                     </Button>
                   </Col>
                 </Row>

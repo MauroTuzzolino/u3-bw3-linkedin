@@ -1,7 +1,7 @@
 import { GET_OTHER_EXPERIENCE, SET_LOADING_OTHER_EXPERIENCE, GET_OTHER_EXPERIENCE_ERROR } from "../actions";
 
 const initialState = {
-  experiences: [],
+  content: [],
   loading: false,
   error: null,
 };
@@ -18,7 +18,7 @@ const otherExperienceReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        experiences: action.payload,
+        content: action.payload,
         error: null,
       };
     case GET_OTHER_EXPERIENCE_ERROR:

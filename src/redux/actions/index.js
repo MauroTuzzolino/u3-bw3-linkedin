@@ -224,3 +224,102 @@ export const submitPost = (content) => async (dispatch) => {
     dispatch(setLoading(false));
   }
 };
+
+export const UPDATE_EXPERIENCE_LOADING = "UPDATE_EXPERIENCE_LOADING";
+export const UPDATE_EXPERIENCE_SUCCESS = "UPDATE_EXPERIENCE_SUCCESS";
+export const UPDATE_EXPERIENCE_ERROR = "UPDATE_EXPERIENCE_ERROR";
+
+export const updateExperience = (userId, expId, updatedExperience) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_EXPERIENCE_LOADING });
+
+    const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences/${expId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${TOKEN}`,
+      },
+      body: JSON.stringify(updatedExperience),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      dispatch({
+        type: UPDATE_EXPERIENCE_SUCCESS,
+        payload: data,
+      });
+    } else {
+      throw new Error("Errore durante l'aggiornamento dell'esperienza");
+    }
+  } catch (error) {
+    dispatch({
+      type: UPDATE_EXPERIENCE_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const CREATE_EXPERIENCE_LOADING = "CREATE_EXPERIENCE_LOADING";
+export const CREATE_EXPERIENCE_SUCCESS = "CREATE_EXPERIENCE_SUCCESS";
+export const CREATE_EXPERIENCE_ERROR = "CREATE_EXPERIENCE_ERROR";
+
+export const createExperience = (userId, newExperience) => async (dispatch) => {
+  try {
+    dispatch({ type: CREATE_EXPERIENCE_LOADING });
+
+    const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${TOKEN}`,
+      },
+      body: JSON.stringify(newExperience),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      dispatch({
+        type: CREATE_EXPERIENCE_SUCCESS,
+        payload: data,
+      });
+    } else {
+      throw new Error("Errore durante la creazione dell'esperienza");
+    }
+  } catch (error) {
+    dispatch({
+      type: CREATE_EXPERIENCE_ERROR,
+      payload: error.message,
+    });
+  }
+};
+
+export const DELETE_EXPERIENCE_LOADING = "DELETE_EXPERIENCE_LOADING";
+export const DELETE_EXPERIENCE_SUCCESS = "DELETE_EXPERIENCE_SUCCESS";
+export const DELETE_EXPERIENCE_ERROR = "DELETE_EXPERIENCE_ERROR";
+
+export const deleteExperience = (userId, expId) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_EXPERIENCE_LOADING });
+
+    const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences/${expId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: ` Bearer ${TOKEN}`,
+      },
+    });
+
+    if (response.ok) {
+      dispatch({
+        type: DELETE_EXPERIENCE_SUCCESS,
+        payload: expId,
+      });
+    } else {
+      throw new Error("Errore durante l'eliminazione dell'esperienza");
+    }
+  } catch (error) {
+    dispatch({
+      type: DELETE_EXPERIENCE_ERROR,
+      payload: error.message,
+    });
+  }
+};
