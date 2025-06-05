@@ -6,33 +6,54 @@ import { FaCamera } from "react-icons/fa";
 import { Pencil, PlusLg } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyExperience, getMyProfile } from "../redux/actions/index";
+import { getExperienceByUserId, getMyExperience, getMyProfile, getUserProfile } from "../redux/actions/index";
 import InfoSections from "./InfoSections";
 import Graphic from "../assets/images/graphic.png";
 import SectionGeneric from "./SectionGeneric";
 import ExperiencesSection from "./ExperiencesSection";
 import EditProfileModal from "./EditProfileModal";
 import SideBar from "./Sidebar";
+import { useParams, useLocation } from "react-router-dom";
 
 const ProfileSection = () => {
   const dispatch = useDispatch();
+  const { userId } = useParams();
+  const location = useLocation();
+
+  const isMyProfile = location.pathname.startsWith("/me");
 
   const [showEditmodal, setShowEditmodal] = useState(false);
-  const { content: profileSection, error, loading } = useSelector((state) => state.profile);
-  const { content: experienceList, error: experienceError, loading: experienceLoading } = useSelector((state) => state.experience);
 
-  // Gestione immagine profilo
+  const myProfile = useSelector((state) => state.myProfile);
+  const otherProfile = useSelector((state) => state.otherProfile);
+
+  const myExperienceState = useSelector((state) => state.experience);
+  const otherExperienceState = useSelector((state) => state.otherExperience);
+
+  const experienceList = isMyProfile ? myExperienceState?.content : otherExperienceState?.content;
+  const experienceLoading = isMyProfile ? myExperienceState?.loading : otherExperienceState?.loading;
+  const experienceError = isMyProfile ? myExperienceState?.error : otherExperienceState?.error;
+
+  const profileSection = isMyProfile ? myProfile?.content : otherProfile?.content;
+  const loading = isMyProfile ? myProfile?.loading : otherProfile?.loading;
+  const error = isMyProfile ? myProfile?.error : otherProfile?.error;
   const [imgSrc, setImgSrc] = useState(avatar);
 
   useEffect(() => {
-    dispatch(getMyProfile());
-  }, [dispatch]);
+    if (isMyProfile) {
+      dispatch(getMyProfile());
+    } else if (userId) {
+      dispatch(getUserProfile(userId));
+    }
+  }, [dispatch, isMyProfile, userId]);
+
+  console.log(userId);
 
   useEffect(() => {
-    if (profileSection?._id) {
-      dispatch(getMyExperience());
+    if ((isMyProfile && profileSection?._id) || userId) {
+      dispatch(getExperienceByUserId(isMyProfile ? profileSection._id : userId));
     }
-  }, [profileSection?._id, dispatch]);
+  }, [dispatch, isMyProfile, profileSection?._id, userId]);
 
   useEffect(() => {
     if (profileSection?.image) {
@@ -97,7 +118,7 @@ const ProfileSection = () => {
                       <h2>
                         {profileSection.name} {profileSection.surname}
                       </h2>
-                      <Pencil size={20} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />
+                      {isMyProfile && <Pencil size={20} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />}
                     </div>
 
                     <h3>{profileSection.title}</h3>
@@ -152,7 +173,7 @@ const ProfileSection = () => {
                     <Alert variant="primary">
                       <div className="d-flex justify-content-between align-items-center">
                         <h5>Disponibile a lavorare</h5>
-                        <Pencil size={20} />
+                        {isMyProfile && <Pencil size={20} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />}
                       </div>
                       <p className="mb-0">Ruoli di </p>
                       <p className="mb-0">Mostra dettagli</p>
@@ -170,7 +191,7 @@ const ProfileSection = () => {
             </Card.Body>
           </Card>
 
-          <InfoSections details={profileSection.bio} />
+          <InfoSections details={profileSection.bio} isMyProfile={isMyProfile} />
 
           {/* Sezione Esperienze */}
           {experienceLoading ? (
@@ -193,7 +214,7 @@ const ProfileSection = () => {
                       <PlusLg className="me-3" size={25} />
                     </Button>
                     <Button variant="light" className="border-0 bg-transparent">
-                      <Pencil size={25} />
+                      {isMyProfile && <Pencil size={25} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />}
                     </Button>
                   </Col>
                 </Row>
@@ -202,8 +223,15 @@ const ProfileSection = () => {
             </Card>
           )}
 
-          <SectionGeneric header="Formazione" title="Scuola/università" subtitle="durata" details="Votazione" image={Graphic} />
-          <SectionGeneric header="Competenze" title="Disciplina" subtitle="Scuola/università" details="Altre informazioni" image={Graphic} />
+          <SectionGeneric header="Formazione" title="Scuola/università" subtitle="durata" details="Votazione" image={Graphic} isMyProfile={isMyProfile} />
+          <SectionGeneric
+            header="Competenze"
+            title="Disciplina"
+            subtitle="Scuola/università"
+            details="Altre informazioni"
+            image={Graphic}
+            isMyProfile={isMyProfile}
+          />
           <EditProfileModal show={showEditmodal} handleClose={() => setShowEditmodal(false)} profileData={profileSection} />
         </Col>
         <Col xs={0} md={5} lg={3} className="d-none d-md-block">

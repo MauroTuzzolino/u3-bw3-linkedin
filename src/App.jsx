@@ -17,7 +17,8 @@ function App() {
               {/* Route per la Home/Feed con le due colonne (profilo + feed) */}
               <Route path="/home" element={<HomePage />} />
               {/* Le tue route esistenti per ProfileSection */}
-              <Route path="/" element={<ProfileSection />} />
+              <Route path="/me" element={<ProfileSection />} />
+              <Route path="/other/:userId" element={<ProfileSection />} />
             </Routes>
           </Container>
         </div>

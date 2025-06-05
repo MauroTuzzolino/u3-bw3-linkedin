@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchProfileByName } from "../redux/reducers/profileThunks";
 
+import { Link } from "react-router-dom";
+
 const NavBar = () => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
@@ -78,7 +80,9 @@ const NavBar = () => {
               align="end"
               style={{ zIndex: 10000 }}
             >
-              <NavDropdown.Item href="/">Profilo</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/me">
+                Profilo
+              </NavDropdown.Item>
               <NavDropdown.Item href="#">Impostazioni</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#">Esci</NavDropdown.Item>
