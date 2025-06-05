@@ -24,7 +24,6 @@ body,
   max-height: 10rem;
   min-height: 10rem;
   object-fit: cover;
-  cursor: pointer;
 }
 .profileImgEdit {
   /* position: absolute;
