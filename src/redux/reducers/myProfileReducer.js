@@ -5,6 +5,9 @@ import {
   UPDATE_PROFILE_LOADING,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_ERROR,
+  UPDATE_PROFILE_IMAGE_LOADING,
+  UPDATE_PROFILE_IMAGE_SUCCESS,
+  UPDATE_PROFILE_IMAGE_ERROR,
   SEARCH_PROFILE_BY_NAME_LOADING,
   SEARCH_PROFILE_BY_NAME_SUCCESS,
   SEARCH_PROFILE_BY_NAME_ERROR,
@@ -14,6 +17,7 @@ const initialState = {
   content: null,
   loading: false,
   error: null,
+  imageLoading: false,
 };
 
 const myProfileReducer = (state = initialState, action) => {
@@ -73,6 +77,26 @@ const myProfileReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        error: action.payload,
+      };
+    case UPDATE_PROFILE_IMAGE_LOADING:
+      return {
+        ...state,
+        imageLoading: true,
+        error: null,
+      };
+
+    case UPDATE_PROFILE_IMAGE_SUCCESS:
+      return {
+        ...state,
+        imageLoading: false,
+        error: null,
+      };
+
+    case UPDATE_PROFILE_IMAGE_ERROR:
+      return {
+        ...state,
+        imageLoading: false,
         error: action.payload,
       };
 

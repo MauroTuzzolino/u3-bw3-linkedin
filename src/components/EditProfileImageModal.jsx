@@ -1,7 +1,7 @@
 import { Modal, Button, Form, Image } from "react-bootstrap";
 import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-// import { updateMyImgProfile } from "../redux/actions/index";
+import { updateMyImgProfile } from "../redux/actions/index";
 
 const EditProfileImageModal = ({ show, handleClose, profileData }) => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const EditProfileImageModal = ({ show, handleClose, profileData }) => {
   // Salva l'immagine
   const handleSave = () => {
     if (selectedFile) {
-      //   dispatch(updateMyImgProfile(selectedFile, profileData._id));
+      dispatch(updateMyImgProfile(selectedFile, profileData._id));
       handleClose();
     }
   };
