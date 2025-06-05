@@ -1,10 +1,12 @@
 import { Modal, Button, Form, Image } from "react-bootstrap";
 import { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateMyImgProfile } from "../redux/actions/index";
 
-const EditProfileImageModal = ({ show, handleClose, profileData }) => {
+const EditProfileImageModal = ({ show, handleClose, isMyProfile }) => {
   const dispatch = useDispatch();
+  const profileData = useSelector((state) => state.myProfile.content);
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(profileData?.image || null);
   const fileInputRef = useRef(null);
@@ -31,7 +33,7 @@ const EditProfileImageModal = ({ show, handleClose, profileData }) => {
 
   // Salva l'immagine
   const handleSave = () => {
-    if (selectedFile) {
+    if (selectedFile && profileData?._id) {
       dispatch(updateMyImgProfile(selectedFile, profileData._id));
       handleClose();
     }

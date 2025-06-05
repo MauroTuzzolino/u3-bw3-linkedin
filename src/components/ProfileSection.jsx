@@ -235,7 +235,7 @@ const ProfileSection = () => {
             isMyProfile={isMyProfile}
           />
           <EditProfileModal show={showEditmodal} handleClose={() => setShowEditmodal(false)} profileData={profileSection} />
-          <EditProfileImageModal show={showImageModal} handleClose={() => setShowImageModal(false)} />
+          <EditProfileImageModal show={showImageModal} handleClose={() => setShowImageModal(false)} isMyProfile={isMyProfile} />
         </Col>
         <Col xs={0} md={5} lg={3} className="d-none d-md-block">
           <SideBar />
