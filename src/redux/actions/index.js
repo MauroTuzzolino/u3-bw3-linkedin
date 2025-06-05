@@ -1,53 +1,48 @@
+//questa export viene fatto per sicurezza (?)
+
 export const GET_MY_PROFILE = "GET_MY_PROFILE";
 export const SET_LOADING_MYPROFILE = "SET_LOADING_MYPROFILE";
 export const GET_MYPROFILE_ERROR = "GET_MYPROFILE_ERROR";
-export const UPDATE_PROFILE_LOADING = "UPDATE_PROFILE_LOADING";
-export const UPDATE_PROFILE_SUCCESS = "UPDATE_PROFILE_SUCCESS";
-export const UPDATE_PROFILE_ERROR = "UPDATE_PROFILE_ERROR";
-export const GET_MY_EXPERIENCE = "GET_MY_EXPERIENCE";
-export const SET_LOADING_MYEXPERIENCE = "SET_LOADING_MYEXPERIENCE";
-export const GET_EXPERIENCE_ERROR = "GET_EXPERIENCE_ERROR";
-export const GET_RANDOM_USERS = "GET_RANDOM_USERS";
-export const GET_RANDOM_SUCCESS = "GET_RANDOM_SUCCESS";
-export const GET_RANDOM_ERROR = "GET_RANDOM_ERROR";
-export const SEARCH_PROFILE_BY_NAME_LOADING = "SEARCH_PROFILE_BY_NAME_LOADING";
-export const SEARCH_PROFILE_BY_NAME_SUCCESS = "SEARCH_PROFILE_BY_NAME_SUCCESS";
-export const SEARCH_PROFILE_BY_NAME_ERROR = "SEARCH_PROFILE_BY_NAME_ERROR";
-
 import TOKEN from "../../../token";
-
-// Funzione per ottenere il profilo dell'utente
-export const getMyProfile = (userId = "me") => {
+import ProfileSection from "../../components/ProfileSection";
+//questa è la funzione che viene chiamata. in questo vaso,  dall'UseEffect quando si carica il componente.
+//codesta funzione me ne ritorna un'altra (matrioska)che mi fa  la fetch e mi metto il json dentro la var fetchedMyProfile
+export const getMyProfile = () => {
   return async (dispatch) => {
-    dispatch({ type: SET_LOADING_MYPROFILE });
     try {
-      let resp = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}`, {
+      let resp = await fetch("https://striveschool-api.herokuapp.com/api/profile/me", {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+          Authorization: `Bearer ${TOKEN}`
+        }
       });
       if (!resp.ok) throw new Error("Errore nella fetch");
-      let fetchedMyProfile = await resp.json();
-      dispatch({ type: GET_MY_PROFILE, payload: fetchedMyProfile });
+      if (resp.ok) {
+        let fetchedMyProfile = await resp.json();
+        //dispaccio (invio) la mia azione con il contenunto (payload) della mia fetch.
+        dispatch({ type: GET_MY_PROFILE, payload: fetchedMyProfile });
+      }
     } catch (error) {
       dispatch({ type: GET_MYPROFILE_ERROR, error: error.message });
     }
   };
 };
 
-// Funzione per aggiornare il profilo dell'utente
+export const UPDATE_PROFILE_LOADING = "UPDATE_PROFILE_LOADING";
+export const UPDATE_PROFILE_SUCCESS = "UPDATE_PROFILE_SUCCESS";
+export const UPDATE_PROFILE_ERROR = "UPDATE_PROFILE_ERROR";
+
 export const updateMyProfile = (updatedData) => {
   return async (dispatch) => {
     try {
-      dispatch({ type: UPDATE_PROFILE_LOADING });
+      dispatch({ type: "UPDATE_PROFILE_LOADING" });
 
       const response = await fetch("https://striveschool-api.herokuapp.com/api/profile/", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${TOKEN}`,
+          Authorization: `Bearer ${TOKEN}`
         },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(updatedData)
       });
 
       if (!response.ok) {
@@ -56,46 +51,55 @@ export const updateMyProfile = (updatedData) => {
 
       const data = await response.json();
 
-      dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data });
+      dispatch({ type: "UPDATE_PROFILE_SUCCESS", payload: data });
     } catch (error) {
-      dispatch({ type: UPDATE_PROFILE_ERROR, payload: error.message });
+      dispatch({ type: "UPDATE_PROFILE_ERROR", payload: error.message });
     }
   };
 };
 
-// Funzione per ottenere le esperienze dell'utente
+export const GET_MY_EXPERIENCE = "GET_MY_EXPERIENCE";
+export const SET_LOADING_MYEXPERIENCE = "SET_LOADING_MYEXPERIENCE";
+export const GET_EXPERIENCE_ERROR = "GET_EXPERIENCE_ERROR";
+
 export const getMyExperience = () => {
   return async (dispatch, getState) => {
     dispatch({ type: SET_LOADING_MYEXPERIENCE });
     try {
+      //richiamo lo stato globale per accedere all'id
       const state = getState();
-      const userId = state.myProfile.content?._id;
+      const userId = state.profile.content?._id;
 
       if (!userId) throw new Error("Utente non trovato");
 
       let resp = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences`, {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+          Authorization: `Bearer ${TOKEN}`
+        }
       });
       if (!resp.ok) throw new Error("Errore nella fetch");
-      let fetchedMyExperience = await resp.json();
-      dispatch({ type: GET_MY_EXPERIENCE, payload: fetchedMyExperience });
+      if (resp.ok) {
+        let fetchedMyExperience = await resp.json();
+        dispatch({ type: GET_MY_EXPERIENCE, payload: fetchedMyExperience });
+      }
     } catch (error) {
       dispatch({ type: GET_EXPERIENCE_ERROR, error: error.message });
     }
   };
 };
 
-// Funzione per ottenere utenti casuali
+export const GET_RANDOM_USERS = "GET_RANDOM_USERS";
+export const GET_RANDOM_SUCCESS = "GET_RANDOM_SUCCESS";
+export const GET_RANDOM_ERROR = "GET_RANDOM_ERROR";
+
 export const fetchRandomUsers = () => {
   return async (dispatch) => {
     dispatch({ type: GET_RANDOM_USERS });
     try {
       const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/`, {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+          Authorization: `Bearer ${TOKEN}`
+        }
       });
       if (!response.ok) {
         throw new Error("Errore nella fetch");
@@ -109,58 +113,103 @@ export const fetchRandomUsers = () => {
     }
   };
 };
+export const UPDATE_EXPERIENCE_LOADING = "UPDATE_EXPERIENCE_LOADING";
+export const UPDATE_EXPERIENCE_SUCCESS = "UPDATE_EXPERIENCE_SUCCESS";
+export const UPDATE_EXPERIENCE_ERROR = "UPDATE_EXPERIENCE_ERROR";
 
-export const GET_OTHER_PROFILE = "GET_OTHER_PROFILE";
-export const SET_LOADING_OTHER_PROFILE = "SET_LOADING_OTHER_PROFILE";
-export const GET_OTHER_PROFILE_ERROR = "GET_OTHER_PROFILE_ERROR";
+export const updateExperience = (userId, expId, updatedExperience) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_EXPERIENCE_LOADING });
 
-export const getUserProfile = (id) => {
-  return async (dispatch) => {
-    try {
-      dispatch({ type: SET_LOADING_OTHER_PROFILE });
-      const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${id}`, {
-        headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
-      });
+    const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences/${expId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${TOKEN}`
+      },
+      body: JSON.stringify(updatedExperience)
+    });
 
-      if (!response.ok) {
-        throw new Error("Errore nella fetch");
-      }
-
+    if (response.ok) {
       const data = await response.json();
-      dispatch({ type: GET_OTHER_PROFILE, payload: data });
-    } catch (error) {
-      dispatch({ type: GET_OTHER_PROFILE_ERROR, payload: error.message });
+      dispatch({
+        type: UPDATE_EXPERIENCE_SUCCESS,
+        payload: data
+      });
+    } else {
+      throw new Error("Errore durante l'aggiornamento dell'esperienza");
     }
-  };
+  } catch (error) {
+    dispatch({
+      type: UPDATE_EXPERIENCE_ERROR,
+      payload: error.message
+    });
+  }
 };
-//aggiornare experience other user
 
-export const GET_OTHER_EXPERIENCE = "GET_OTHER_EXPERIENCE";
-export const SET_LOADING_OTHER_EXPERIENCE = "SET_LOADING_OTHER_EXPERIENCE";
-export const GET_OTHER_EXPERIENCE_ERROR = "GET_OTHER_EXPERIENCE_ERROR";
+export const CREATE_EXPERIENCE_LOADING = "CREATE_EXPERIENCE_LOADING";
+export const CREATE_EXPERIENCE_SUCCESS = "CREATE_EXPERIENCE_SUCCESS";
+export const CREATE_EXPERIENCE_ERROR = "CREATE_EXPERIENCE_ERROR";
 
-export const getExperienceByUserId = (userId) => {
-  return async (dispatch) => {
-    try {
-      dispatch({ type: SET_LOADING_OTHER_EXPERIENCE });
-      const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences`, {
-        headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
-      });
+export const createExperience = (userId, newExperience) => async (dispatch) => {
+  try {
+    dispatch({ type: CREATE_EXPERIENCE_LOADING });
 
-      if (!response.ok) {
-        throw new Error("Errore nella fetch");
-      }
+    const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${TOKEN}`
+      },
+      body: JSON.stringify(newExperience)
+    });
 
+    if (response.ok) {
       const data = await response.json();
-      dispatch({ type: "GET_OTHER_EXPERIENCE", payload: data });
-    } catch (error) {
-      dispatch({ type: "GET_OTHER_EXPERIENCE_ERROR", payload: error.message });
+      dispatch({
+        type: CREATE_EXPERIENCE_SUCCESS,
+        payload: data
+      });
+    } else {
+      throw new Error("Errore durante la creazione dell'esperienza");
     }
-  };
+  } catch (error) {
+    dispatch({
+      type: CREATE_EXPERIENCE_ERROR,
+      payload: error.message
+    });
+  }
+};
+
+export const DELETE_EXPERIENCE_LOADING = "DELETE_EXPERIENCE_LOADING";
+export const DELETE_EXPERIENCE_SUCCESS = "DELETE_EXPERIENCE_SUCCESS";
+export const DELETE_EXPERIENCE_ERROR = "DELETE_EXPERIENCE_ERROR";
+
+export const deleteExperience = (userId, expId) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_EXPERIENCE_LOADING });
+
+    const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences/${expId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`
+      }
+    });
+
+    if (response.ok) {
+      dispatch({
+        type: DELETE_EXPERIENCE_SUCCESS,
+        payload: expId
+      });
+    } else {
+      throw new Error("Errore durante l'eliminazione dell'esperienza");
+    }
+  } catch (error) {
+    dispatch({
+      type: DELETE_EXPERIENCE_ERROR,
+      payload: error.message
+    });
+  }
 };
 
 export const FETCH_POSTS_START = "FETCH_POSTS_START";

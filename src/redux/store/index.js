@@ -10,7 +10,7 @@ import createPostReducer from "../reducers/createPostReducer";
 
 // faccio la fusione di tutti gli stati dei miei RxComponentInstance, in questo modo cambia lo stato globale
 const rootReducer = combineReducers({
-  myProfile: myProfileReducer,
+  profile: myProfileReducer,
   experience: experienceReducer,
   profiles: profilesReducer,
   otherProfile: otherProfileReducer,

@@ -2,7 +2,7 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import { PlusLg } from "react-bootstrap-icons";
 import { Pencil } from "react-bootstrap-icons";
 
-const InfoSections = ({ details, isMyProfile }) => {
+const InfoSections = ({ details }) => {
   return (
     <Card className="my-2 py-3">
       <Card.Header className="bg-white border-0">
@@ -12,7 +12,7 @@ const InfoSections = ({ details, isMyProfile }) => {
           </Col>
           <Col className="text-end">
             <Button variant="light" className="border-0 bg-transparent">
-              {isMyProfile && <Pencil size={25} style={{ cursor: "pointer" }} />}
+              <Pencil size={25} />
             </Button>
           </Col>
         </Row>
