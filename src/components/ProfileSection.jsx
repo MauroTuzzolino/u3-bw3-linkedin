@@ -21,7 +21,7 @@ const ProfileSection = () => {
   const { userId } = useParams();
   const location = useLocation();
 
-  const isMyProfile = location.pathname.startsWith("/me");
+  const isMyProfile = location.pathname === "/me";
 
   const [showEditmodal, setShowEditmodal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
@@ -32,6 +32,11 @@ const ProfileSection = () => {
   const myExperienceState = useSelector((state) => state.experience);
   const otherExperienceState = useSelector((state) => state.otherExperience);
 
+  // Debug per vedere cosa c'è negli stati
+  console.log("isMyProfile:", isMyProfile);
+  console.log("userId:", userId);
+  console.log("otherExperienceState:", otherExperienceState);
+
   const experienceList = isMyProfile ? myExperienceState?.content : otherExperienceState?.content;
   const experienceLoading = isMyProfile ? myExperienceState?.loading : otherExperienceState?.loading;
   const experienceError = isMyProfile ? myExperienceState?.error : otherExperienceState?.error;
@@ -41,6 +46,7 @@ const ProfileSection = () => {
   const error = isMyProfile ? myProfile?.error : otherProfile?.error;
   const [imgSrc, setImgSrc] = useState(avatar);
 
+  // Carica il profilo
   useEffect(() => {
     if (isMyProfile) {
       dispatch(getMyProfile());
@@ -49,15 +55,18 @@ const ProfileSection = () => {
     }
   }, [dispatch, isMyProfile, userId]);
 
-  console.log("userId " + userId);
-
+  // Carica le esperienze
   useEffect(() => {
     if (isMyProfile && profileSection?._id) {
-      dispatch(getMyExperience()); // usa l'action per il tuo profilo
+      dispatch(getMyExperience());
     } else if (!isMyProfile && userId) {
-      dispatch(getExperienceByUserId(userId)); // usa userId per altri profili
+      // Per altri profili, assicurati che l'action usi correttamente userId
+      console.log("Caricando esperienze per userId:", userId);
+      dispatch(getExperienceByUserId(userId));
     }
   }, [dispatch, isMyProfile, profileSection?._id, userId]);
+
+  // Gestisci l'immagine del profilo
   useEffect(() => {
     if (profileSection?.image) {
       setImgSrc(profileSection.image);
@@ -95,22 +104,25 @@ const ProfileSection = () => {
       <Row>
         <Col xs={12} md={7} lg={9}>
           <Card>
-            <div
-              style={{
-                position: "absolute",
-                zIndex: "1000",
-                top: "1rem",
-                right: "1rem",
-                backgroundColor: "#e0e0e0",
-                borderRadius: "50%",
-                padding: "12px",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <FaCamera size={17} fill="primary" />
-            </div>
+            {isMyProfile && (
+              <div
+                style={{
+                  position: "absolute",
+                  zIndex: "1000",
+                  top: "1rem",
+                  right: "1rem",
+                  backgroundColor: "#e0e0e0",
+                  borderRadius: "50%",
+                  padding: "12px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <FaCamera size={17} fill="primary" />
+              </div>
+            )}
             <Card.Img variant="top" src={coverImage} className="coverImage position-relative" />
             <Card.Body>
               <Image
@@ -155,48 +167,52 @@ const ProfileSection = () => {
                   </Col>
                 </Row>
 
-                <Row className="d-flex justify-content-around w-100 mb-3 gy-2">
-                  <Col sm={12} md={6} lg={3}>
-                    <Button className="w-100 py-2 myButton" variant="primary">
-                      Disponibile per
-                    </Button>
-                  </Col>
-                  <Col sm={12} md={6} lg={3}>
-                    <Button className="w-100 py-2 myButton" variant="outline-primary">
-                      Aggiungi sezione del profilo
-                    </Button>
-                  </Col>
-                  <Col sm={12} md={6} lg={3}>
-                    <Button className="w-100 py-2 myButton" variant="outline-secondary">
-                      Risorse
-                    </Button>
-                  </Col>
-                  <Col sm={12} md={6} lg={3}>
-                    <Button className="w-100 py-2 myButton" variant="outline-primary">
-                      Migliora profilo
-                    </Button>
-                  </Col>
-                </Row>
+                {isMyProfile && (
+                  <Row className="d-flex justify-content-around w-100 mb-3 gy-2">
+                    <Col sm={12} md={6} lg={3}>
+                      <Button className="w-100 py-2 myButton" variant="primary">
+                        Disponibile per
+                      </Button>
+                    </Col>
+                    <Col sm={12} md={6} lg={3}>
+                      <Button className="w-100 py-2 myButton" variant="outline-primary">
+                        Aggiungi sezione del profilo
+                      </Button>
+                    </Col>
+                    <Col sm={12} md={6} lg={3}>
+                      <Button className="w-100 py-2 myButton" variant="outline-secondary">
+                        Risorse
+                      </Button>
+                    </Col>
+                    <Col sm={12} md={6} lg={3}>
+                      <Button className="w-100 py-2 myButton" variant="outline-primary">
+                        Migliora profilo
+                      </Button>
+                    </Col>
+                  </Row>
+                )}
 
-                <Row>
-                  <Col>
-                    <Alert variant="primary">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <h5>Disponibile a lavorare</h5>
-                        {isMyProfile && <Pencil size={20} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />}
-                      </div>
-                      <p className="mb-0">Ruoli di </p>
-                      <p className="mb-0">Mostra dettagli</p>
-                    </Alert>
-                  </Col>
-                  <Col>
-                    <Alert variant="light" dismissible>
-                      <h5>Metti in risalto i tuoi servizi</h5>
-                      <p className="mb-0">in un'apposita sezione del tuo profilo, così sarà più facile trovarti.</p>
-                      <p className="mb-0">Inizia</p>
-                    </Alert>
-                  </Col>
-                </Row>
+                {isMyProfile && (
+                  <Row>
+                    <Col>
+                      <Alert variant="primary">
+                        <div className="d-flex justify-content-between align-items-center">
+                          <h5>Disponibile a lavorare</h5>
+                          <Pencil size={20} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />
+                        </div>
+                        <p className="mb-0">Ruoli di </p>
+                        <p className="mb-0">Mostra dettagli</p>
+                      </Alert>
+                    </Col>
+                    <Col>
+                      <Alert variant="light" dismissible>
+                        <h5>Metti in risalto i tuoi servizi</h5>
+                        <p className="mb-0">in un'apposita sezione del tuo profilo, così sarà più facile trovarti.</p>
+                        <p className="mb-0">Inizia</p>
+                      </Alert>
+                    </Col>
+                  </Row>
+                )}
               </Row>
             </Card.Body>
           </Card>
@@ -211,7 +227,7 @@ const ProfileSection = () => {
           ) : experienceError ? (
             <Alert variant="danger">{experienceError}</Alert>
           ) : experienceList && experienceList.length > 0 ? (
-            <ExperiencesSection experiences={experienceList} />
+            <ExperiencesSection experiences={experienceList} isMyProfile={isMyProfile} />
           ) : (
             <Card className="my-2 py-3">
               <Card.Header className="bg-white border-0">
@@ -220,12 +236,16 @@ const ProfileSection = () => {
                     <h4>Esperienze</h4>
                   </Col>
                   <Col className="text-end">
-                    <Button variant="light" className="border-0 bg-transparent">
-                      <PlusLg className="me-3" size={25} />
-                    </Button>
-                    <Button variant="light" className="border-0 bg-transparent">
-                      {isMyProfile && <Pencil size={25} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />}
-                    </Button>
+                    {isMyProfile && (
+                      <>
+                        <Button variant="light" className="border-0 bg-transparent">
+                          <PlusLg className="me-3" size={25} />
+                        </Button>
+                        <Button variant="light" className="border-0 bg-transparent">
+                          <Pencil size={25} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />
+                        </Button>
+                      </>
+                    )}
                   </Col>
                 </Row>
               </Card.Header>
@@ -242,8 +262,13 @@ const ProfileSection = () => {
             image={Graphic}
             isMyProfile={isMyProfile}
           />
-          <EditProfileModal show={showEditmodal} handleClose={() => setShowEditmodal(false)} profileData={profileSection} />
-          <EditProfileImageModal show={showImageModal} handleClose={() => setShowImageModal(false)} />
+
+          {isMyProfile && (
+            <>
+              <EditProfileModal show={showEditmodal} handleClose={() => setShowEditmodal(false)} profileData={profileSection} />
+              <EditProfileImageModal show={showImageModal} handleClose={() => setShowImageModal(false)} />
+            </>
+          )}
         </Col>
         <Col xs={0} md={5} lg={3} className="d-none d-md-block">
           <SideBar />
