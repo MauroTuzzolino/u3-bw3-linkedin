@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateMyProfile } from "../redux/actions/index";
 
-const EditProfileImageModal = ({ show, handleClose, profileData }) => {
+const EditProfileModal = ({ show, handleClose, profileData }) => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({ ...profileData });
 
@@ -66,4 +66,4 @@ const EditProfileImageModal = ({ show, handleClose, profileData }) => {
   );
 };
 
-export default EditProfileImageModal;
+export default EditProfileModal;

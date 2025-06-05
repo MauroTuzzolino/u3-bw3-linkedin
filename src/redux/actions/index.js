@@ -63,6 +63,43 @@ export const updateMyProfile = (updatedData) => {
   };
 };
 
+//funzione per aggiornare l'immagine del profilo
+
+/* 
+export const updateMyImgProfile = (imageFile, userId) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_PROFILE_IMAGE_LOADING });
+      
+      // Crea FormData per inviare il file
+      const formData = new FormData();
+      formData.append("profile", imageFile); // "profile" è il nome del campo che l'API si aspetta
+      
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/profile/${userId}/picture`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+            // NON impostare Content-Type con FormData!
+          },
+          body: formData,
+        }
+      );
+      
+      if (!response.ok) {
+        throw new Error("Errore nel caricamento dell'immagine");
+      }
+      
+      // Ricarica il profilo per vedere l'immagine aggiornata
+      dispatch(getMyProfile());
+      
+    } catch (error) {
+      dispatch({ type: UPDATE_PROFILE_IMAGE_ERROR, payload: error.message });
+    }
+  };
+}; */
+
 // Funzione per ottenere le esperienze dell'utente
 export const getMyExperience = () => {
   return async (dispatch, getState) => {
