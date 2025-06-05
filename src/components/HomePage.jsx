@@ -21,6 +21,8 @@ import { getMyProfile } from "../redux/actions";
 import coverImage from "../assets/images/placeholderCover.png";
 import { fetchPosts } from "../redux/actions";
 import avatar from "../assets/images/avatar.svg";
+import CreatePost from "./CreatePost";
+import { openModal } from "../redux/actions/index";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -116,7 +118,7 @@ const HomePage = () => {
               <Card.Body>
                 <div className="d-flex align-items-center mb-3">
                   <Image src={myProfile.image} roundedCircle className="me-3" style={{ height: "45px" }} />
-                  <Button variant="outline-secondary" className="rounded-pill text-start flex-grow-1">
+                  <Button variant="outline-secondary" onClick={() => dispatch(openModal())} className="rounded-pill text-start flex-grow-1">
                     Crea un post
                   </Button>
                 </div>
@@ -174,25 +176,27 @@ const HomePage = () => {
                 <div className="d-flex align-items-center">
                   <Image src="https://via.placeholder.com" roundedCircle className="me-2" />
                   <div>
-                    <strong>Guido Penta</strong> ha diffuso questo post
+                    <strong>Luana Elia</strong> <FaPlus className="text-primary ms-1" />
+                    <div className="text-muted small">Unconventional Full Stack Recruiter @Welleya | Per ma...</div>
+                    <Button variant="link" className="p-0 text-decoration-none">
+                      Visualizza i miei servizi
+                    </Button>
                     <div className="text-muted small">
                       1 ora • Modificato • <FaGlobeAmericas />
                     </div>
                   </div>
                 </div>
-                <FaEllipsisH className="text-muted" />
-              </div>
-              <div className="d-flex align-items-center mb-3">
-                <Image src="https://via.placeholder.com" roundedCircle className="me-2" />
-                <div>
-                  <strong>Luana Elia</strong> <FaPlus className="text-primary ms-1" />
-                  <div className="text-muted small">Unconventional Full Stack Recruiter @Welleya | Per ma...</div>
+                <Card.Text>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. At alias voluptatem aut qui aliquid itaque maiores, tempora odit, nostrum blanditiis
+                  est corporis quos commodi vero quisquam ex iusto? Commodi, repellat.{" "}
                   <Button variant="link" className="p-0 text-decoration-none">
-                    Visualizza i miei servizi
+                    altro
                   </Button>
-                  <div className="text-muted small">
-                    1 ora • Modificato • <FaGlobeAmericas />
-                  </div>
+                </Card.Text>
+                <div className="d-flex align-items-center text-muted small mb-2">
+                  <FaThumbsUp className="text-primary me-1" />
+                  <span>Guido Penta e 51 altre persone</span>
+                  <span className="ms-auto">8 commenti • 10 diffusioni post</span>
                 </div>
               </div>
               <Card.Text>
@@ -308,7 +312,7 @@ const HomePage = () => {
           </Col>
         </Row>
       </Container>
-      <CreatPost />
+      <CreatePost />
     </>
   );
 };
