@@ -21,6 +21,9 @@ body,
   border: 5px solid white;
   max-width: 10rem;
   min-width: 10rem;
+  max-height: 10rem;
+  min-height: 10rem;
+  object-fit: cover;
 }
 .myButton {
   border-radius: 43px;
