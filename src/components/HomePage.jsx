@@ -1,4 +1,5 @@
-import { Container, Row, Col, Card, Button, ListGroup, Image } from "react-bootstrap";
+import { useEffect } from "react";
+import { Container, Row, Col, Card, Button, ListGroup, Image, Spinner } from "react-bootstrap";
 import {
   FaInfoCircle,
   FaBookmark,
@@ -15,30 +16,51 @@ import {
   FaShare,
   FaPaperPlane,
 } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { getMyProfile } from "../redux/actions";
+import coverImage from "../assets/images/placeholderCover.png";
 
 const HomePage = () => {
+  const dispatch = useDispatch();
+
+  const myProfile = useSelector((state) => state.myProfile.content);
+
+  useEffect(() => {
+    dispatch(getMyProfile());
+  }, [dispatch]);
+
+  if (!myProfile) {
+    return (
+      <Spinner animation="border" role="status" variant="info">
+        <span className="visually-hidden">Caricamento profilo...</span>
+      </Spinner>
+    );
+  }
+
   return (
     <Container>
       <Row>
         {/* Colonna sinistra - Profilo */}
         <Col lg={3}>
           <Card className="mb-3">
-            <Card.Img variant="top" src="https://via.placeholder.com" alt="Immagine di copertina" style={{ objectFit: "cover", height: "80px" }} />
+            <Card.Img variant="top" src={coverImage} alt="Immagine di copertina" style={{ objectFit: "cover", height: "80px" }} />
             <Card.Body className="text-center position-relative pt-0">
               <Image
-                src="https://via.placeholder.com"
+                src={myProfile.image}
                 roundedCircle
                 className="border border-white border-3"
                 style={{ width: "80px", height: "80px", marginTop: "-40px", objectFit: "cover" }}
               />
-              <Card.Title className="mb-0 mt-2">Nome Cognome</Card.Title>
-              <Card.Text className="text-muted small">Titolo</Card.Text>
-              <Card.Text className="text-muted small">Area</Card.Text>
-              <Card.Text className="text-muted small">Bio</Card.Text>
+              <Card.Title className="mb-0 mt-2">
+                {myProfile.name} {myProfile.surname}
+              </Card.Title>
+              <Card.Text className="text-muted small">{myProfile.title}</Card.Text>
+              <Card.Text className="text-muted small">{myProfile.area}</Card.Text>
+              <Card.Text className="text-muted small">{myProfile.bio}</Card.Text>
               <hr />
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <small className="text-muted">Visualizzazioni del profilo</small>
-                <strong>N</strong>
+                <strong>10</strong>
               </div>
               <Button variant="link" className="p-0 text-decoration-none">
                 Visualizza tutte le analisi
@@ -83,7 +105,7 @@ const HomePage = () => {
           <Card className="mb-3">
             <Card.Body>
               <div className="d-flex align-items-center mb-3">
-                <Image src="https://via.placeholder.com" roundedCircle className="me-3" />
+                <Image src={myProfile.image} roundedCircle className="me-3" style={{ height: "45px" }} />
                 <Button variant="outline-secondary" className="rounded-pill text-start flex-grow-1">
                   Crea un post
                 </Button>
