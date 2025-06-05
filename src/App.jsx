@@ -4,7 +4,6 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { Container, Row, Col } from "react-bootstrap";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Sidebar from "./components/Sidebar";
 import HomePage from "./components/HomePage";
 
 function App() {
