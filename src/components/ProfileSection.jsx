@@ -19,7 +19,7 @@ const ProfileSection = () => {
   const { userId } = useParams();
   const location = useLocation();
 
-  const myProfile = location.pathname === "/me";
+  const isMyProfile = location.pathname.startsWith("/me");
 
   const [showEditmodal, setShowEditmodal] = useState(false);
   const { content: profileSection, error, loading } = useSelector((state) => state.profile);
@@ -32,12 +32,12 @@ const ProfileSection = () => {
  */
 
   useEffect(() => {
-    if (myProfile) {
+    if (isMyProfile) {
       dispatch(getMyProfile());
     } else if (userId) {
       dispatch(getUserProfile(userId));
     }
-  }, [dispatch, myProfile, userId]);
+  }, [dispatch, isMyProfile, userId]);
 
   console.log(userId);
 
@@ -48,10 +48,10 @@ const ProfileSection = () => {
   }, [profileSection?._id, dispatch]); */
 
   useEffect(() => {
-    if ((myProfile && profileSection?._id) || userId) {
-      dispatch(getExperienceByUserId(myProfile ? profileSection._id : userId));
+    if ((isMyProfile && profileSection?._id) || userId) {
+      dispatch(getExperienceByUserId(isMyProfile ? profileSection._id : userId));
     }
-  }, [dispatch, myProfile, profileSection?._id, userId]);
+  }, [dispatch, isMyProfile, profileSection?._id, userId]);
 
   if (loading) {
     return (
@@ -102,7 +102,7 @@ const ProfileSection = () => {
                   <h2>
                     {profileSection.name} {profileSection.surname}
                   </h2>
-                  <Pencil size={20} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />
+                  {isMyProfile && <Pencil size={20} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />}
                 </div>
 
                 <h3>{profileSection.title}</h3>
