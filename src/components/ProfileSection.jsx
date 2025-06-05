@@ -19,7 +19,7 @@ const ProfileSection = () => {
   const { userId } = useParams();
   const location = useLocation();
 
-  const isMyProfile = location.pathname.includes === "/me";
+  const isMyProfile = location.pathname.includes("/me");
   const [showEditmodal, setShowEditmodal] = useState(false);
 
   const myProfile = useSelector((state) => state.myProfile);

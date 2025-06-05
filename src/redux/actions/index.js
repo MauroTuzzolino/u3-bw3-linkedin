@@ -68,7 +68,7 @@ export const getMyExperience = () => {
     try {
       //richiamo lo stato globale per accedere all'id
       const state = getState();
-      const userId = state.profile.content?._id;
+      const userId = state.myProfile.content?._id;
 
       if (!userId) throw new Error("Utente non trovato");
 
