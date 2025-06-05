@@ -14,6 +14,7 @@ function App() {
           <NavBar />
           <Container className="my-4">
             <Routes>
+              <Route path="/" element={<HomePage />} />
               {/* Route per la Home/Feed con le due colonne (profilo + feed) */}
               <Route path="/home" element={<HomePage />} />
               {/* Le tue route esistenti per ProfileSection */}
