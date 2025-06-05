@@ -19,7 +19,9 @@ const ProfileSection = () => {
   const [showEditmodal, setShowEditmodal] = useState(false);
   const { content: profileSection, error, loading } = useSelector((state) => state.profile);
   const { content: experienceList, error: experienceError, loading: experienceLoading } = useSelector((state) => state.experience);
-  console.log(experienceList);
+
+  // Gestione immagine profilo
+  const [imgSrc, setImgSrc] = useState(avatar);
 
   useEffect(() => {
     dispatch(getMyProfile());
@@ -30,6 +32,18 @@ const ProfileSection = () => {
       dispatch(getMyExperience());
     }
   }, [profileSection?._id, dispatch]);
+
+  useEffect(() => {
+    if (profileSection?.image) {
+      setImgSrc(profileSection.image);
+    } else {
+      setImgSrc(avatar);
+    }
+  }, [profileSection]);
+
+  const handleError = () => {
+    setImgSrc(avatar);
+  };
 
   if (loading) {
     return (
@@ -72,7 +86,7 @@ const ProfileSection = () => {
         </div>
         <Card.Img variant="top" src={coverImage} className="coverImage position-relative" />
         <Card.Body>
-          <Image src={profileSection.image || avatar} className="profileImg" alt="Profilo" />
+          <Image src={imgSrc} onError={handleError} className="profileImg" alt="Profilo" />
           <Row className="position-relative pt-5">
             <Row>
               <Col>
