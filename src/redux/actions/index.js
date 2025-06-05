@@ -8,12 +8,12 @@ import ProfileSection from "../../components/ProfileSection";
 //questa è la funzione che viene chiamata. in questo vaso,  dall'UseEffect quando si carica il componente.
 //codesta funzione me ne ritorna un'altra (matrioska)che mi fa  la fetch e mi metto il json dentro la var fetchedMyProfile
 export const getMyProfile = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let resp = await fetch("https://striveschool-api.herokuapp.com/api/profile/me", {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+          Authorization: `Bearer ${TOKEN}`
+        }
       });
       if (!resp.ok) throw new Error("Errore nella fetch");
       if (resp.ok) {
@@ -40,9 +40,9 @@ export const updateMyProfile = (updatedData) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${TOKEN}`,
+          Authorization: `Bearer ${TOKEN}`
         },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(updatedData)
       });
 
       if (!response.ok) {
@@ -74,8 +74,8 @@ export const getMyExperience = () => {
 
       let resp = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences`, {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+          Authorization: `Bearer ${TOKEN}`
+        }
       });
       if (!resp.ok) throw new Error("Errore nella fetch");
       if (resp.ok) {
@@ -98,8 +98,8 @@ export const fetchRandomUsers = () => {
     try {
       const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/`, {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+          Authorization: `Bearer ${TOKEN}`
+        }
       });
       if (!response.ok) {
         throw new Error("Errore nella fetch");
@@ -112,4 +112,37 @@ export const fetchRandomUsers = () => {
       dispatch({ type: GET_RANDOM_ERROR, payload: error.message });
     }
   };
+};
+export const UPDATE_EXPERIENCE_LOADING = "UPDATE_EXPERIENCE_LOADING";
+export const UPDATE_EXPERIENCE_SUCCESS = "UPDATE_EXPERIENCE_SUCCESS";
+export const UPDATE_EXPERIENCE_ERROR = "UPDATE_EXPERIENCE_ERROR";
+
+export const updateExperience = (userId, expId, updatedExperience) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_EXPERIENCE_LOADING });
+
+    const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences/${expId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${TOKEN}`
+      },
+      body: JSON.stringify(updatedExperience)
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      dispatch({
+        type: UPDATE_EXPERIENCE_SUCCESS,
+        payload: data
+      });
+    } else {
+      throw new Error("Errore durante l'aggiornamento dell'esperienza");
+    }
+  } catch (error) {
+    dispatch({
+      type: UPDATE_EXPERIENCE_ERROR,
+      payload: error.message
+    });
+  }
 };

@@ -5,7 +5,7 @@ import { GET_MY_PROFILE, SET_LOADING_MYPROFILE, GET_MYPROFILE_ERROR, UPDATE_PROF
 const initialState = {
   content: null,
   loading: false,
-  error: null,
+  error: null
 };
 
 //qquando non ci sono azioni, vado nello stato di default (vedi sopra). Altirmenti, se ricevo azioni (come Get_My_profile),
@@ -17,41 +17,41 @@ const myProfileReducer = (state = initialState, action) => {
         ...state,
         content: action.payload,
         loading: false,
-        error: null,
+        error: null
       };
     case SET_LOADING_MYPROFILE:
       return {
         ...state,
         loading: true,
-        error: null,
+        error: null
       };
 
     case GET_MYPROFILE_ERROR:
       return {
         ...state,
         loading: false,
-        error: action.error,
+        error: action.error
       };
 
     case UPDATE_PROFILE_LOADING:
       return {
         ...state,
         loading: true,
-        error: null,
+        error: null
       };
 
     case UPDATE_PROFILE_SUCCESS:
       return {
         ...state,
         loading: false,
-        content: action.payload,
+        content: action.payload
       };
 
     case UPDATE_PROFILE_ERROR:
       return {
         ...state,
-        loading: FALSE,
-        error: action.payload,
+        loading: false,
+        error: action.payload
       };
 
     default:

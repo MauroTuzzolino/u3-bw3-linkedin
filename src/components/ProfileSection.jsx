@@ -19,7 +19,6 @@ const ProfileSection = () => {
   const [showEditmodal, setShowEditmodal] = useState(false);
   const { content: profileSection, error, loading } = useSelector((state) => state.profile);
   const { content: experienceList, error: experienceError, loading: experienceLoading } = useSelector((state) => state.experience);
-  console.log(experienceList);
 
   useEffect(() => {
     dispatch(getMyProfile());
@@ -65,7 +64,7 @@ const ProfileSection = () => {
             padding: "12px",
             display: "inline-flex",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "center"
           }}
         >
           <FaCamera size={17} fill="primary" />
