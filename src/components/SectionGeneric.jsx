@@ -2,7 +2,7 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import { PlusLg } from "react-bootstrap-icons";
 import { Pencil } from "react-bootstrap-icons";
 
-const SectionGeneric = ({ header, title, subtitle, details, image, isMyProfile }) => {
+const SectionGeneric = ({ header, title, subtitle, details, image }) => {
   return (
     <Card className="my-2 py-3">
       <Card.Header className="bg-white border-0">
@@ -15,7 +15,7 @@ const SectionGeneric = ({ header, title, subtitle, details, image, isMyProfile }
               <PlusLg className="me-3 " size={25} />
             </Button>
             <Button variant="light" className="border-0 bg-transparent">
-              {isMyProfile && <Pencil size={25} style={{ cursor: "pointer" }} />}
+              <Pencil size={25} />
             </Button>
           </Col>
         </Row>
