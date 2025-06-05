@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRandomUsers } from "../redux/actions/index";
+import { Link } from "react-router-dom";
 
 const MySidebar = () => {
   const dispatch = useDispatch();
@@ -54,7 +55,10 @@ const MySidebar = () => {
           {users.map((profile) => (
             <ListGroup.Item key={profile._id}>
               <h6>
-                {profile.name} {profile.surname}
+                <Link to={`/${profile._id}`}>
+                  {" "}
+                  {profile.name} {profile.surname}
+                </Link>
               </h6>
               <p className="mb-0">{profile.title}</p>
             </ListGroup.Item>
