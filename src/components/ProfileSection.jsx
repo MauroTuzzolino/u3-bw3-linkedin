@@ -14,6 +14,7 @@ import ExperiencesSection from "./ExperiencesSection";
 import EditProfileModal from "./EditProfileModal";
 import SideBar from "./Sidebar";
 import { useParams, useLocation } from "react-router-dom";
+import EditProfileImageModal from "./EditProfileImageModal";
 
 const ProfileSection = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const ProfileSection = () => {
   const isMyProfile = location.pathname.startsWith("/me");
 
   const [showEditmodal, setShowEditmodal] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
 
   const myProfile = useSelector((state) => state.myProfile);
   const otherProfile = useSelector((state) => state.otherProfile);
@@ -110,7 +112,7 @@ const ProfileSection = () => {
             </div>
             <Card.Img variant="top" src={coverImage} className="coverImage position-relative" />
             <Card.Body>
-              <Image src={imgSrc} onError={handleError} className="profileImg" alt="Profilo" />
+              <Image src={imgSrc} onError={handleError} className="profileImg" alt="Profile Image" onClick={() => setShowImageModal(true)} />
               <Row className="position-relative pt-5">
                 <Row>
                   <Col>
@@ -233,6 +235,7 @@ const ProfileSection = () => {
             isMyProfile={isMyProfile}
           />
           <EditProfileModal show={showEditmodal} handleClose={() => setShowEditmodal(false)} profileData={profileSection} />
+          <EditProfileImageModal show={showImageModal} handleClose={() => setShowImageModal(false)} />
         </Col>
         <Col xs={0} md={5} lg={3} className="d-none d-md-block">
           <SideBar />
