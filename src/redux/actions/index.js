@@ -101,9 +101,9 @@ export const fetchRandomUsers = () => {
         throw new Error("Errore nella fetch");
       }
       const profiles = await response.json();
-      const randomThree = profiles.sort(() => Math.random() - 0.5).slice(0, 3);
-      dispatch({ type: GET_RANDOM_SUCCESS, payload: randomThree });
-      console.log("random 3:", randomThree);
+      const randomSix = profiles.sort(() => Math.random() - 0.5).slice(0, 6);
+      dispatch({ type: GET_RANDOM_SUCCESS, payload: randomSix });
+      // console.log("random 3:", randomThree);
     } catch (error) {
       dispatch({ type: GET_RANDOM_ERROR, payload: error.message });
     }
