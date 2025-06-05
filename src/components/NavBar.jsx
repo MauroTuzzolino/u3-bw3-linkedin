@@ -44,7 +44,7 @@ const NavBar = () => {
 
           {/* Icone */}
           <Nav className="d-flex align-items-center">
-            <Nav.Link href="#" className="d-flex flex-column align-items-center mx-2">
+            <Nav.Link href="/home" className="d-flex flex-column align-items-center mx-2">
               <FaHome size={30} />
               <small className="d-block d-md-none d-lg-block">Home</small>
             </Nav.Link>
@@ -78,7 +78,7 @@ const NavBar = () => {
               align="end"
               style={{ zIndex: 10000 }}
             >
-              <NavDropdown.Item href="#">Profilo</NavDropdown.Item>
+              <NavDropdown.Item href="/">Profilo</NavDropdown.Item>
               <NavDropdown.Item href="#">Impostazioni</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#">Esci</NavDropdown.Item>
