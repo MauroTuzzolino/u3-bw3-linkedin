@@ -47,14 +47,16 @@ const MySidebar = () => {
 
       {/* Groups Section */}
       <Card>
-        <Card.Header>I tuoi gruppi</Card.Header>
+        <Card.Header>
+          <h6>Persone che potresti conoscere</h6>
+        </Card.Header>
         <ListGroup variant="flush">
           {users.map((profile) => (
             <ListGroup.Item key={profile._id}>
               <h6>
                 {profile.name} {profile.surname}
               </h6>
-              <p>{profile.title}</p>
+              <p className="mb-0">{profile.title}</p>
             </ListGroup.Item>
           ))}
           {/*<ListGroup.Item action>Gruppo 1</ListGroup.Item>
