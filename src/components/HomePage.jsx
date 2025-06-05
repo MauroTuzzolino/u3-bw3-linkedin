@@ -147,7 +147,7 @@ const HomePage = () => {
 
           {/*Post*/}
 
-          {posts.slice(0, 3).map((post) => (
+          {posts.slice(0, 5).map((post) => (
             <Col key={post._id}>
               <Card className="p-3 mb-2">
                 <Card.Body>
@@ -270,7 +270,7 @@ const HomePage = () => {
             <Card.Body>
               <Card.Title className="mb-3">Il rompicapo di oggi</Card.Title>
               <div className="d-flex align-items-center mb-3">
-                <Image src="https://via.placeholder.com" alt="Logo Zip" className="me-2" />
+                <Image src="https://cdn.creazilla.com/cliparts/3160675/puzzle-clipart-xl.png" alt="Logo Zip" className="me-2" style={{ height: "100px" }} />
                 <div>
                   <strong>Zip – un rompicapo veloce</strong>
                   <div className="text-muted small">Rispondilo in 60 secondi o meno!</div>
@@ -285,8 +285,16 @@ const HomePage = () => {
           {/* Card pubblicitaria */}
           <Card className="mb-3">
             <Card.Body className="text-center">
-              <small className="text-muted">Promosso</small> <FaEllipsisH className="text-muted" />
-              <Image src="https://via.placeholder.com" alt="V-Valley Logo" className="mb-3" />
+              <div className="d-flex align-items-center justify-content-between">
+                <small>Promosso</small>
+                <FaEllipsisH />
+              </div>
+
+              <Image
+                src="https://media.licdn.com/dms/image/v2/C4E0BAQH1ZyFa1LMFXA/company-logo_200_200/company-logo_200_200/0/1657092186806/v_valley_the_value_of_esprinet_logo?e=2147483647&v=beta&t=ZNbDWukaQXhKUdQD-aVPkWhPuBbOBPqoDiAcJS-GAkk"
+                alt="V-Valley Logo"
+                className="mb-3"
+              />
               <Card.Text>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum quod itaque nihil cum aspernatur quidem debitis natus culpa ipsam, accusamus
                 aliquid hic mollitia neque dolor quo unde eum repellat dolore.
