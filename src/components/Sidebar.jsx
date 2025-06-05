@@ -55,7 +55,7 @@ const MySidebar = () => {
           {users.map((profile) => (
             <ListGroup.Item key={profile._id}>
               <h6>
-                <Link to={`/${profile._id}`}>
+                <Link to={`/user/${profile._id}`}>
                   {" "}
                   {profile.name} {profile.surname}
                 </Link>

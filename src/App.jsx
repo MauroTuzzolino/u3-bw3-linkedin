@@ -16,8 +16,8 @@ function App() {
             <Row>
               <Col xs={12} md={7} lg={9}>
                 <Routes>
-                  <Route path="/" element={<ProfileSection />} />
-                  <Route path="/:userId" element={<ProfileSection />} />
+                  <Route path="/myProfile/:userId" element={<ProfileSection userType="me" />} />
+                  <Route path="/user/:userId" element={<ProfileSection userType="otherUser" />} />
                 </Routes>
               </Col>
               <Col xs={0} md={5} lg={3}>

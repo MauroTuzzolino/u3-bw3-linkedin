@@ -12,14 +12,24 @@ import Graphic from "../assets/images/graphic.png";
 import SectionGeneric from "./SectionGeneric";
 import ExperiencesSection from "./ExperiencesSection";
 import EditProfileModal from "./EditProfileModal";
+import { useLocation, useParams } from "react-router-dom";
 
-const ProfileSection = () => {
+const ProfileSection = ({ userType }) => {
   const dispatch = useDispatch();
-
   const [showEditmodal, setShowEditmodal] = useState(false);
   const { content: profileSection, error, loading } = useSelector((state) => state.profile);
   const { content: experienceList, error: experienceError, loading: experienceLoading } = useSelector((state) => state.experience);
   console.log(experienceList);
+
+  const { userId } = useParams();
+  let isMyProfile = false;
+  console.log("User id:" + userId);
+  console.log("tipo di utente " + userType);
+
+  if (userType === "me") {
+    isMyProfile = true;
+  }
+  console.log("è il mio profilo? " + isMyProfile);
 
   useEffect(() => {
     dispatch(getMyProfile());
