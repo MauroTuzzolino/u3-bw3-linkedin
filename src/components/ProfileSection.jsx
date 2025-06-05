@@ -6,30 +6,52 @@ import { FaCamera } from "react-icons/fa";
 import { Cursor, Pencil, PlusLg } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyExperience, getMyProfile } from "../redux/actions/index";
+import { getExperienceByUserId, getMyExperience, getMyProfile, getUserProfile } from "../redux/actions/index";
 import InfoSections from "./InfoSections";
 import Graphic from "../assets/images/graphic.png";
 import SectionGeneric from "./SectionGeneric";
 import ExperiencesSection from "./ExperiencesSection";
 import EditProfileModal from "./EditProfileModal";
+import { useParams, useLocation } from "react-router-dom";
 
 const ProfileSection = () => {
   const dispatch = useDispatch();
+  const { userId } = useParams();
+  const location = useLocation();
+
+  const myProfile = location.pathname === "/me";
 
   const [showEditmodal, setShowEditmodal] = useState(false);
   const { content: profileSection, error, loading } = useSelector((state) => state.profile);
   const { content: experienceList, error: experienceError, loading: experienceLoading } = useSelector((state) => state.experience);
   console.log(experienceList);
 
-  useEffect(() => {
+  /* useEffect(() => {
     dispatch(getMyProfile());
   }, [dispatch]);
+ */
 
   useEffect(() => {
+    if (myProfile) {
+      dispatch(getMyProfile());
+    } else if (userId) {
+      dispatch(getUserProfile(userId));
+    }
+  }, [dispatch, myProfile, userId]);
+
+  console.log(userId);
+
+  /*  useEffect(() => {
     if (profileSection?._id) {
       dispatch(getMyExperience());
     }
-  }, [profileSection?._id, dispatch]);
+  }, [profileSection?._id, dispatch]); */
+
+  useEffect(() => {
+    if ((myProfile && profileSection?._id) || userId) {
+      dispatch(getExperienceByUserId(myProfile ? profileSection._id : userId));
+    }
+  }, [dispatch, myProfile, profileSection?._id, userId]);
 
   if (loading) {
     return (

@@ -113,3 +113,45 @@ export const fetchRandomUsers = () => {
     }
   };
 };
+
+export const getUserProfile = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${id}`, {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Errore nel recupero del profilo utente");
+      }
+
+      const data = await response.json();
+      dispatch({ type: "GET_PROFILE_SUCCESS", payload: data });
+    } catch (error) {
+      dispatch({ type: "GET_PROFILE_ERROR", payload: error.message });
+    }
+  };
+};
+
+export const getExperienceByUserId = (userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences`, {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Errore nel recupero delle esperienze");
+      }
+
+      const data = await response.json();
+      dispatch({ type: "GET_EXPERIENCE_SUCCESS", payload: data });
+    } catch (error) {
+      dispatch({ type: "GET_EXPERIENCE_ERROR", payload: error.message });
+    }
+  };
+};

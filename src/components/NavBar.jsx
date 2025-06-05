@@ -3,6 +3,8 @@ import { FaLinkedin, FaSearch, FaHome, FaUsers, FaUserCircle, FaBriefcase, FaCom
 import "./NavBar.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import TOKEN from "../../token";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -94,7 +96,9 @@ const NavBar = () => {
               align="end"
               style={{ zIndex: 10000 }}
             >
-              <NavDropdown.Item href="#">Profilo</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/me">
+                Profilo
+              </NavDropdown.Item>
               <NavDropdown.Item href="#">Impostazioni</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#">Esci</NavDropdown.Item>
