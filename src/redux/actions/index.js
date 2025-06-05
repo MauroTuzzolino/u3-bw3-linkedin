@@ -162,3 +162,27 @@ export const getExperienceByUserId = (userId) => {
     }
   };
 };
+
+export const FETCH_POSTS_START = "FETCH_POSTS_START";
+export const FETCH_POSTS_SUCCESS = "FETCH_POSTS_SUCCESS";
+export const FETCH_POSTS_FAILURE = "FETCH_POSTS_FAILURE";
+
+export const fetchPosts = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: FETCH_POSTS_START });
+      const response = await fetch("https://striveschool-api.herokuapp.com/api/posts/", {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      dispatch({ type: "FETCH_POSTS_SUCCESS", payload: data });
+    } catch (error) {
+      dispatch({ type: "FETCH_POSTS_FAILURE", payload: error.message });
+    }
+  };
+};

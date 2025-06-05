@@ -5,6 +5,7 @@ import experienceReducer from "../reducers/experienceReducer";
 import profilesReducer from "../reducers/profilesReducers";
 import otherProfileReducer from "../reducers/otherProfileReducer";
 import otherExperienceReducer from "../reducers/experienceOtherProfiles";
+import postsReducer from "../reducers/postReducer";
 
 // faccio la fusione di tutti gli stati dei miei RxComponentInstance, in questo modo cambia lo stato globale
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   profiles: profilesReducer,
   otherProfile: otherProfileReducer,
   otherExperience: otherExperienceReducer,
+  posts: postsReducer,
 });
 
 const store = configureStore({

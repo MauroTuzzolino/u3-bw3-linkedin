@@ -19,14 +19,20 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../redux/actions";
 import coverImage from "../assets/images/placeholderCover.png";
+import { fetchPosts } from "../redux/actions";
+import avatar from "../assets/images/avatar.svg";
 
 const HomePage = () => {
   const dispatch = useDispatch();
 
   const myProfile = useSelector((state) => state.myProfile.content);
+  const posts = useSelector((state) => state.posts.posts);
+  const loading = useSelector((state) => state.posts.loading);
+  const error = useSelector((state) => state.posts.error);
 
   useEffect(() => {
     dispatch(getMyProfile());
+    dispatch(fetchPosts());
   }, [dispatch]);
 
   if (!myProfile) {
@@ -36,6 +42,9 @@ const HomePage = () => {
       </Spinner>
     );
   }
+
+  if (loading) return <p>Loading posts...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <Container>
@@ -136,69 +145,28 @@ const HomePage = () => {
             </Button>
           </div>
 
-          {/* Esempio di Post */}
-          <Card className="mb-3">
-            <Card.Body>
-              <div className="d-flex justify-content-between align-items-center mb-2">
-                <div className="d-flex align-items-center">
-                  <Image src="https://via.placeholder.com" roundedCircle className="me-2" />
-                  <div>
-                    <strong>Guido Penta</strong> ha diffuso questo post
-                    <div className="text-muted small">
-                      1 ora • Modificato • <FaGlobeAmericas />
-                    </div>
-                  </div>
-                </div>
-                <FaEllipsisH className="text-muted" />
-              </div>
-              <div className="d-flex align-items-center mb-3">
-                <Image src="https://via.placeholder.com" roundedCircle className="me-2" />
-                <div>
-                  <strong>Luana Elia</strong> <FaPlus className="text-primary ms-1" />
-                  <div className="text-muted small">Unconventional Full Stack Recruiter @Welleya | Per ma...</div>
-                  <Button variant="link" className="p-0 text-decoration-none">
-                    Visualizza i miei servizi
-                  </Button>
-                  <div className="text-muted small">
-                    1 ora • Modificato • <FaGlobeAmericas />
-                  </div>
-                </div>
-              </div>
-              <Card.Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. At alias voluptatem aut qui aliquid itaque maiores, tempora odit, nostrum blanditiis
-                est corporis quos commodi vero quisquam ex iusto? Commodi, repellat.{" "}
-                <Button variant="link" className="p-0 text-decoration-none">
-                  altro
-                </Button>
-              </Card.Text>
-              <div className="d-flex align-items-center text-muted small mb-2">
-                <FaThumbsUp className="text-primary me-1" />
-                <span>Guido Penta e 51 altre persone</span>
-                <span className="ms-auto">8 commenti • 10 diffusioni post</span>
-              </div>
-              <hr />
-              <div className="d-flex justify-content-around">
-                <Button variant="link" className="text-muted text-decoration-none d-flex align-items-center">
-                  <FaThumbsUp className="me-2" />
-                  Consiglia
-                </Button>
-                <Button variant="link" className="text-muted text-decoration-none d-flex align-items-center">
-                  <FaCommentDots className="me-2" />
-                  Commenta
-                </Button>
-                <Button variant="link" className="text-muted text-decoration-none d-flex align-items-center">
-                  <FaShare className="me-2" />
-                  Diffondi il post
-                </Button>
-                <Button variant="link" className="text-muted text-decoration-none d-flex align-items-center">
-                  <FaPaperPlane className="me-2" />
-                  Invia
-                </Button>
-              </div>
-            </Card.Body>
-          </Card>
+          {/*Post*/}
 
-          {/* Un altro esempio di Post */}
+          {posts.slice(0, 3).map((post) => (
+            <Col key={post._id}>
+              <Card className="p-3 mb-2">
+                <Card.Body>
+                  <div className="d-flex align-items-center mb-2">
+                    <Card.Img src={avatar} className="rounded-circle me-2" style={{ width: "30px", height: "30px", objectFit: "cover" }} />
+                    <Card.Title className="m-0">{post.name || "Nome non disponibile"}</Card.Title>
+                  </div>
+
+                  <Card.Text>{post.text || "Nessun testo disponibile."}</Card.Text>
+                  <Card.Text className="d-flex justify-content-between">
+                    <small className="text-muted">Modificato il {new Date(post.updatedAt).toLocaleDateString()}</small>
+                    <small className="text-muted">Postato il {new Date(post.createdAt).toLocaleDateString()}</small>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+
+          {/* Esempio di Post
           <Card className="mb-3">
             <Card.Body>
               <div className="d-flex justify-content-between align-items-center mb-2">
@@ -258,7 +226,7 @@ const HomePage = () => {
                 </Button>
               </div>
             </Card.Body>
-          </Card>
+          </Card> */}
         </Col>
 
         {/* Colonna destra - Notizie e Pubblicità */}
