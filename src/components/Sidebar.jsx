@@ -34,10 +34,7 @@ const MySidebar = () => {
           <div className="mt-2">Italiano</div>
           <hr />
           <Card.Text>
-            <strong>Link pubblico</strong>{" "}
-            <a href="https://www.linkedin.com/in/tuo-profilo" target="_blank" rel="noopener noreferrer">
-              linkedin.com/in/tuo-profilo
-            </a>
+            <strong>Link pubblico</strong> <Link to="/me"> linkedin.com/in/tuo-profilo</Link>
           </Card.Text>
         </Card.Body>
       </Card>
