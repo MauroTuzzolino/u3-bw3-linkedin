@@ -32,7 +32,7 @@ const CompanySearchResults = () => {
     <Container>
       <Row>
         <Col className="my-3">
-          <h2 className="my-4 display-5">Job posting for: {params.company}</h2>
+          <h2 className="my-4 display-5">Lavori offerti da: {params.company}</h2>
 
           {jobs.map((jobData) => (
             <Job key={jobData._id} data={jobData} />

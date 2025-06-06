@@ -1,7 +1,7 @@
 import { Row, Col, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa";
 
 const Job = ({ data }) => {
   const dispatch = useDispatch();
@@ -30,8 +30,8 @@ const Job = ({ data }) => {
         </Col>
       )}
       <Col xs={3}>
-        <Button variant="light" onClick={toggleFavourite}>
-          {isFavourited ? <FaHeart color="red" /> : <FaRegHeart />}
+        <Button variant="transparent" onClick={toggleFavourite}>
+          {isFavourited ? <FaBookmark color="red" /> : <FaBookmark />}
         </Button>
       </Col>
     </Row>

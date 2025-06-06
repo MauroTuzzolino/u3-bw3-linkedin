@@ -29,7 +29,7 @@ const Favourites = () => {
           <h2 className="my-4 display-5">Elementi Salvati</h2>
           {favourites.length === 0 ? (
             <Alert variant="warning" dismissible onClose={alertClosed}>
-              No favourite company selected
+              Non ci sono elementi salvati!
             </Alert>
           ) : (
             <ListGroup>

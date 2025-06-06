@@ -98,13 +98,13 @@ const MainSearch = () => {
         <Col>
           <Col xs={10} className="mx-auto">
             <Form onSubmit={handleSubmit}>
-              <Form.Control type="search" value={query} onChange={handleChange} placeholder="Search by work" />
+              <Form.Control type="search" value={query} onChange={handleChange} placeholder="Inizia a cercare..." />
             </Form>
           </Col>
           <Col xs={10} className="mx-auto mb-5">
             {searchQuery && (
               <p className="mt-3 display-6">
-                You searched: <em>{searchQuery}</em>
+                Hai cercato: <em>{searchQuery}</em>
               </p>
             )}
             {jobs.map((jobData) => (
