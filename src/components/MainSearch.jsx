@@ -14,9 +14,9 @@ const MainSearch = () => {
   //  const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search=";
   //Fetch importata
   const dispatch = useDispatch();
-  const error = useSelector((state) => state.searchResults.error);
-  const jobs = useSelector((state) => state.searchResults.content);
-  const searchQuery = useSelector((state) => state.searchQuery);
+  const error = useSelector((state) => state.mainReducer.searchResults.error);
+  const jobs = useSelector((state) => state.mainReducer.searchResults.content);
+  const searchQuery = useSelector((state) => state.mainReducer.searchQuery);
 
   const handleChange = (e) => {
     setQuery(e.target.value);
