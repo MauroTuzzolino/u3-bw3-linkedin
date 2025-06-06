@@ -1,19 +1,17 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Card, Spinner, Button, ListGroup, Image } from "react-bootstrap";
-import { FaBookmark, FaUsers, FaNewspaper, FaPlus, FaImage, FaVideo, FaRegCalendarAlt, FaEllipsisH } from "react-icons/fa";
+import { Container, Row, Col, Form, Card, Spinner, Button, ListGroup, Image, Alert } from "react-bootstrap";
+import { FaBookmark, FaUsers, FaNewspaper, FaPlus } from "react-icons/fa";
 import Job from "./Job";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchJobs, setSearchQuery } from "../redux/actions";
 import coverImage from "../assets/images/placeholderCover.png";
 import { getMyProfile } from "../redux/actions";
 import { Link } from "react-router-dom";
+import JobList from "./JobList";
 
 const MainSearch = () => {
   const [query, setQuery] = useState("");
-  // const [jobs, setJobs] = useState([]);
 
-  //  const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search=";
-  //Fetch importata
   const dispatch = useDispatch();
   const error = useSelector((state) => state.mainReducer.searchResults.error);
   const jobs = useSelector((state) => state.mainReducer.searchResults.content);
@@ -38,6 +36,7 @@ const MainSearch = () => {
     <Container>
       {error && <Alert variant="danger">{error}</Alert>}
       <Row>
+        {/* Sidebar sinistra */}
         <Col lg={3}>
           <Card className="mb-3">
             <Card.Img variant="top" src={coverImage} alt="Immagine di copertina" style={{ objectFit: "cover", height: "80px" }} />
@@ -46,7 +45,12 @@ const MainSearch = () => {
                 src={myProfile.image}
                 roundedCircle
                 className="border border-white border-3"
-                style={{ width: "80px", height: "80px", marginTop: "-40px", objectFit: "cover" }}
+                style={{
+                  width: "80px",
+                  height: "80px",
+                  marginTop: "-40px",
+                  objectFit: "cover",
+                }}
               />
               <Card.Title className="mb-0 mt-2">
                 {myProfile.name} {myProfile.surname}
@@ -67,7 +71,7 @@ const MainSearch = () => {
                 <small className="text-muted">Sblocca 4 volte più visite del profilo</small>
               </div>
               <Button variant="link" className="p-0 text-decoration-none text-warning">
-                Riativa Premium
+                Riattiva Premium
               </Button>
             </Card.Body>
           </Card>
@@ -95,23 +99,27 @@ const MainSearch = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col>
-          <Col xs={10} className="mx-auto">
+
+        {/* Colonna centrale */}
+        <Col lg={8}>
+          <Col xs={12} className="mx-auto">
             <Form onSubmit={handleSubmit}>
               <Form.Control type="search" value={query} onChange={handleChange} placeholder="Inizia a cercare..." />
             </Form>
           </Col>
-          <Col xs={10} className="mx-auto mb-5">
+          <Col xs={12} className="mx-auto mb-5">
             {searchQuery && (
               <p className="mt-3 display-6">
                 Hai cercato: <em>{searchQuery}</em>
               </p>
             )}
-            {jobs.map((jobData) => (
-              <Job key={jobData._id} data={jobData} />
-            ))}
+
+            {searchQuery && jobs.map((jobData) => <Job key={jobData._id} data={jobData} />)}
+            {!searchQuery && <JobList />}
           </Col>
         </Col>
+
+        {/* JobList visibile solo se non c'è una ricerca attiva */}
       </Row>
     </Container>
   );

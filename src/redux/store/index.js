@@ -9,6 +9,7 @@ import postsReducer from "../reducers/postReducer";
 import createPostReducer from "../reducers/createPostReducer";
 import mainReducer from "../reducers";
 import favouritesReducer from "../reducers/favouritesReducer";
+import jobsReducer from "../reducers/jobsReducer";
 
 // faccio la fusione di tutti gli stati dei miei RxComponentInstance, in questo modo cambia lo stato globale
 const rootReducer = combineReducers({
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   createPost: createPostReducer,
   mainReducer: mainReducer,
   favouritesReducer: favouritesReducer,
+  jobsReducer: jobsReducer,
 });
 
 const store = configureStore({
