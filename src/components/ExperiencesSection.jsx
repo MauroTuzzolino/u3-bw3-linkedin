@@ -5,7 +5,7 @@ import { PlusLg, Pencil, Trash } from "react-bootstrap-icons";
 import EditExperienceModal from "./EditExperienceModal";
 import { updateExperience, createExperience, deleteExperience } from "../redux/actions";
 
-const ExperiencesSection = ({ userId }) => {
+const ExperiencesSection = ({ userId, isMyProfile }) => {
   const dispatch = useDispatch();
   const experiences = useSelector((state) => state.experience.content);
 
@@ -47,7 +47,7 @@ const ExperiencesSection = ({ userId }) => {
             </Col>
             <Col className="text-end">
               <Button variant="light" className="border-0 bg-transparent" onClick={handleAddClick}>
-                <PlusLg className="me-3" size={25} />
+                {isMyProfile && <PlusLg className="me-3" size={25} />}
               </Button>
             </Col>
           </Row>
@@ -59,7 +59,7 @@ const ExperiencesSection = ({ userId }) => {
               <Col md={1} className="d-none d-md-block"></Col>
               <Col>
                 <h5>
-                  {exp.role} <Pencil size={20} className="ms-2" style={{ cursor: "pointer" }} onClick={() => handleEditClick(exp)} />
+                  {exp.role} {isMyProfile && <Pencil size={20} className="ms-2" style={{ cursor: "pointer" }} onClick={() => handleEditClick(exp)} />}
                   <Trash size={20} className="ms-2 text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(exp._id)} />
                 </h5>
                 <h6>{exp.company}</h6>
