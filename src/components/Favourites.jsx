@@ -32,9 +32,9 @@ const Favourites = () => {
               Non ci sono elementi salvati!
             </Alert>
           ) : (
-            <ListGroup>
+            <ListGroup className="bg-white mt-3 p-3 rounded">
               {favourites.map((job, index) => (
-                <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">
+                <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center" style={{ borderBottom: "1px solid #00000033" }}>
                   <Link to={`/${job.company_name}`} className="text-decoration-none">
                     <strong>{job.company_name}</strong>
                   </Link>
