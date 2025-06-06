@@ -63,7 +63,7 @@ const ExperiencesSection = ({ userId, isMyProfile }) => {
             experiences.map((exp) => (
               <Row key={exp._id} className="mb-3 border-bottom">
                 <Col sm={1} className="d-none d-md-block me-4 ">
-                  <Image src={exp.image} className="companyImgExperience" />
+                  <Image src={exp.image} className="companyImgExperience" style={{ width: "45", height: "45", objectFit: "cover" }} />
                 </Col>
                 <Col>
                   <h5>
