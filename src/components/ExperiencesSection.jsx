@@ -62,7 +62,7 @@ const ExperiencesSection = ({ userId, isMyProfile }) => {
               <Col>
                 <h5>
                   {exp.role} {isMyProfile && <Pencil size={20} className="ms-2" style={{ cursor: "pointer" }} onClick={() => handleEditClick(exp)} />}
-                  <Trash size={20} className="ms-2 text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(exp._id)} />
+                  {isMyProfile && <Trash size={20} className="ms-2 text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(exp._id)} />}
                 </h5>
                 <h6>{exp.company}</h6>
                 <p>
