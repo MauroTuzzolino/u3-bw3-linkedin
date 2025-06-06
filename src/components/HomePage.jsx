@@ -201,7 +201,7 @@ const HomePage = () => {
                               style={{ width: "40px", height: "40px", objectFit: "cover" }}
                             />
                             <div>
-                              <Card.Title className="m-0">
+                              <Card.Title className="m-0" style={{ cursor: "pointer" }} onClick={() => navigate(`/other/${post.user._id}`)}>
                                 {post.user?.name} {post.user?.surname}
                               </Card.Title>
                               <Card.Subtitle className="text-muted small">{post.user?.title}</Card.Subtitle>
@@ -234,70 +234,6 @@ const HomePage = () => {
                   </Col>
                 );
               })}
-
-            {/* Esempio di Post
-          <Card className="mb-3">
-            <Card.Body>
-              <div className="d-flex justify-content-between align-items-center mb-2">
-                <div className="d-flex align-items-center">
-                  <Image src="https://via.placeholder.com" roundedCircle className="me-2" />
-                  <div>
-                    <strong>Luana Elia</strong> <FaPlus className="text-primary ms-1" />
-                    <div className="text-muted small">Unconventional Full Stack Recruiter @Welleya | Per ma...</div>
-                    <Button variant="link" className="p-0 text-decoration-none">
-                      Visualizza i miei servizi
-                    </Button>
-                    <div className="text-muted small">
-                      1 ora • Modificato • <FaGlobeAmericas />
-                    </div>
-                  </div>
-                </div>
-                <Card.Text>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. At alias voluptatem aut qui aliquid itaque maiores, tempora odit, nostrum blanditiis
-                  est corporis quos commodi vero quisquam ex iusto? Commodi, repellat.{" "}
-                  <Button variant="link" className="p-0 text-decoration-none">
-                    altro
-                  </Button>
-                </Card.Text>
-                <div className="d-flex align-items-center text-muted small mb-2">
-                  <FaThumbsUp className="text-primary me-1" />
-                  <span>Guido Penta e 51 altre persone</span>
-                  <span className="ms-auto">8 commenti • 10 diffusioni post</span>
-                </div>
-              </div>
-              <Card.Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. At alias voluptatem aut qui aliquid itaque maiores, tempora odit, nostrum blanditiis
-                est corporis quos commodi vero quisquam ex iusto? Commodi, repellat.{" "}
-                <Button variant="link" className="p-0 text-decoration-none">
-                  altro
-                </Button>
-              </Card.Text>
-              <div className="d-flex align-items-center text-muted small mb-2">
-                <FaThumbsUp className="text-primary me-1" />
-                <span>Guido Penta e 51 altre persone</span>
-                <span className="ms-auto">8 commenti • 10 diffusioni post</span>
-              </div>
-              <hr />
-              <div className="d-flex justify-content-around">
-                <Button variant="link" className="text-muted text-decoration-none d-flex align-items-center">
-                  <FaThumbsUp className="me-2" />
-                  Consiglia
-                </Button>
-                <Button variant="link" className="text-muted text-decoration-none d-flex align-items-center">
-                  <FaCommentDots className="me-2" />
-                  Commenta
-                </Button>
-                <Button variant="link" className="text-muted text-decoration-none d-flex align-items-center">
-                  <FaShare className="me-2" />
-                  Diffondi il post
-                </Button>
-                <Button variant="link" className="text-muted text-decoration-none d-flex align-items-center">
-                  <FaPaperPlane className="me-2" />
-                  Invia
-                </Button>
-              </div>
-            </Card.Body>
-          </Card> */}
           </Col>
 
           {/* Colonna destra - Notizie e Pubblicità */}
