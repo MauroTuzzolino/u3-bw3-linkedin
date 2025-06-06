@@ -28,33 +28,31 @@ const JobList = () => {
 
   return (
     <>
-      <div className="bg-white mt-3 p-3 rounded">
-        {data.slice(0, 10).map((job) => {
-          const isFavourited = favourites.some((fav) => fav.company_name === job.company_name);
+      {data.slice(0, 5).map((job) => {
+        const isFavourited = favourites.some((fav) => fav.company_name === job.company_name);
 
-          return (
-            <Row key={job._id} className="mx-0 mt-3 p-3" style={{ borderBottom: "1px solid #00000033" }}>
+        return (
+          <>
+            <Row key={job._id} className="mx-0 mt-3 p-3" style={{ border: "1px solid #00000033", borderRadius: 4 }}>
               <Col xs={3}>
-                <Link to={`/${job.company_name}`} className="text-decoration-none">
-                  {job.company_name}
-                </Link>
+                <Link to={`/${job.company_name}`}>{job.company_name}</Link>
               </Col>
               {job.title && (
                 <Col xs={6}>
-                  <a href={job.url} target="_blank" rel="noreferrer" className="text-decoration-none">
+                  <a href={job.url} target="_blank" rel="noreferrer">
                     {job.title}
                   </a>
                 </Col>
               )}
-              <Col xs={3} className="text-end">
+              <Col xs={3}>
                 <Button variant="transparent" onClick={() => toggleFavourite(job)}>
                   {isFavourited ? <FaBookmark color="red" /> : <FaBookmark />}
                 </Button>
               </Col>
             </Row>
-          );
-        })}
-      </div>{" "}
+          </>
+        );
+      })}
     </>
   );
 };

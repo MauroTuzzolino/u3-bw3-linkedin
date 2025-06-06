@@ -34,14 +34,18 @@ const Favourites = () => {
           ) : (
             <ListGroup className="bg-white mt-3 p-3 rounded">
               {favourites.map((job, index) => (
-                <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center" style={{ borderBottom: "1px solid #00000033" }}>
+                <div
+                  key={index}
+                  className="d-flex justify-content-between align-items-center mb-3 pb-2"
+                  style={{ borderBottom: "1px solid rgb(108, 107, 107)" }}
+                >
                   <Link to={`/${job.company_name}`} className="text-decoration-none">
                     <strong>{job.company_name}</strong>
                   </Link>
                   <Button variant="outline-danger" size="sm" onClick={() => handleRemoveFromFavourites(job.company_name)}>
                     <FaTrash />
                   </Button>
-                </ListGroup.Item>
+                </div>
               ))}
             </ListGroup>
           )}

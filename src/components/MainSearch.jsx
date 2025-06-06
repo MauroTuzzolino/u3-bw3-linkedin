@@ -113,9 +113,10 @@ const MainSearch = () => {
                 Hai cercato: <em>{searchQuery}</em>
               </p>
             )}
-
-            {searchQuery && jobs.map((jobData) => <Job key={jobData._id} data={jobData} />)}
-            {!searchQuery && <JobList />}
+            <div className="bg-white rounded p-3">
+              {searchQuery && jobs.map((jobData) => <Job key={jobData._id} data={jobData} />)}
+              {!searchQuery && <JobList />}
+            </div>
           </Col>
         </Col>
 
