@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Button, Card, Col, Image, Row } from "react-bootstrap";
 import { PlusLg, Pencil, Trash } from "react-bootstrap-icons";
 import EditExperienceModal from "./EditExperienceModal";
 import { updateExperience, createExperience, deleteExperience } from "../redux/actions";
@@ -56,7 +56,9 @@ const ExperiencesSection = ({ userId, isMyProfile }) => {
         <Card.Body>
           {experiences?.map((exp) => (
             <Row key={exp._id} className="mb-3 border-bottom">
-              <Col md={1} className="d-none d-md-block"></Col>
+              <Col sm={1} className="d-none d-md-block">
+                <Image src={exp.image} className="companyImgExperience" />{" "}
+              </Col>
               <Col>
                 <h5>
                   {exp.role} {isMyProfile && <Pencil size={20} className="ms-2" style={{ cursor: "pointer" }} onClick={() => handleEditClick(exp)} />}

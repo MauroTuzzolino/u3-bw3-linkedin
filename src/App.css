@@ -37,6 +37,13 @@ body,
   min-height: 14rem;
   object-fit: cover;
 }
+.industryImg {
+  width: 8%;
+}
+.companyImgExperience {
+  width: 65px;
+  height: 65px;
+}
 .myButton {
   border-radius: 43px;
 }
