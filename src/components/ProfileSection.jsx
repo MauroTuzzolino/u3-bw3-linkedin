@@ -1,7 +1,7 @@
 import { Alert, Button, Card, Col, Image, Row, Spinner } from "react-bootstrap";
 import coverImage from "../assets/images/placeholderCover.png";
 import avatar from "../assets/images/avatar.svg";
-import linkSvg from "../assets/images/vite.svg";
+import linkSvg from "../assets/images/industry.png";
 import { FaCamera } from "react-icons/fa";
 import { Pencil, PlusLg } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
@@ -15,7 +15,6 @@ import EditProfileModal from "./EditProfileModal";
 import SideBar from "./Sidebar";
 import { useParams, useLocation } from "react-router-dom";
 import EditProfileImageModal from "./EditProfileImageModal";
-import EditExperienceModal from "./EditExperienceModal";
 
 const ProfileSection = () => {
   const dispatch = useDispatch();
@@ -33,10 +32,12 @@ const ProfileSection = () => {
   const myExperienceState = useSelector((state) => state.experience);
   const otherExperienceState = useSelector((state) => state.otherExperience);
 
+  const experiences = isMyProfile ? myExperienceState.content : otherExperienceState.content;
+
   // Debug per vedere cosa c'è negli stati
-  console.log("isMyProfile:", isMyProfile);
+  /*  console.log("isMyProfile:", isMyProfile);
   console.log("userId:", userId);
-  console.log("otherExperienceState:", otherExperienceState);
+  console.log("otherExperienceState:", otherExperienceState); */
 
   const experienceList = isMyProfile ? myExperienceState?.content : otherExperienceState?.content;
   const experienceLoading = isMyProfile ? myExperienceState?.loading : otherExperienceState?.loading;
@@ -61,8 +62,6 @@ const ProfileSection = () => {
     if (isMyProfile && profileSection?._id) {
       dispatch(getMyExperience());
     } else if (!isMyProfile && userId) {
-      // Per altri profili, assicurati che l'action usi correttamente userId
-      console.log("Caricando esperienze per userId:", userId);
       dispatch(getExperienceByUserId(userId));
     }
   }, [dispatch, isMyProfile, profileSection?._id, userId]);
@@ -144,26 +143,49 @@ const ProfileSection = () => {
                       {isMyProfile && <Pencil size={20} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />}
                     </div>
 
-                    <h3>{profileSection.title}</h3>
+                    <h3 className="fs-5">{profileSection.title}</h3>
                     <Row>
-                      <Col xs={12} md={6}>
+                      <Col xs={12}>
                         <p className="text-muted">{profileSection.area}</p>
                       </Col>
-                      <Col xs={12} md={6}>
+                      <Col xs={12}>
                         <p>{profileSection.email}</p>
                       </Col>
                     </Row>
                   </Col>
                   <Col className="d-flex justify-content-center align-items-center">
                     <div>
-                      <div className="d-block mb-3">
-                        <Image src={linkSvg} />
-                        <h6 className="d-inline-block">AZIENDA</h6>
-                      </div>
-                      <div className="d-block">
-                        <Image src={linkSvg} />
-                        <h6 className="d-inline-block">AZIENDA</h6>
-                      </div>
+                      {experienceLoading ? (
+                        <Spinner animation="border" size="sm" />
+                      ) : (
+                        experiences?.slice(0, 2).map((exp, index) => (
+                          <Row key={exp._id} className="mb-3 align-items-center">
+                            <Col xs={4}>
+                              <Image
+                                src={exp.image || linkSvg}
+                                className="industryImg"
+                                alt={exp.company}
+                                onError={(e) => {
+                                  e.target.src = linkSvg;
+                                }}
+                              />
+                            </Col>
+                            <Col xs={8}>
+                              <h6 className="mb-0">{exp.company}</h6>
+                            </Col>
+                          </Row>
+                        ))
+                      )}
+
+                      {/* Se non ci sono esperienze, mostra placeholder */}
+                      {!experienceLoading && (!experiences || experiences.length === 0) && (
+                        <>
+                          <div className="d-block mb-3">
+                            <Image src={linkSvg} className="industryImg" />
+                            <h6 className="d-inline-block">Nessuna azienda</h6>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </Col>
                 </Row>
@@ -201,8 +223,8 @@ const ProfileSection = () => {
                           <h5>Disponibile a lavorare</h5>
                           <Pencil size={20} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />
                         </div>
-                        <p className="mb-0">Ruoli di </p>
-                        <p className="mb-0">Mostra dettagli</p>
+                        <p className="mb-0">Ruoli di {profileSection.title}</p>
+                        <a className="mb-0">Mostra dettagli</a>
                       </Alert>
                     </Col>
                     <Col>
@@ -228,7 +250,12 @@ const ProfileSection = () => {
           ) : experienceError ? (
             <Alert variant="danger">{experienceError}</Alert>
           ) : experienceList && experienceList.length > 0 ? (
-            <ExperiencesSection experiences={experienceList} isMyProfile={isMyProfile} userId={userId} />
+            <ExperiencesSection
+              // RIMUOVI questa prop che non serve
+              // experiences={experienceList}
+              isMyProfile={isMyProfile}
+              userId={userId}
+            />
           ) : (
             <Card className="my-2 py-3">
               <Card.Header className="bg-white border-0">
@@ -236,21 +263,11 @@ const ProfileSection = () => {
                   <Col>
                     <h4>Esperienze</h4>
                   </Col>
-                  <Col className="text-end">
-                    {isMyProfile && (
-                      <>
-                        <Button variant="light" className="border-0 bg-transparent">
-                          <PlusLg className="me-3" size={25} />
-                        </Button>
-                        <Button variant="light" className="border-0 bg-transparent">
-                          <Pencil size={25} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />
-                        </Button>
-                      </>
-                    )}
-                  </Col>
                 </Row>
               </Card.Header>
-              <Card.Body>Nessuna esperienza disponibile.</Card.Body>
+              <Card.Body>
+                <p className="text-muted">Nessuna esperienza disponibile.</p>
+              </Card.Body>
             </Card>
           )}
 

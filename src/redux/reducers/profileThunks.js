@@ -55,6 +55,7 @@ export const searchProfileByName = (name) => async (dispatch) => {
 
     // Aggiorno anche lo stato globale del profilo
     dispatch({ type: GET_MY_PROFILE, payload: profileData });
+    return profileData;
   } catch (error) {
     // Se qualcosa è andato storto, stampo l'errore in console per debugging
     console.error("Errore nella ricerca:", error.message);

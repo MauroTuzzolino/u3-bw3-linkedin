@@ -12,7 +12,7 @@ const SectionGeneric = ({ header, title, subtitle, details, image, isMyProfile }
           </Col>
           <Col className="text-end">
             <Button variant="light" className="border-0 bg-transparent">
-              <PlusLg className="me-3 " size={25} />
+              {isMyProfile && <PlusLg className="me-3 " size={25} />}
             </Button>
             <Button variant="light" className="border-0 bg-transparent">
               {isMyProfile && <Pencil size={25} style={{ cursor: "pointer" }} />}
