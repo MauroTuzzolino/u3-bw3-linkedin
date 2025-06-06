@@ -5,7 +5,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const Job = ({ data }) => {
   const dispatch = useDispatch();
-  const favourites = useSelector((state) => state.favourites.content);
+  const favourites = useSelector((state) => state.favouritesReducer.content);
 
   const isFavourited = favourites.some((job) => job.company_name === data.company_name);
 

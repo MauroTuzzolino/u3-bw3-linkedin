@@ -6,7 +6,7 @@ import { removeFromFavourites } from "../redux/actions";
 
 const Favourites = () => {
   const dispatch = useDispatch();
-  const favourites = useSelector((state) => state.favourites.content);
+  const favourites = useSelector((state) => state.favouritesReducer.content);
   const navigate = useNavigate();
 
   const handleRemoveFromFavourites = (companyName) => {
