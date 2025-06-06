@@ -15,6 +15,7 @@ import EditProfileModal from "./EditProfileModal";
 import SideBar from "./Sidebar";
 import { useParams, useLocation } from "react-router-dom";
 import EditProfileImageModal from "./EditProfileImageModal";
+import EditExperienceModal from "./EditExperienceModal";
 
 const ProfileSection = () => {
   const dispatch = useDispatch();
@@ -227,7 +228,7 @@ const ProfileSection = () => {
           ) : experienceError ? (
             <Alert variant="danger">{experienceError}</Alert>
           ) : experienceList && experienceList.length > 0 ? (
-            <ExperiencesSection experiences={experienceList} isMyProfile={isMyProfile} />
+            <ExperiencesSection experiences={experienceList} isMyProfile={isMyProfile} userId={userId} />
           ) : (
             <Card className="my-2 py-3">
               <Card.Header className="bg-white border-0">
