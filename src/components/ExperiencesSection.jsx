@@ -20,14 +20,26 @@ const ExperiencesSection = ({ userId, isMyProfile }) => {
   };
 
   const handleAddClick = () => {
+    console.log("HandleAddClick chiamato");
     setSelectedExperience(null);
     setShowModal(true);
   };
 
   const handleSave = (updatedExperience, imageFile) => {
+    console.log("HandleSave chiamato con:", {
+      updatedExperience,
+      imageFile,
+      selectedExperience,
+      userId,
+    });
+
     if (selectedExperience?._id) {
+      console.log("Aggiornamento esperienza esistente");
       dispatch(updateExperience(userId, selectedExperience._id, updatedExperience, imageFile));
     } else {
+      console.log("Creazione nuova esperienza");
+      console.log("userId:", userId);
+      console.log("updatedExperience:", updatedExperience);
       dispatch(createExperience(userId, updatedExperience));
     }
     setShowModal(false);

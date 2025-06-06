@@ -18,7 +18,7 @@ import EditProfileImageModal from "./EditProfileImageModal";
 
 const ProfileSection = () => {
   const dispatch = useDispatch();
-  const { userId } = useParams();
+  const { userId: urlUserId } = useParams();
   const location = useLocation();
 
   const isMyProfile = location.pathname === "/me";
@@ -34,10 +34,7 @@ const ProfileSection = () => {
 
   const experiences = isMyProfile ? myExperienceState.content : otherExperienceState.content;
 
-  // Debug per vedere cosa c'è negli stati
-  /*  console.log("isMyProfile:", isMyProfile);
-  console.log("userId:", userId);
-  console.log("otherExperienceState:", otherExperienceState); */
+  const userId = isMyProfile ? myProfile?.content?._id : urlUserId;
 
   const experienceList = isMyProfile ? myExperienceState?.content : otherExperienceState?.content;
   const experienceLoading = isMyProfile ? myExperienceState?.loading : otherExperienceState?.loading;
@@ -48,25 +45,22 @@ const ProfileSection = () => {
   const error = isMyProfile ? myProfile?.error : otherProfile?.error;
   const [imgSrc, setImgSrc] = useState(avatar);
 
-  // Carica il profilo
   useEffect(() => {
     if (isMyProfile) {
       dispatch(getMyProfile());
-    } else if (userId) {
-      dispatch(getUserProfile(userId));
+    } else if (urlUserId) {
+      dispatch(getUserProfile(urlUserId));
     }
-  }, [dispatch, isMyProfile, userId]);
+  }, [dispatch, isMyProfile, urlUserId]);
 
-  // Carica le esperienze
   useEffect(() => {
     if (isMyProfile && profileSection?._id) {
       dispatch(getMyExperience());
-    } else if (!isMyProfile && userId) {
-      dispatch(getExperienceByUserId(userId));
+    } else if (!isMyProfile && urlUserId) {
+      dispatch(getExperienceByUserId(urlUserId));
     }
-  }, [dispatch, isMyProfile, profileSection?._id, userId]);
+  }, [dispatch, isMyProfile, profileSection?._id, urlUserId]);
 
-  // Gestisci l'immagine del profilo
   useEffect(() => {
     if (profileSection?.image) {
       setImgSrc(profileSection.image);
@@ -177,7 +171,6 @@ const ProfileSection = () => {
                         ))
                       )}
 
-                      {/* Se non ci sono esperienze, mostra placeholder */}
                       {!experienceLoading && (!experiences || experiences.length === 0) && (
                         <>
                           <div className="d-block mb-3">
@@ -242,33 +235,14 @@ const ProfileSection = () => {
 
           <InfoSections details={profileSection.bio} isMyProfile={isMyProfile} />
 
-          {/* Sezione Esperienze */}
           {experienceLoading ? (
             <Spinner animation="border" role="status" variant="info">
               <span className="visually-hidden">Caricamento esperienze...</span>
             </Spinner>
           ) : experienceError ? (
             <Alert variant="danger">{experienceError}</Alert>
-          ) : experienceList && experienceList.length > 0 ? (
-            <ExperiencesSection
-              // RIMUOVI questa prop che non serve
-              // experiences={experienceList}
-              isMyProfile={isMyProfile}
-              userId={userId}
-            />
           ) : (
-            <Card className="my-2 py-3">
-              <Card.Header className="bg-white border-0">
-                <Row className="align-items-center">
-                  <Col>
-                    <h4>Esperienze</h4>
-                  </Col>
-                </Row>
-              </Card.Header>
-              <Card.Body>
-                <p className="text-muted">Nessuna esperienza disponibile.</p>
-              </Card.Body>
-            </Card>
+            <ExperiencesSection isMyProfile={isMyProfile} userId={userId} />
           )}
 
           <SectionGeneric header="Formazione" title="Scuola/università" subtitle="durata" details="Votazione" image={Graphic} isMyProfile={isMyProfile} />

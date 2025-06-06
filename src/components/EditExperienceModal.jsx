@@ -13,7 +13,6 @@ const EditExperienceModal = ({ show, handleClose, experienceData, handleSave }) 
       startDate: experienceData?.startDate ? experienceData.startDate.substring(0, 10) : "",
       endDate: experienceData?.endDate ? experienceData.endDate.substring(0, 10) : "",
     });
-    // Reset preview quando cambia experienceData
     setPreview(experienceData?.image || null);
   }, [experienceData]);
 
@@ -37,7 +36,7 @@ const EditExperienceModal = ({ show, handleClose, experienceData, handleSave }) 
   };
 
   const onSave = () => {
-    handleSave(formData, selectedFile); // Passa anche il file
+    handleSave(formData, selectedFile);
     handleClose();
   };
 
@@ -55,6 +54,10 @@ const EditExperienceModal = ({ show, handleClose, experienceData, handleSave }) 
           <Form.Group className="mb-3">
             <Form.Label>Ruolo</Form.Label>
             <Form.Control type="text" name="role" value={formData.role || ""} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Azienda</Form.Label>
+            <Form.Control type="text" name="company" value={formData.company || ""} onChange={handleChange} />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Data di inizio</Form.Label>
@@ -76,7 +79,6 @@ const EditExperienceModal = ({ show, handleClose, experienceData, handleSave }) 
         </Button>
         <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileSelect} style={{ display: "none" }} />
 
-        {/* Preview dell'immagine */}
         <div className="text-center">
           {preview ? (
             <Image
