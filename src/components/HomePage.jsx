@@ -23,6 +23,7 @@ import { fetchPosts } from "../redux/actions";
 import avatar from "../assets/images/avatar.svg";
 import CreatePost from "./CreatePost";
 import { openModal } from "../redux/actions/index";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -90,7 +91,7 @@ const HomePage = () => {
             <Card className="mb-3">
               <Card.Body>
                 <ListGroup variant="flush">
-                  <ListGroup.Item className="d-flex align-items-center py-1 px-0 border-0">
+                  <ListGroup.Item className="d-flex align-items-center py-1 px-0 border-0" as={Link} to={"/Favourites"}>
                     <FaBookmark className="me-2" />
                     <small>Elementi salvati</small>
                   </ListGroup.Item>

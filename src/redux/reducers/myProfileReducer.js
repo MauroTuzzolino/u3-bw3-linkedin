@@ -14,7 +14,7 @@ import {
 } from "../actions";
 
 const initialState = {
-  content: null,
+  content: [],
   loading: false,
   error: null,
   imageLoading: false,

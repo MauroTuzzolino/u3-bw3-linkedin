@@ -26,7 +26,7 @@ const Favourites = () => {
     <Container>
       <Row>
         <Col xs={10} className="mx-auto my-3">
-          <h2 className="my-4 display-5">Favourites</h2>
+          <h2 className="my-4 display-5">Elementi Salvati</h2>
           {favourites.length === 0 ? (
             <Alert variant="warning" dismissible onClose={alertClosed}>
               No favourite company selected
