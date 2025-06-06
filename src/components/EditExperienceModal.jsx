@@ -1,8 +1,11 @@
-import { Modal, Button, Form } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { Modal, Button, Form, Image } from "react-bootstrap";
+import { useState, useEffect, useRef } from "react";
 
 const EditExperienceModal = ({ show, handleClose, experienceData, handleSave }) => {
   const [formData, setFormData] = useState({});
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     setFormData({
@@ -10,6 +13,8 @@ const EditExperienceModal = ({ show, handleClose, experienceData, handleSave }) 
       startDate: experienceData?.startDate ? experienceData.startDate.substring(0, 10) : "",
       endDate: experienceData?.endDate ? experienceData.endDate.substring(0, 10) : "",
     });
+    // Reset preview quando cambia experienceData
+    setPreview(experienceData?.image || null);
   }, [experienceData]);
 
   const handleChange = (e) => {
@@ -19,9 +24,25 @@ const EditExperienceModal = ({ show, handleClose, experienceData, handleSave }) 
     });
   };
 
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const onSave = () => {
-    handleSave(formData);
+    handleSave(formData, selectedFile); // Passa anche il file
     handleClose();
+  };
+
+  const handleError = () => {
+    setPreview(null);
   };
 
   return (
@@ -48,6 +69,48 @@ const EditExperienceModal = ({ show, handleClose, experienceData, handleSave }) 
             <Form.Control as="textarea" rows={3} name="description" value={formData.description || ""} onChange={handleChange} />
           </Form.Group>
         </Form>
+
+        <h5>Carica Immagine</h5>
+        <Button variant="outline-primary" onClick={() => fileInputRef.current?.click()} className="mb-3">
+          Scegli immagine
+        </Button>
+        <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileSelect} style={{ display: "none" }} />
+
+        {/* Preview dell'immagine */}
+        <div className="text-center">
+          {preview ? (
+            <Image
+              src={preview}
+              onError={handleError}
+              className="profileImgEdit"
+              alt="Experience Image"
+              style={{ maxWidth: "300px", maxHeight: "300px" }}
+              fluid
+              rounded
+            />
+          ) : (
+            <div
+              style={{
+                width: "300px",
+                height: "300px",
+                backgroundColor: "#f0f0f0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto",
+                borderRadius: "8px",
+              }}
+            >
+              <p>Nessuna immagine selezionata</p>
+            </div>
+          )}
+        </div>
+
+        {selectedFile && (
+          <p className="text-center mt-3">
+            File selezionato: <strong>{selectedFile.name}</strong>
+          </p>
+        )}
       </Modal.Body>
 
       <Modal.Footer>
@@ -61,5 +124,4 @@ const EditExperienceModal = ({ show, handleClose, experienceData, handleSave }) 
     </Modal>
   );
 };
-
 export default EditExperienceModal;

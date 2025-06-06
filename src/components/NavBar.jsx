@@ -4,21 +4,27 @@ import "./NavBar.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchProfileByName } from "../redux/reducers/profileThunks";
-
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (searchQuery.trim() !== "") {
-      dispatch(searchProfileByName(searchQuery.trim()));
+      try {
+        const profileData = await dispatch(searchProfileByName(searchQuery.trim()));
+        if (profileData && profileData._id) {
+          navigate(`/other/${profileData._id}`);
+        }
+      } catch (error) {
+        console.error("Errore nel reindirizzamento:", error);
+      }
     }
   };
 
