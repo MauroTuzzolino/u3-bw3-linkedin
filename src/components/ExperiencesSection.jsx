@@ -5,10 +5,9 @@ import { PlusLg, Pencil, Trash } from "react-bootstrap-icons";
 import EditExperienceModal from "./EditExperienceModal";
 import { updateExperience, createExperience, deleteExperience } from "../redux/actions";
 
-const ExperiencesSection = () => {
+const ExperiencesSection = ({ userId }) => {
   const dispatch = useDispatch();
   const experiences = useSelector((state) => state.experience.content);
-  const userId = useSelector((state) => state.profile.content._id);
 
   const [showModal, setShowModal] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState(null);
