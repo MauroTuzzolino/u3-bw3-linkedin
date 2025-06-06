@@ -35,9 +35,9 @@ const ProfileSection = () => {
   const experiences = isMyProfile ? myExperienceState.content : otherExperienceState.content;
 
   // Debug per vedere cosa c'è negli stati
-  console.log("isMyProfile:", isMyProfile);
+  /*  console.log("isMyProfile:", isMyProfile);
   console.log("userId:", userId);
-  console.log("otherExperienceState:", otherExperienceState);
+  console.log("otherExperienceState:", otherExperienceState); */
 
   const experienceList = isMyProfile ? myExperienceState?.content : otherExperienceState?.content;
   const experienceLoading = isMyProfile ? myExperienceState?.loading : otherExperienceState?.loading;
@@ -62,8 +62,6 @@ const ProfileSection = () => {
     if (isMyProfile && profileSection?._id) {
       dispatch(getMyExperience());
     } else if (!isMyProfile && userId) {
-      // Per altri profili, assicurati che l'action usi correttamente userId
-      console.log("Caricando esperienze per userId:", userId);
       dispatch(getExperienceByUserId(userId));
     }
   }, [dispatch, isMyProfile, profileSection?._id, userId]);
@@ -258,20 +256,20 @@ const ProfileSection = () => {
               <Card.Header className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col className="text-end">
-                    {isMyProfile && (
+                    {/*      {isMyProfile && (
                       <>
-                        <Button variant="light" className="border-0 bg-transparent">
+                                               <Button variant="light" className="border-0 bg-transparent">
                           <PlusLg className="me-3" size={25} />
                         </Button>
                         <Button variant="light" className="border-0 bg-transparent">
                           <Pencil size={25} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />
                         </Button>
                       </>
-                    )}
+                    )} */}
                   </Col>
                 </Row>
               </Card.Header>
-              <Card.Body>Nessuna esperienza disponibile.</Card.Body>
+              <Card.Body> Nessuna esperienza disponibile.</Card.Body>
             </Card>
           )}
 

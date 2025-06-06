@@ -16,7 +16,8 @@ const ExperiencesSection = ({ userId, isMyProfile }) => {
     setSelectedExperience(experience);
     setShowModal(true);
   };
-
+  console.log("ciao, sono expsection, sto caricando le esperienze di " + userId);
+  console.log("Se sotto non ti confermo nulla, vuol dire che non sto proprio invuiando le esperienze ");
   const handleAddClick = () => {
     setSelectedExperience(null);
     setShowModal(true);
@@ -63,6 +64,7 @@ const ExperiencesSection = ({ userId, isMyProfile }) => {
                 <h5>
                   {exp.role} {isMyProfile && <Pencil size={20} className="ms-2" style={{ cursor: "pointer" }} onClick={() => handleEditClick(exp)} />}
                   {isMyProfile && <Trash size={20} className="ms-2 text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(exp._id)} />}
+                  {console.log("ebbene sì, le ho proprio caricate.Riesci a vederle?")}
                 </h5>
                 <h6>{exp.company}</h6>
                 <p>
