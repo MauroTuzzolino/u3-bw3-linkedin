@@ -161,8 +161,8 @@ const ProfileSection = () => {
                         <Spinner animation="border" size="sm" />
                       ) : (
                         experiences?.slice(0, 2).map((exp, index) => (
-                          <Row key={exp._id} className="d-block mb-3">
-                            <Col x2={4}>
+                          <Row key={exp._id} className="mb-3 align-items-center">
+                            <Col xs={4}>
                               <Image
                                 src={exp.image || linkSvg}
                                 className="industryImg"
@@ -172,10 +172,8 @@ const ProfileSection = () => {
                                 }}
                               />
                             </Col>
-
                             <Col xs={8}>
-                              {" "}
-                              <h6 className="d-inline-block">{exp.company}</h6>
+                              <h6 className="mb-0">{exp.company}</h6>
                             </Col>
                           </Row>
                         ))
