@@ -22,9 +22,9 @@ const ExperiencesSection = ({ userId, isMyProfile }) => {
     setShowModal(true);
   };
 
-  const handleSave = (updatedExperience) => {
+  const handleSave = (updatedExperience, imageFile) => {
     if (selectedExperience?._id) {
-      dispatch(updateExperience(userId, selectedExperience._id, updatedExperience));
+      dispatch(updateExperience(userId, selectedExperience._id, updatedExperience, imageFile));
     } else {
       dispatch(createExperience(userId, updatedExperience));
     }
