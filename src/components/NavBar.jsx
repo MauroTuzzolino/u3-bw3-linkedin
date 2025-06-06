@@ -7,9 +7,13 @@ import { searchProfileByName } from "../redux/reducers/profileThunks";
 
 import { Link } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+
 const NavBar = () => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,7 +26,7 @@ const NavBar = () => {
     <Navbar bg="white" expand="md" className="border border-bottom-secondary border-bottom-2">
       <Container className="d-flex align-items-center">
         {/* Logo */}
-        <Navbar.Brand href="#" className="d-flex align-items-center">
+        <Navbar.Brand onClick={() => navigate("/")} style={{ cursor: "pointer" }} className="d-flex align-items-center">
           <FaLinkedin color="#0a66c2" size={45} />
         </Navbar.Brand>
 
@@ -46,7 +50,7 @@ const NavBar = () => {
 
           {/* Icone */}
           <Nav className="d-flex align-items-center">
-            <Nav.Link href="/home" className="d-flex flex-column align-items-center mx-2">
+            <Nav.Link as={Link} to="/home" className="d-flex flex-column align-items-center mx-2">
               <FaHome size={30} />
               <small className="d-block d-md-none d-lg-block">Home</small>
             </Nav.Link>
@@ -54,7 +58,7 @@ const NavBar = () => {
               <FaUsers size={30} />
               <small className="d-block d-md-none d-lg-block">Rete</small>
             </Nav.Link>
-            <Nav.Link href="/jobs" className="d-flex flex-column align-items-center mx-2">
+            <Nav.Link as={Link} to="/jobs" className="d-flex flex-column align-items-center mx-2">
               <FaBriefcase size={30} />
               <small className="d-block d-md-none d-lg-block">Lavoro</small>
             </Nav.Link>

@@ -28,9 +28,11 @@ import { openModal } from "../redux/actions/index";
 import { Link } from "react-router-dom";
 import EditPostModal from "./EditPostModal";
 import { deletePost } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const myProfile = useSelector((state) => state.myProfile.content);
   const posts = useSelector((state) => state.posts.posts);
@@ -93,7 +95,7 @@ const HomePage = () => {
                   className="border border-white border-3"
                   style={{ width: "80px", height: "80px", marginTop: "-40px", objectFit: "cover" }}
                 />
-                <Card.Title className="mb-0 mt-2">
+                <Card.Title className="mb-0 mt-2" style={{ cursor: "pointer" }} onClick={() => navigate("/me")}>
                   {myProfile.name} {myProfile.surname}
                 </Card.Title>
                 <Card.Text className="text-muted small">{myProfile.title}</Card.Text>
@@ -112,7 +114,7 @@ const HomePage = () => {
                   <small className="text-muted">Sblocca 4 volte più visite del profilo</small>
                 </div>
                 <Button variant="link" className="p-0 text-decoration-none text-warning">
-                  Riativa Premium
+                  Riattiva Premium
                 </Button>
               </Card.Body>
             </Card>
