@@ -26,8 +26,8 @@ export const getMyProfile = (userId = "me") => {
     try {
       let resp = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}`, {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+          Authorization: `Bearer ${TOKEN}`
+        }
       });
       if (!resp.ok) throw new Error("Errore nella fetch");
       let fetchedMyProfile = await resp.json();
@@ -48,9 +48,9 @@ export const updateMyProfile = (updatedData) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${TOKEN}`,
+          Authorization: `Bearer ${TOKEN}`
         },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(updatedData)
       });
 
       if (!response.ok) {
@@ -79,9 +79,9 @@ export const updateMyImgProfile = (imageFile, userId) => {
       const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/picture`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
+          Authorization: `Bearer ${TOKEN}`
         },
-        body: formData,
+        body: formData
       });
 
       if (!response.ok) {
@@ -108,8 +108,8 @@ export const getMyExperience = () => {
 
       let resp = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences`, {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+          Authorization: `Bearer ${TOKEN}`
+        }
       });
       if (!resp.ok) throw new Error("Errore nella fetch");
       let fetchedMyExperience = await resp.json();
@@ -127,8 +127,8 @@ export const fetchRandomUsers = () => {
     try {
       const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/`, {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+          Authorization: `Bearer ${TOKEN}`
+        }
       });
       if (!response.ok) {
         throw new Error("Errore nella fetch");
@@ -153,8 +153,8 @@ export const getUserProfile = (id) => {
       dispatch({ type: SET_LOADING_OTHER_PROFILE });
       const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${id}`, {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+          Authorization: `Bearer ${TOKEN}`
+        }
       });
 
       if (!response.ok) {
@@ -180,8 +180,8 @@ export const getExperienceByUserId = (userId) => {
       dispatch({ type: SET_LOADING_OTHER_EXPERIENCE });
       const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences`, {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+          Authorization: `Bearer ${TOKEN}`
+        }
       });
 
       if (!response.ok) {
@@ -206,8 +206,8 @@ export const fetchPosts = () => {
       dispatch({ type: FETCH_POSTS_START });
       const response = await fetch("https://striveschool-api.herokuapp.com/api/posts/", {
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+          Authorization: `Bearer ${TOKEN}`
+        }
       });
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -242,7 +242,7 @@ export const submitPost = (content) => async (dispatch) => {
     const res = await fetch("https://striveschool-api.herokuapp.com/api/posts/", {
       method: "POST",
       headers: { Authorization: `Bearer ${TOKEN}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ text: content }),
+      body: JSON.stringify({ text: content })
     });
 
     if (!res.ok) {
@@ -270,16 +270,16 @@ export const updateExperience = (userId, expId, updatedExperience) => async (dis
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${TOKEN}`
       },
-      body: JSON.stringify(updatedExperience),
+      body: JSON.stringify(updatedExperience)
     });
 
     if (response.ok) {
       const data = await response.json();
       dispatch({
         type: UPDATE_EXPERIENCE_SUCCESS,
-        payload: data,
+        payload: data
       });
     } else {
       throw new Error("Errore durante l'aggiornamento dell'esperienza");
@@ -287,7 +287,7 @@ export const updateExperience = (userId, expId, updatedExperience) => async (dis
   } catch (error) {
     dispatch({
       type: UPDATE_EXPERIENCE_ERROR,
-      payload: error.message,
+      payload: error.message
     });
   }
 };
@@ -304,16 +304,16 @@ export const createExperience = (userId, newExperience) => async (dispatch) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${TOKEN}`
       },
-      body: JSON.stringify(newExperience),
+      body: JSON.stringify(newExperience)
     });
 
     if (response.ok) {
       const data = await response.json();
       dispatch({
         type: CREATE_EXPERIENCE_SUCCESS,
-        payload: data,
+        payload: data
       });
     } else {
       throw new Error("Errore durante la creazione dell'esperienza");
@@ -321,7 +321,7 @@ export const createExperience = (userId, newExperience) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CREATE_EXPERIENCE_ERROR,
-      payload: error.message,
+      payload: error.message
     });
   }
 };
@@ -337,14 +337,14 @@ export const deleteExperience = (userId, expId) => async (dispatch) => {
     const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences/${expId}`, {
       method: "DELETE",
       headers: {
-        Authorization: ` Bearer ${TOKEN}`,
-      },
+        Authorization: ` Bearer ${TOKEN}`
+      }
     });
 
     if (response.ok) {
       dispatch({
         type: DELETE_EXPERIENCE_SUCCESS,
-        payload: expId,
+        payload: expId
       });
     } else {
       throw new Error("Errore durante l'eliminazione dell'esperienza");
@@ -352,7 +352,70 @@ export const deleteExperience = (userId, expId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_EXPERIENCE_ERROR,
-      payload: error.message,
+      payload: error.message
     });
   }
+};
+
+// aggiornamento post
+export const UPDATE_POST_SUCCESS = "UPDATE_POST_SUCCESS";
+export const UPDATE_POST_ERROR = "UPDATE_POST_ERROR";
+
+export const updatePost = (postId, updatedData) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`https://striveschool-api.herokuapp.com/api/posts/${postId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${TOKEN}`
+        },
+        body: JSON.stringify(updatedData)
+      });
+
+      if (!response.ok) {
+        throw new Error("Errore durante l'aggiornamento del post");
+      }
+
+      const updatedPost = await response.json();
+      dispatch({ type: UPDATE_POST_SUCCESS, payload: updatedPost });
+    } catch (error) {
+      console.error("Errore durante l'aggiornamento del post:", error.message);
+      dispatch({ type: UPDATE_POST_ERROR, payload: error.message });
+    }
+  };
+};
+export const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS";
+export const DELETE_POST_ERROR = "DELETE_POST_ERROR";
+
+export const deletePost = (postId) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`https://striveschool-api.herokuapp.com/api/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${TOKEN}` // Sostituisci con il tuo token
+        }
+      });
+
+      if (response.ok) {
+        dispatch({
+          type: DELETE_POST_SUCCESS,
+          payload: postId // Passa l'ID del post eliminato
+        });
+      } else {
+        const error = await response.json();
+        dispatch({
+          type: DELETE_POST_ERROR,
+          payload: error.message
+        });
+      }
+    } catch (error) {
+      console.error("Errore durante l'eliminazione del post:", error);
+      dispatch({
+        type: DELETE_POST_ERROR,
+        payload: error.message
+      });
+    }
+  };
 };
