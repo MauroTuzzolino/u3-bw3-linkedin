@@ -54,7 +54,7 @@ const NavBar = () => {
               <FaUsers size={30} />
               <small className="d-block d-md-none d-lg-block">Rete</small>
             </Nav.Link>
-            <Nav.Link href="#" className="d-flex flex-column align-items-center mx-2">
+            <Nav.Link href="/jobs" className="d-flex flex-column align-items-center mx-2">
               <FaBriefcase size={30} />
               <small className="d-block d-md-none d-lg-block">Lavoro</small>
             </Nav.Link>
