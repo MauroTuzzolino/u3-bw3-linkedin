@@ -201,7 +201,7 @@ const HomePage = () => {
                               style={{ width: "40px", height: "40px", objectFit: "cover" }}
                             />
                             <div>
-                              <Card.Title className="m-0" style={{ cursor: "pointer" }} onClick={() => navigate(`/other/${post.user._id}`)}>
+                              <Card.Title className="m-0 mb-2" style={{ cursor: "pointer" }} onClick={() => navigate(`/other/${post.user._id}`)}>
                                 {post.user?.name} {post.user?.surname}
                               </Card.Title>
                               <Card.Subtitle className="text-muted small">{post.user?.title}</Card.Subtitle>
