@@ -234,7 +234,7 @@ export const setContent = (content) => ({ type: SET_CONTENT, payload: content })
 export const setLoading = (loading) => ({ type: SET_LOADING, payload: loading });
 export const setError = (error) => ({ type: SET_ERROR, payload: error });
 
-export const submitPost = (content) => async (dispatch) => {
+/* export const submitPost = (content) => async (dispatch) => {
   dispatch(setLoading(true));
   dispatch(setError(null));
 
@@ -251,6 +251,48 @@ export const submitPost = (content) => async (dispatch) => {
     }
 
     dispatch(closeModal());
+  } catch (error) {
+    dispatch(setError(error.message));
+  } finally {
+    dispatch(setLoading(false));
+  }
+}; */
+
+export const submitPost = (content) => async (dispatch, getState) => {
+  dispatch(setLoading(true));
+  dispatch(setError(null));
+
+  try {
+    const state = getState();
+    const myProfile = state.myProfile.content;
+
+    const postData = {
+      text: content,
+      user: {
+        _id: myProfile._id,
+        name: myProfile.name,
+        surname: myProfile.surname,
+        image: myProfile.image,
+        title: myProfile.title,
+      },
+    };
+
+    const res = await fetch("https://striveschool-api.herokuapp.com/api/posts/", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "Errore invio post");
+    }
+
+    dispatch(closeModal());
+    dispatch(fetchPosts());
   } catch (error) {
     dispatch(setError(error.message));
   } finally {

@@ -10,6 +10,8 @@ import {
   FaVideo,
   FaRegCalendarAlt,
   FaEllipsisH,
+  FaPen,
+  FaTrash,
   FaGlobeAmericas,
   FaThumbsUp,
   FaCommentDots,
@@ -187,27 +189,44 @@ const HomePage = () => {
                   <Col key={post._id}>
                     <Card className="p-3 mb-2">
                       <Card.Body>
-                        <div className="d-flex align-items-center mb-2">
-                          <Card.Img src={avatar} className="rounded-circle me-2" style={{ width: "30px", height: "30px", objectFit: "cover" }} />
-                          <Card.Title className="m-0">{post.name || "Nome non disponibile"}</Card.Title>
+                        {/* Header con nome, immagine e bottoni */}
+                        <div className="d-flex align-items-center justify-content-between mb-2">
+                          <div className="d-flex align-items-center">
+                            <Card.Img
+                              src={post.user?.image || avatar}
+                              alt="avatar"
+                              className="rounded-circle me-2"
+                              style={{ width: "40px", height: "40px", objectFit: "cover" }}
+                            />
+                            <div>
+                              <Card.Title className="m-0">
+                                {post.user?.name} {post.user?.surname}
+                              </Card.Title>
+                              <Card.Subtitle className="text-muted small">{post.user?.title}</Card.Subtitle>
+                            </div>
+                          </div>
+
+                          {/* Bottoni modifica ed elimina solo se è il tuo post */}
+                          {post.user?._id === myProfile._id && (
+                            <div>
+                              <Button variant="link" className="text-muted p-1" onClick={() => handleEditPost(post)} title="Modifica">
+                                <FaPen />
+                              </Button>
+                              <Button variant="link" className="text-danger p-1" onClick={() => handleDeletePost(post._id)} title="Elimina">
+                                <FaTrash />
+                              </Button>
+                            </div>
+                          )}
                         </div>
 
+                        {/* Testo del post */}
                         <Card.Text>{post.text || "Nessun testo disponibile."}</Card.Text>
+
+                        {/* Date */}
                         <Card.Text className="d-flex justify-content-between">
                           <small className="text-muted">Modificato il {new Date(post.updatedAt).toLocaleDateString()}</small>
                           <small className="text-muted">Postato il {new Date(post.createdAt).toLocaleDateString()}</small>
                         </Card.Text>
-                        {/* Mostra i pulsanti solo se l'utente è l'autore del post */}
-                        {post.user._id === myProfile._id && (
-                          <div className="d-flex justify-content-between">
-                            <Button variant="link" className="text-muted text-decoration-none" onClick={() => handleEditPost(post)}>
-                              Modifica
-                            </Button>
-                            <Button variant="link" className="text-danger text-decoration-none" onClick={() => handleDeletePost(post._id)}>
-                              Elimina
-                            </Button>
-                          </div>
-                        )}
                       </Card.Body>
                     </Card>
                   </Col>
