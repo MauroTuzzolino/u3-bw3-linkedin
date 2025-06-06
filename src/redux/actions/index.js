@@ -323,3 +323,50 @@ export const deleteExperience = (userId, expId) => async (dispatch) => {
     });
   }
 };
+
+export const START_LOADING = "START_LOADING";
+export const SET_RESULTS = "SET_RESULTS";
+export const SET_ERROR_WORK = "SET_ERROR";
+
+//action creators
+export const startLoading = () => ({ type: START_LOADING });
+export const setResults = (results) => ({ type: SET_RESULTS, payload: results });
+export const setErrorWork = (error) => ({ type: SET_ERROR, payload: error });
+
+// favourites actions (se servono nello stesso file)
+export const ADD_FAVOURITE = "ADD_FAVOURITE";
+export const REMOVE_FAVOURITE = "REMOVE_FAVOURITE";
+
+export const addFavourite = (company) => ({ type: ADD_FAVOURITE, payload: company });
+export const removeFavourite = (company) => ({ type: REMOVE_FAVOURITE, payload: company });
+
+// thunk
+export const fetchSearchResults = (query) => {
+  return async (dispatch) => {
+    dispatch(startLoading());
+
+    try {
+      const response = await fetch(`https://strive-benchmark.herokuapp.com/api/jobs?search=${query}&limit=20`);
+      if (!response.ok) throw new Error("Errore nel caricamento");
+      const data = await response.json();
+      dispatch(setResults(data.data));
+    } catch (err) {
+      dispatch(setError(err.toString()));
+    }
+  };
+};
+
+export const fetchCompanyJobs = (company) => {
+  return async (dispatch) => {
+    dispatch(startLoading());
+
+    try {
+      const response = await fetch(`https://strive-benchmark.herokuapp.com/api/jobs?company=${company}`);
+      if (!response.ok) throw new Error("Errore nel caricamento dei lavori");
+      const data = await response.json();
+      dispatch(setResults(data.data));
+    } catch (err) {
+      dispatch(setError(err.toString()));
+    }
+  };
+};

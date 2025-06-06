@@ -150,24 +150,27 @@ const HomePage = () => {
 
             {/*Post*/}
 
-            {posts.slice(0, 5).map((post) => (
-              <Col key={post._id}>
-                <Card className="p-3 mb-2">
-                  <Card.Body>
-                    <div className="d-flex align-items-center mb-2">
-                      <Card.Img src={avatar} className="rounded-circle me-2" style={{ width: "30px", height: "30px", objectFit: "cover" }} />
-                      <Card.Title className="m-0">{post.name || "Nome non disponibile"}</Card.Title>
-                    </div>
+            {posts
+              .reverse()
+              .slice(0, 5)
+              .map((post) => (
+                <Col key={post._id}>
+                  <Card className="p-3 mb-2">
+                    <Card.Body>
+                      <div className="d-flex align-items-center mb-2">
+                        <Card.Img src={avatar} className="rounded-circle me-2" style={{ width: "30px", height: "30px", objectFit: "cover" }} />
+                        <Card.Title className="m-0">{post.name || "Nome non disponibile"}</Card.Title>
+                      </div>
 
-                    <Card.Text>{post.text || "Nessun testo disponibile."}</Card.Text>
-                    <Card.Text className="d-flex justify-content-between">
-                      <small className="text-muted">Modificato il {new Date(post.updatedAt).toLocaleDateString()}</small>
-                      <small className="text-muted">Postato il {new Date(post.createdAt).toLocaleDateString()}</small>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
+                      <Card.Text>{post.text || "Nessun testo disponibile."}</Card.Text>
+                      <Card.Text className="d-flex justify-content-between">
+                        <small className="text-muted">Modificato il {new Date(post.updatedAt).toLocaleDateString()}</small>
+                        <small className="text-muted">Postato il {new Date(post.createdAt).toLocaleDateString()}</small>
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
 
             {/* Esempio di Post
           <Card className="mb-3">

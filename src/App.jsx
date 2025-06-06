@@ -2,9 +2,12 @@ import "./App.css";
 import ProfileSection from "./components/ProfileSection";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
+import Job from "./components/Job";
+import CompanySearchResults from "./components/CompanySearchResults";
+import Favourites from "./components/Favourites";
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
               {/* Le tue route esistenti per ProfileSection */}
               <Route path="/me" element={<ProfileSection />} />
               <Route path="/other/:userId" element={<ProfileSection />} />
+              <Route path="/work" element={<Job />} />
+              <Route path="/:company" element={<CompanySearchResults />} />
+              <Route path="/favourites" element={<Favourites />} />
             </Routes>
           </Container>
         </div>
