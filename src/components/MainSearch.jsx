@@ -52,7 +52,7 @@ const MainSearch = () => {
                   objectFit: "cover",
                 }}
               />
-              <Card.Title className="mb-0 mt-2">
+              <Card.Title className="mb-0 mt-2 d-block text-decoration-none" as={Link} to={"/me"}>
                 {myProfile.name} {myProfile.surname}
               </Card.Title>
               <Card.Text className="text-muted small">{myProfile.title}</Card.Text>
