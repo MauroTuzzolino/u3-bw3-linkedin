@@ -134,7 +134,7 @@ export const fetchRandomUsers = () => {
         throw new Error("Errore nella fetch");
       }
       const profiles = await response.json();
-      const randomSix = profiles.sort(() => Math.random() - 0.5).slice(0, 6);
+      const randomSix = profiles.sort(() => Math.random() - 0.5).slice(0, 10);
       dispatch({ type: GET_RANDOM_SUCCESS, payload: randomSix });
       // console.log("random 3:", randomThree);
     } catch (error) {

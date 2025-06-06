@@ -52,8 +52,9 @@ const MySidebar = () => {
           {users.map((profile) => (
             <ListGroup.Item key={profile._id}>
               <h6>
-                <Link to={`/other/${profile._id}`}>
+                <Link to={`/other/${profile._id}`} className="text-decoration-none text-dark">
                   {" "}
+                  <Image src={profile.image} className="rounded-circle me-2" style={{ height: "20px", width: "20px" }} />
                   {profile.name} {profile.surname}
                 </Link>
               </h6>
