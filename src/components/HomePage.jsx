@@ -149,7 +149,7 @@ const HomePage = () => {
             <Card className="mb-3">
               <Card.Body>
                 <div className="d-flex align-items-center mb-3">
-                  <Image src={myProfile.image} roundedCircle className="me-3" style={{ height: "45px" }} />
+                  <Image src={myProfile.image} roundedCircle className="me-3" style={{ height: "45px", width: "45px", objectFit: "cover" }} />
                   <Button variant="outline-secondary" onClick={() => dispatch(openModal())} className="rounded-pill text-start flex-grow-1">
                     Crea un post
                   </Button>

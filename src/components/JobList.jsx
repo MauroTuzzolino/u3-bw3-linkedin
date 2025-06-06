@@ -28,7 +28,7 @@ const JobList = () => {
 
   return (
     <>
-      {data.slice(0, 5).map((job) => {
+      {data.slice(0, 10).map((job) => {
         const isFavourited = favourites.some((fav) => fav.company_name === job.company_name);
 
         return (
