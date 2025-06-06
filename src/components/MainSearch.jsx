@@ -102,7 +102,7 @@ const MainSearch = () => {
 
         {/* Colonna centrale */}
         <Col lg={8}>
-          <Col xs={12} className="mx-auto">
+          <Col xs={12} className="mx-auto mb-3">
             <Form onSubmit={handleSubmit}>
               <Form.Control type="search" value={query} onChange={handleChange} placeholder="Inizia a cercare..." />
             </Form>

@@ -36,10 +36,10 @@ const Favourites = () => {
               {favourites.map((job, index) => (
                 <div
                   key={index}
-                  className="d-flex justify-content-between align-items-center mb-3 pb-2"
+                  className="d-flex justify-content-between align-items-center mb-3 pb-2 px-2"
                   style={{ borderBottom: "1px solid rgb(108, 107, 107)" }}
                 >
-                  <Link to={`/${job.company_name}`} className="text-decoration-none">
+                  <Link to={`/${job.company_name}`} className="text-decoration-none text-dark">
                     <strong>{job.company_name}</strong>
                   </Link>
                   <Button variant="outline-danger" size="sm" onClick={() => handleRemoveFromFavourites(job.company_name)}>

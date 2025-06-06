@@ -21,11 +21,13 @@ const Job = ({ data }) => {
     <>
       <Row className="mx-0 mt-3 p-3" style={{ borderBottom: "1px solid #00000033" }}>
         <Col xs={3}>
-          <Link to={`/${data.company_name}`}>{data.company_name}</Link>
+          <Link to={`/${data.company_name}`} className="text-decoration-none text-dark">
+            <strong>{data.company_name}</strong>
+          </Link>
         </Col>
         {data.title && (
           <Col xs={6}>
-            <a href={data.url} target="_blank" rel="noreferrer">
+            <a href={data.url} target="_blank" rel="noreferrer" className="text-decoration-none text-dark">
               {data.title}
             </a>
           </Col>

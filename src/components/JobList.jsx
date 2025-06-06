@@ -33,18 +33,20 @@ const JobList = () => {
 
         return (
           <>
-            <Row key={job._id} className="mx-0 mt-3 p-3" style={{ border: "1px solid #00000033", borderRadius: 4 }}>
+            <Row key={job._id} className="mx-0 p-3" style={{ borderBottom: "1px solid #00000033" }}>
               <Col xs={3}>
-                <Link to={`/${job.company_name}`}>{job.company_name}</Link>
+                <Link to={`/${job.company_name}`} className="text-decoration-none text-dark">
+                  <strong>{job.company_name}</strong>
+                </Link>
               </Col>
               {job.title && (
                 <Col xs={6}>
-                  <a href={job.url} target="_blank" rel="noreferrer">
+                  <a href={job.url} target="_blank" rel="noreferrer" className="text-decoration-none text-dark">
                     {job.title}
                   </a>
                 </Col>
               )}
-              <Col xs={3}>
+              <Col xs={3} className="text-end">
                 <Button variant="transparent" onClick={() => toggleFavourite(job)}>
                   {isFavourited ? <FaBookmark color="red" /> : <FaBookmark />}
                 </Button>
