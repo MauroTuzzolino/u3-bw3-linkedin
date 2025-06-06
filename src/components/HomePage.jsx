@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, ListGroup, Image, Spinner } from "react-bootstrap";
 import {
   FaInfoCircle,
@@ -17,13 +17,15 @@ import {
   FaPaperPlane,
 } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyProfile } from "../redux/actions";
+import { getMyProfile, updatePost } from "../redux/actions";
 import coverImage from "../assets/images/placeholderCover.png";
 import { fetchPosts } from "../redux/actions";
 import avatar from "../assets/images/avatar.svg";
 import CreatePost from "./CreatePost";
 import { openModal } from "../redux/actions/index";
 import { Link } from "react-router-dom";
+import EditPostModal from "./EditPostModal";
+import { deletePost } from "../redux/actions";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -32,6 +34,31 @@ const HomePage = () => {
   const posts = useSelector((state) => state.posts.posts);
   const loading = useSelector((state) => state.posts.loading);
   const error = useSelector((state) => state.posts.error);
+
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [updatedText, setUpdatedText] = useState("");
+
+  // Funzione per aprire il modale con il post selezionato
+  const handleEditPost = (post) => {
+    setSelectedPost(post);
+    setUpdatedText(post.text);
+    setShowModal(true);
+  };
+
+  // Funzione per salvare le modifiche al post
+  const handleSavePost = () => {
+    if (selectedPost) {
+      dispatch(updatePost(selectedPost._id, { text: updatedText }));
+      setShowModal(false);
+    }
+  };
+  const handleDeletePost = (postId) => {
+    const confirmDelete = window.confirm("Sei sicuro di voler eliminare questo post?");
+    if (confirmDelete) {
+      dispatch(deletePost(postId)); // Chiama l'azione Redux per eliminare il post
+    }
+  };
 
   useEffect(() => {
     dispatch(getMyProfile());
@@ -151,24 +178,41 @@ const HomePage = () => {
 
             {/*Post*/}
 
-            {posts.slice(0, 5).map((post) => (
-              <Col key={post._id}>
-                <Card className="p-3 mb-2">
-                  <Card.Body>
-                    <div className="d-flex align-items-center mb-2">
-                      <Card.Img src={avatar} className="rounded-circle me-2" style={{ width: "30px", height: "30px", objectFit: "cover" }} />
-                      <Card.Title className="m-0">{post.name || "Nome non disponibile"}</Card.Title>
-                    </div>
+            {posts
+              .slice()
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+              .slice(0, 9)
+              .map((post) => {
+                return (
+                  <Col key={post._id}>
+                    <Card className="p-3 mb-2">
+                      <Card.Body>
+                        <div className="d-flex align-items-center mb-2">
+                          <Card.Img src={avatar} className="rounded-circle me-2" style={{ width: "30px", height: "30px", objectFit: "cover" }} />
+                          <Card.Title className="m-0">{post.name || "Nome non disponibile"}</Card.Title>
+                        </div>
 
-                    <Card.Text>{post.text || "Nessun testo disponibile."}</Card.Text>
-                    <Card.Text className="d-flex justify-content-between">
-                      <small className="text-muted">Modificato il {new Date(post.updatedAt).toLocaleDateString()}</small>
-                      <small className="text-muted">Postato il {new Date(post.createdAt).toLocaleDateString()}</small>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
+                        <Card.Text>{post.text || "Nessun testo disponibile."}</Card.Text>
+                        <Card.Text className="d-flex justify-content-between">
+                          <small className="text-muted">Modificato il {new Date(post.updatedAt).toLocaleDateString()}</small>
+                          <small className="text-muted">Postato il {new Date(post.createdAt).toLocaleDateString()}</small>
+                        </Card.Text>
+                        {/* Mostra i pulsanti solo se l'utente è l'autore del post */}
+                        {post.user._id === myProfile._id && (
+                          <div className="d-flex justify-content-between">
+                            <Button variant="link" className="text-muted text-decoration-none" onClick={() => handleEditPost(post)}>
+                              Modifica
+                            </Button>
+                            <Button variant="link" className="text-danger text-decoration-none" onClick={() => handleDeletePost(post._id)}>
+                              Elimina
+                            </Button>
+                          </div>
+                        )}
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                );
+              })}
 
             {/* Esempio di Post
           <Card className="mb-3">
@@ -313,6 +357,8 @@ const HomePage = () => {
           </Col>
         </Row>
       </Container>
+      {/* Modale per modificare il post */}
+      <EditPostModal show={showModal} handleClose={() => setShowModal(false)} postText={updatedText} setPostText={setUpdatedText} handleSave={handleSavePost} />
       <CreatePost />
     </>
   );

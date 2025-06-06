@@ -403,3 +403,65 @@ export const selectFavourite = (job) => ({
   type: SELECT_FAVOURITE,
   payload: job,
 });
+// aggiornamento post
+export const UPDATE_POST_SUCCESS = "UPDATE_POST_SUCCESS";
+export const UPDATE_POST_ERROR = "UPDATE_POST_ERROR";
+
+export const updatePost = (postId, updatedData) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`https://striveschool-api.herokuapp.com/api/posts/${postId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${TOKEN}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Errore durante l'aggiornamento del post");
+      }
+
+      const updatedPost = await response.json();
+      dispatch({ type: UPDATE_POST_SUCCESS, payload: updatedPost });
+    } catch (error) {
+      console.error("Errore durante l'aggiornamento del post:", error.message);
+      dispatch({ type: UPDATE_POST_ERROR, payload: error.message });
+    }
+  };
+};
+export const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS";
+export const DELETE_POST_ERROR = "DELETE_POST_ERROR";
+
+export const deletePost = (postId) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`https://striveschool-api.herokuapp.com/api/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${TOKEN}`, // Sostituisci con il tuo token
+        },
+      });
+
+      if (response.ok) {
+        dispatch({
+          type: DELETE_POST_SUCCESS,
+          payload: postId, // Passa l'ID del post eliminato
+        });
+      } else {
+        const error = await response.json();
+        dispatch({
+          type: DELETE_POST_ERROR,
+          payload: error.message,
+        });
+      }
+    } catch (error) {
+      console.error("Errore durante l'eliminazione del post:", error);
+      dispatch({
+        type: DELETE_POST_ERROR,
+        payload: error.message,
+      });
+    }
+  };
+};
