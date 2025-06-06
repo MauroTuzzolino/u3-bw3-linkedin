@@ -250,26 +250,24 @@ const ProfileSection = () => {
           ) : experienceError ? (
             <Alert variant="danger">{experienceError}</Alert>
           ) : experienceList && experienceList.length > 0 ? (
-            <ExperiencesSection experiences={experienceList} isMyProfile={isMyProfile} userId={userId} />
+            <ExperiencesSection
+              // RIMUOVI questa prop che non serve
+              // experiences={experienceList}
+              isMyProfile={isMyProfile}
+              userId={userId}
+            />
           ) : (
             <Card className="my-2 py-3">
               <Card.Header className="bg-white border-0">
                 <Row className="align-items-center">
-                  <Col className="text-end">
-                    {/*      {isMyProfile && (
-                      <>
-                                               <Button variant="light" className="border-0 bg-transparent">
-                          <PlusLg className="me-3" size={25} />
-                        </Button>
-                        <Button variant="light" className="border-0 bg-transparent">
-                          <Pencil size={25} onClick={() => setShowEditmodal(true)} style={{ cursor: "pointer" }} />
-                        </Button>
-                      </>
-                    )} */}
+                  <Col>
+                    <h4>Esperienze</h4>
                   </Col>
                 </Row>
               </Card.Header>
-              <Card.Body> Nessuna esperienza disponibile.</Card.Body>
+              <Card.Body>
+                <p className="text-muted">Nessuna esperienza disponibile.</p>
+              </Card.Body>
             </Card>
           )}
 
