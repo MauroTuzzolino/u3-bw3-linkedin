@@ -8,12 +8,10 @@ const InfoSections = ({ details, isMyProfile }) => {
       <Card.Header className="bg-white border-0">
         <Row className="align-items-center">
           <Col>
-            <h4>Informazioni</h4>
+            <h4>Biografia</h4>
           </Col>
           <Col className="text-end">
-            <Button variant="light" className="border-0 bg-transparent">
-              {isMyProfile && <Pencil size={25} style={{ cursor: "pointer" }} />}
-            </Button>
+            <Button variant="light" className="border-0 bg-transparent"></Button>
           </Col>
         </Row>
       </Card.Header>
